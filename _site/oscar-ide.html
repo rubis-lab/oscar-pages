@@ -90,10 +90,42 @@
   <div class="row">
     <div class="col-lg-8 col-md-10 mx-auto">
 
-      <p>Paragraph</p>
+      <p>OSCAR IDE is an end-to-end design tool covering both hardware and software modules of an autonomous car. Using the model-based design methodology, users can describe the autonomous driving system as a block diagram. There, individual modules of the car are mapped to separate blocks. Relationships between modules are represented by linkages between blocks.</p>
+
+<p>After the system model is fully defined, a user only needs to write code for individual modules, without having to care for the overall source code structure, dependencies or build mechanisms. Note that apart from the algorithm implementation, everything else is taken care of by the OSCAR IDE.</p>
 
 <p><img class="img-fluid" src="img/oscar-ide.png" />
-<span class="caption text-muted">Caption</span></p>
+<span class="caption text-muted">A block diagram representation of a sample autonomous driving system</span></p>
+
+<p>The goal of the OSCAR IDE is to provide the necessary tools to easily model algorithms and hardware components (such as sensors and actuators) for autonomous driving:</p>
+<ul>
+  <li>Graphical editor with block diagram environment for the ROS model-based design of autonomous driving systems</li>
+  <li>Customizable templates of common autonomous driving systems</li>
+  <li>Automatic ROS source code generator</li>
+  <li>Source code editor synchronized with a model specification and its graphical representation</li>
+  <li>Source code and model validation tools</li>
+  <li>ROS build automation tools that create and builds ROS packages (local or remote)</li>
+  <li>ROS diagnostic tools and parameter tuning</li>
+</ul>
+
+<p>OSCAR IDE adopts the model-based design methodology to describe an autonomous driving system. Using blocks and lines, users create a block diagram of the entire system, and based on it OSCAR IDE generates a ROS package and handles all dependencies. Finally, OSCAR IDE builds the generated package on a target device and creates ready-to-launch executable ROS nodes.</p>
+
+<h3 id="technical-overview">Technical overview:</h3>
+<ul>
+  <li>ROS-based system can be viewed as a graph, where nodes are computational processes that communicate with each other by passing messages through topics with publish/subscribe semantics.</li>
+  <li>In a block diagram, nodes and topics are represented by blocks, and the message passing interface is represented by connections between blocks.</li>
+  <li>Nodes and topics are defined as classes using EMF (Eclipse Modeling Framework).</li>
+  <li>GEF (Graphical Editing Framework) is used to easily make and edit instances of defined classes.</li>
+  <li>The actual visual representation of the classes is shown using Draw2D.</li>
+</ul>
+
+<h3 id="development-process">Development process:</h3>
+<ol>
+  <li>The graphical editor provides a drag-and-drop interface for creating instances of ROS publisher/subscriber nodes and topics.</li>
+  <li>The model description is saved as an XML (Extensible Markup Language) file, from which the skeleton code is generated.</li>
+  <li>Skeleton code of each module can be modified in the source code editor. All changes are simultaneously reflected in a model description and its graphical representation.</li>
+  <li>Build automation tools generate a ROS package in compliance with the ROS Filesystem and transfer it to the target’s workspace directory via FTP (File Transfer Protocol). It checks for dependency issues, handles them, and builds the package.</li>
+</ol>
 
 
     </div>
