@@ -2,7 +2,8 @@ title:             OSCAR
 email:             lab@rubis.snu.ac.kr
 description:       Open-Source Self-Driving CAR
 author:            RUBIS
-url:               "https://alkaza.github.io/oscar-pages/"
+baseurl:           "/oscar-pages"
+url:               "https://alkaza.github.io"
 
 # Social Profiles
 github_username:   rubis-lab
