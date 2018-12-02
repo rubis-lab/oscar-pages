@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About OSCAR
-description: This is our big picture.
+description: This is our big picture
 background: '/img/bg-oscar.png'
 ---
 
