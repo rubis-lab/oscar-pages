@@ -1,1 +1,16 @@
-theme: jekyll-theme-cayman
+title:             OSCAR
+email:             lab@rubis.snu.ac.kr
+description:       Open-Source Self-Driving CAR
+author:            RUBIS
+url:               "https://alkaza.github.io/oscar-pages/"
+
+# Social Profiles
+github_username:   rubis-lab
+
+# Build settings
+markdown:          kramdown
+paginate:          5
+paginate_path:     "/posts/page:num/"
+plugins:
+  - jekyll-feed
+  - jekyll-paginate
