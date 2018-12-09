@@ -72,13 +72,13 @@ img::-moz-selection {
     font-weight: 800;
     color: #343a40; }
   #mainNav .navbar-toggler {
-    font-size: 12px;
+    font-size: 18px;
     font-weight: 800;
     padding: 13px;
     text-transform: uppercase;
     color: #343a40; }
   #mainNav .navbar-nav > li.nav-item > a {
-    font-size: 12px;
+    font-size: 18px;
     font-weight: 800;
     letter-spacing: 1px;
     text-transform: uppercase; }
