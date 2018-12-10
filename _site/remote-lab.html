@@ -106,11 +106,9 @@
 
 <p>The track in the remote laboratory is constructed to resemble a real road. We are using dark floor with yellow lanes to enable testing lane detection-based driving. Various sites are placed along the driveway to provide landmarks for localization with both LIDAR and an on-board camera. They include buildings of different sizes with different surface patterns, traffic cones, traffic barriers and traffic signs, all appropriately scaled for the OSCAR scaled platform.</p>
 
-<p>A monitoring system is needed to mimic a Global Positioning System (GPS). Wide-angle cameras are installed above and alongside the track to monitor car’s movement. We are using Hikvision fixed dome network cameras because they provide wide angle of view and are easily setup to stream video over network.</p>
+<p>A monitoring system is needed to mimic a Global Positioning System (GPS). Wide-angle cameras are installed above and alongside the track to monitor car’s movement.</p>
 
 <p>The remote laboratory is integrated into the OSCAR IDE. Remote clients can select a set of sensor inputs to use for their computations to generate an output of motion control commands. Users can collect real-time sensor data from the OSCAR platform while monitoring a video stream from cameras installed in the laboratory.</p>
-
-<p>The server manages requests from remote clients and the data transmission in FIFO manner. That is, only one client can perform the experiment at a time. When a client is authorized, the server grants access to the remote laboratory or queues the request.</p>
 
 
     </div>
@@ -129,15 +127,6 @@
         <ul class="list-inline text-center">
           
           
-          
-          <li class="list-inline-item">
-            <a href="https://github.com/rubis-lab">
-              <span class="fa-stack fa-lg">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-              </span>
-            </a>
-          </li>
           
         </ul>
         <p class="copyright text-muted">Copyright &copy; RUBIS 2018</p>

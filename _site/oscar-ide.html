@@ -112,23 +112,6 @@
 
 <p>OSCAR IDE adopts the model-based design methodology to describe an autonomous driving system. Using blocks and lines, users create a block diagram of the entire system, and based on it OSCAR IDE generates a ROS package and handles all dependencies. Finally, OSCAR IDE builds the generated package on a target device and creates ready-to-launch executable ROS nodes.</p>
 
-<h3 id="technical-overview">Technical overview:</h3>
-<ul>
-  <li>ROS-based system can be viewed as a graph, where nodes are computational processes that communicate with each other by passing messages through topics with publish/subscribe semantics.</li>
-  <li>In a block diagram, nodes and topics are represented by blocks, and the message passing interface is represented by connections between blocks.</li>
-  <li>Nodes and topics are defined as classes using EMF (Eclipse Modeling Framework).</li>
-  <li>GEF (Graphical Editing Framework) is used to easily make and edit instances of defined classes.</li>
-  <li>The actual visual representation of the classes is shown using Draw2D.</li>
-</ul>
-
-<h3 id="development-process">Development process:</h3>
-<ol>
-  <li>The graphical editor provides a drag-and-drop interface for creating instances of ROS publisher/subscriber nodes and topics.</li>
-  <li>The model description is saved as an XML (Extensible Markup Language) file, from which the skeleton code is generated.</li>
-  <li>Skeleton code of each module can be modified in the source code editor. All changes are simultaneously reflected in a model description and its graphical representation.</li>
-  <li>Build automation tools generate a ROS package in compliance with the ROS Filesystem and transfer it to the target’s workspace directory via FTP (File Transfer Protocol). It checks for dependency issues, handles them, and builds the package.</li>
-</ol>
-
 
     </div>
   </div>
@@ -146,15 +129,6 @@
         <ul class="list-inline text-center">
           
           
-          
-          <li class="list-inline-item">
-            <a href="https://github.com/rubis-lab">
-              <span class="fa-stack fa-lg">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-              </span>
-            </a>
-          </li>
           
         </ul>
         <p class="copyright text-muted">Copyright &copy; RUBIS 2018</p>

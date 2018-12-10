@@ -2,11 +2,7 @@ title:             OSCAR
 email:             chief@rubis.snu.ac.kr
 description:       Open-Source Self-Driving CAR
 author:            RUBIS
-#baseurl:           "/oscar-pages"
 url:               "https://rubis-lab.github.io/oscar-pages"
-
-# Social Profiles
-github_username:   rubis-lab
 
 # Build settings
 markdown:          kramdown
