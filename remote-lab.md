@@ -5,7 +5,7 @@ description: Remote experimentation environment for autonomous driving
 background: '/img/bg-oscar.png'
 ---
 
-The remote laboratory extends the accessibility of OSCAR. It consists of the following components:
+testThe remote laboratory extends the accessibility of OSCAR. It consists of the following components:
 - OSCAR platform,
 -	track,
 -	monitoring system,
