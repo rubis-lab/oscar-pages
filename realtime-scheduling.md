@@ -19,7 +19,7 @@ Kang-Wook Kim, Youngeun Cho, Jeongyoon Eo, Chang-Gun Lee, and Junghee Han, Syste
 Recent parallel programming frameworks such as OpenCL and OpenMP allow us to enjoy the parallelization freedom for real-time tasks. The parallelization freedom creates the time vs. density tradeoff problem in fluid scheduling, i.e., more parallelization reduces thread execution times but increases the density. By system-widely exercising this tradeoff, we propose optimal parameter tuning of real-time tasks aiming at maximizing the schedulability of multicore fluid scheduling. Our experimental study by both simulation and actual implementation shows that the proposed approach well balances the time and the density, and results in up to 80% improvement of the schedulability.
 
 <center>
-<a align="center"><img class="img-fluid" src="img/Fluid_schedulability1.PNG" width="400" height="200" ><img class="img-fluid" src="img/Fluid_schedulability2.PNG" width="400" height="200" ></a>
+<a align="center"><img class="img-fluid" src="img/Fluid_schedulability1.PNG" width="400" height="200" ><img class="img-fluid" src="img/Fluid_schedulability2.png" width="400" height="200" ></a>
 <img img class="img-fluid" src="img/Fluid_distribution.PNG" width="500" >
 <img class="img-fluid" src="img/Fluid_result.PNG" >
 </center>
