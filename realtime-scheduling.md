@@ -10,8 +10,8 @@ background: '/img/bg-oscar.png'
 Youngeun Cho, Do Hyung Kim, Daechul Park, Seungsu Lee, and Chang-Gun Lee, Conditionally Optimal Task Parallelization for Global EDF on Multi-core Systems, in IEEE Real-Time Systems Symposium (RTSS), Dec. 2019.
 </div>
 Targeting global EDF scheduling, this paper proposes a conditionally optimal algorithm for parallelizing tasks with parallelization freedom. For this, we extend the interferencebased sufficient schedulability analysis and derive monotonic increasing properties of both tolerance and interference for the schedulability. Leveraging those properties, we propose a oneway search based conditionally optimal algorithm with polynomial time complexity. Our extensive experiments through both simulation and actual implementation show that our proposed approach can significantly improve the schedulability up to 60 percent.
-<img class="img-fluid" src="img/parallelization_graph.png" align="center">
-<img class="img-fluid" src="img/parallelization_result.png"  align="center">
+<img class="img-fluid" src="img/parallelization_graph.PNG" align="center">
+<img class="img-fluid" src="img/parallelization_result.PNG"  align="center">
 
 <div class="alert alert-secondary" role="alert">
 Kang-Wook Kim, Youngeun Cho, Jeongyoon Eo, Chang-Gun Lee, and Junghee Han, System-wide Time vs. Density Tradeoff in Real-Time Multicore Fluid Scheduling, in IEEE Transactions on Computers (TC), Vol. 67, Issue 7, pp. 7, July 2018.
@@ -20,9 +20,9 @@ Recent parallel programming frameworks such as OpenCL and OpenMP allow us to enj
 
 <a align="center"><img class="img-fluid" src="img/Fluid_schedulability1.png" width="400" height="200" ><img class="img-fluid" src="img/Fluid_schedulability2.png" width="400" height="200" ></a>
 <br/><br/>
-<img img class="img-fluid" src="img/Fluid_distribution.png" width="500" >
+<img img class="img-fluid" src="img/Fluid_distribution.PNG" width="500" >
 <br/><br/>
-<img class="img-fluid" src="img/Fluid_result.png" >
+<img class="img-fluid" src="img/Fluid_result.PNG" >
 
 <div class="alert alert-secondary" role="alert">
 Jihye Kwon, Kang-Wook Kim, Sangyoun Paik, Jihwa Lee, and Chang-Gun Lee, Multicore Scheduling of Parallel Real-Time Tasks with Multiple Parallelization Options, in 21st IEEE Real-Time and Embedded Technology and Applications Symposium (RTAS), Seattle, Washington, Apr. 2015.
@@ -30,10 +30,10 @@ Jihye Kwon, Kang-Wook Kim, Sangyoun Paik, Jihwa Lee, and Chang-Gun Lee, Multicor
 Past researches on multicore scheduling assume that a computational unit has already been parallelized into a prefixed number of threads. However, with recent technologies such as OpenCL, a computational unit can be parallelized in many different ways with runtime selectable numbers of threads.This paper proposes an optimal algorithm for parallelizing and scheduling a set of parallel tasks with multiple parallelization options on multiple CPU cores. The proposed algorithm is validated through both simulation and actual implementation. To the best of our knowledge, this is the first work addressing the problem of scheduling real-time tasks with multiple parallelization options on multiple CPU cores.
 
 
-<img src="img/parallel_sched1.png" width="400" align="center">
-<img src="img/parallel_sched2.png" width="400" align="middle">
+<img src="img/parallel_sched1.PNG" width="400" align="center">
+<img src="img/parallel_sched2.PNG" width="400" align="middle">
 <br/>
-<img img class="img-fluid" src="img/parallel_result.png"  width="500"  align="middle">
+<img img class="img-fluid" src="img/parallel_result.PNG"  width="500"  align="middle">
 <br/>
 
 <div class="alert alert-secondary" role="alert">
