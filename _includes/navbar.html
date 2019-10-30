@@ -1,0 +1,43 @@
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="{{"/" | relative_url }}"><img src="img/oscar logo-white.png" width="130" height="50"></a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{{"/" | relative_url }}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{"/about" | relative_url }}">About</a>
+        </li>
+		<li class="nav-item dropdown">
+		  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">research</a>
+		  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="{{"/realtime-scheduling"" | relative_url }}">Realtime Scheduling</a>
+            <a class="dropdown-item" href="{{"/realtime-simulator" | relative_url }}">Realtime Simulator</a>
+          </div>
+		</li>
+		<li class="nav-item dropdown">
+		  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">toolchain</a>
+		  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="{{"/oscar-ide"" | relative_url }}">OSCAR IDE</a>
+            <a class="dropdown-item" href="{{"/remote-lab" | relative_url }}">Remote Laboratory</a>
+            <a class="dropdown-item" href="{{"/scaled-platform" | relative_url }}">Scaled Platform</a>
+          </div>
+		</li>
+        <!--
+        <li class="nav-item">
+          <a class="nav-link" href="{{"/posts" | relative_url }}">Posts</a>
+        </li>
+        -->
+        <li class="nav-item">
+          <a class="nav-link" href="{{"/contact" | relative_url }}">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
