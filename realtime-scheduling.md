@@ -18,25 +18,24 @@ Kang-Wook Kim, Youngeun Cho, Jeongyoon Eo, Chang-Gun Lee, and Junghee Han, Syste
 </div>
 Recent parallel programming frameworks such as OpenCL and OpenMP allow us to enjoy the parallelization freedom for real-time tasks. The parallelization freedom creates the time vs. density tradeoff problem in fluid scheduling, i.e., more parallelization reduces thread execution times but increases the density. By system-widely exercising this tradeoff, we propose optimal parameter tuning of real-time tasks aiming at maximizing the schedulability of multicore fluid scheduling. Our experimental study by both simulation and actual implementation shows that the proposed approach well balances the time and the density, and results in up to 80% improvement of the schedulability.
 
-<a align="center"><img class="img-fluid" src="img/Fluid_schedulability1.png" width="400" height="200" ><img class="img-fluid" src="img/Fluid_schedulability2.png" width="400" height="200" ></a>
-<br/><br/>
+<center>
+<a align="center"><img class="img-fluid" src="img/Fluid_schedulability1.PNG" width="400" height="200" ><img class="img-fluid" src="img/Fluid_schedulability2.PNG" width="400" height="200" ></a>
 <img img class="img-fluid" src="img/Fluid_distribution.PNG" width="500" >
-<br/><br/>
 <img class="img-fluid" src="img/Fluid_result.PNG" >
+</center>
 
 <div class="alert alert-secondary" role="alert">
 Jihye Kwon, Kang-Wook Kim, Sangyoun Paik, Jihwa Lee, and Chang-Gun Lee, Multicore Scheduling of Parallel Real-Time Tasks with Multiple Parallelization Options, in 21st IEEE Real-Time and Embedded Technology and Applications Symposium (RTAS), Seattle, Washington, Apr. 2015.
 </div>
 Past researches on multicore scheduling assume that a computational unit has already been parallelized into a prefixed number of threads. However, with recent technologies such as OpenCL, a computational unit can be parallelized in many different ways with runtime selectable numbers of threads.This paper proposes an optimal algorithm for parallelizing and scheduling a set of parallel tasks with multiple parallelization options on multiple CPU cores. The proposed algorithm is validated through both simulation and actual implementation. To the best of our knowledge, this is the first work addressing the problem of scheduling real-time tasks with multiple parallelization options on multiple CPU cores.
 
-
+<center>
 <img src="img/parallel_sched1.PNG" width="400" align="center">
 <img src="img/parallel_sched2.PNG" width="400" align="middle">
 <br/>
-<center>
 <img img class="img-fluid" src="img/parallel_result.PNG"  width="500">
-</center>
 <br/>
+</center>
 
 <div class="alert alert-secondary" role="alert">
 Kang-Wook Kim, Jeongyoon Eo, and Chang-Gun Lee, A Problem of Time vs. Density Tradeoff in Multicore Fluid Scheduling, in Real-Time Scheduling Open Problems Seminar, Dubrovnik, Croatia, June 2017.
