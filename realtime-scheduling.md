@@ -34,7 +34,7 @@ Past researches on multicore scheduling assume that a computational unit has alr
 <img src="img/parallel_sched2.PNG" width="400" align="middle">
 <br/>
 <center>
-<img img class="img-fluid" src="img/parallel_result.PNG"  width="500"  align="middle">
+<img img class="img-fluid" src="img/parallel_result.PNG"  width="500">
 </center>
 <br/>
 
