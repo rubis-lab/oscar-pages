@@ -12,5 +12,3 @@ calendar_caption: is this workingNOPE? # optional
 
 ---
 
-
-The REMOTEe laboratory extends the accessibility of OSCAR.
