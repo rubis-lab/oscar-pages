@@ -12,3 +12,5 @@ calendar_caption:  # optional
 
 ---
 checking
+site.baseurl 
+site.url
