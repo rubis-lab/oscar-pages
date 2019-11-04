@@ -42,7 +42,7 @@ if(!String.prototype.formatNum) {
 		// Width of the calendar
 		width:              '100%',
 		//Added a padding option
-		padding:	    '10px',
+		padding:	    '20px',
 		// Initial view (can be 'month', 'week', 'day')
 		view:               'month',
 		// Initial date. No matter month, week or day this will be a starting point. Can be 'now' or a date in format 'yyyy-mm-dd'
