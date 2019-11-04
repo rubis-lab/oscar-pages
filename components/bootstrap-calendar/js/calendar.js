@@ -41,6 +41,8 @@ if(!String.prototype.formatNum) {
 	var defaults = {
 		// Width of the calendar
 		width:              '100%',
+		//Added a padding option
+		padding:	    '10px',
 		// Initial view (can be 'month', 'week', 'day')
 		view:               'month',
 		// Initial date. No matter month, week or day this will be a starting point. Can be 'now' or a date in format 'yyyy-mm-dd'
@@ -366,8 +368,8 @@ if(!String.prototype.formatNum) {
 		this.options = $.extend(true, {position: {start: new Date(), end: new Date()}}, defaults, params);
 		this.setLanguage(this.options.language);
 		this.context = context;
-
-		context.css('width', this.options.width).addClass('cal-context');
+		//added .css('padding',this.options.padding) in order to fix the formatting when 'YEAR' displays
+		context.css('width', this.options.width).css('padding',this.options.padding).addClass('cal-context');
 
 		this.view();
 		return this;
