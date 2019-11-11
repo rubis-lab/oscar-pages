@@ -5,6 +5,7 @@ description: Reserch on Real-time Scheduling
 background: '/img/bg-oscar.png'
 ---
 
+
 <div class="shadow-sm p-3 mt-3 mb-3 bg-light rounded"><h3 class="text-center">Multi-core Scheduling</h3></div>
 <div class="alert alert-secondary" role="alert">
 Youngeun Cho, Do Hyung Kim, Daechul Park, Seungsu Lee, and Chang-Gun Lee, Conditionally Optimal Task Parallelization for Global EDF on Multi-core Systems, in IEEE Real-Time Systems Symposium (RTSS), Dec. 2019.
