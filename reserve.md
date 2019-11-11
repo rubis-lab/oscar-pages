@@ -13,4 +13,4 @@ calendar_caption:  # optional
 ---
 
 
-The REMOTE laboratory extends the accessibility of OSCAR.
+The remote laboratory extends the accessibility of OSCAR.
