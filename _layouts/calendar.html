@@ -23,7 +23,8 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
         </div>
       </div>
     </div>
-  </div>
+  </div>   
+    
 </header>
 
 <div class="container">
@@ -36,8 +37,8 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 </div>
 
 <div class="container" style="width:100%">
-  <div class="page-header">
-
+    
+    <div class="page-header">
     <div class="pull-right form-inline">
       <div class="btn-group">
         <button class="btn btn-primary" data-calendar-nav="prev"><< Prev</button>
@@ -60,17 +61,80 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
   <div id="calendar"></div>
 
   <div class="clearfix"></div>
-
+    
+    
+<!--Added a form-->
+<form action="uranium.snu.ac.kr:7780/reserve" method="POST"> <!-- changed this to include a .php file -->
+        
+  <div class="form-group row">
+    <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+    </div>
+  </div>
+    
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Time</label>
+    <div class="col-sm-10">
+    <div class="row">
+    <div class="col-6">
+    <label for="inputTimeStart"><small>Start</small></label>
+    <input type="datetime-local" class="form-control" id="inputTimeStart" placeholder="Reservation Start Time" step=1800>
+        
+    </div>
+    
+    <div class="col-6">      
+    <label for="inputTimeEnd"><small>Finish</small></label>
+    
+    <input type="datetime-local" class="form-control" id="inputTimeEnd" placeholder="Reservation End Time" step=1800>
+    </div>
+    </div>
+    <small id="timeSlotBlock" class="form-text text-muted">
+                Input your desired start and end time. Appointments are offered in 30 minute intervals. Only include times between 10:00-22:00.
+    </small>
+        
+    </div>
+ </div>
+<!--Uploading is not necessary now
+  <div class="form-group row">
+    <label for="dockerFile" class="col-sm-2 col-form-label">Docker File</label>
+    <div class="col-sm-10">
+        <input type="file" accept=".dockerfile" class="form-control-file" id="dockerFile">
+    </div>
+  </div> -->
+    
+  <div class="form-group row">
+    <label for="inputPin" class="col-sm-2 col-form-label">Pin</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="inputPin" placeholder="Four-Digit Pin" aria-describedby="pinBlock" maxlength="4">
+        <small id="pinBlock" class="form-text text-muted">
+                Your password must be 4 digits long. Must not contain letters, spaces, or special characters.
+        </small>
+    </div>
+    </div>
+  <div class="form-group row">
+    <div class="col-sm-10">
+      <button type="submit" class="btn btn-primary">Request Reservation</button> <!--what do i do with the button?-->
+    </div>
+  </div>
+</form>
+    
+    
+    
 </div>
-
+<script src="formprocessing.js"></script> <!-- load our javascript file (for processing the form) -->
+        
+        
 <script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/lodash/lodash.min.js"></script>
 <script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/bootstrap-calendar/js/calendar.js"></script>
 <script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/moment/min/moment.min.js"></script>
 <script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/papaparse/papaparse.min.js"></script>
-
+        
 <script type="text/javascript">
+
+    
 (function($) {
 
   "use strict";
@@ -197,14 +261,15 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
       //e.stopPropagation();
     });
   }
+
+
+
 }(jQuery));
+
+        
+        
 </script>
 
     </div>
   </div>
 </div>
-
-
-
-
-
