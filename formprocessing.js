@@ -19,7 +19,7 @@ $(document).ready(function(){
         
         //alert(formData.name + formData.reserveEnd + formData.reserveStart);
         
-        myServer.open("POST", "https://uranium.snu.ac.kr:7780/reserve", true);
+        myServer.open("POST", "https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve", true);
         
         //do i have to parse the data? in what form should i parse it?
         myServer.send(formData);
@@ -28,7 +28,7 @@ $(document).ready(function(){
         $.ajax({
             async         :true,   
             type          :'POST',
-            url           :'https://uranium.snu.ac.kr:7780/reserve',
+            url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve',
             data          :"name=" + formData.name + 
                            "reserveStart=" + formData.reserveStart + 
                            "reserveEnd=" + formData.reserveEnd,
