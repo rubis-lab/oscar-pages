@@ -19,33 +19,17 @@ $(document).ready(function(){
         
         //alert(formData);
         //alert(formData.name + formData.reserveStart + formData.reserveEnd);
-
-        //myServer.open("GET", "https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve", true);
-        
-        //do i have to parse the data? in what form should i parse it?
-        //myServer.send(formData);
-        
-        
-        // Alex Test
-        
-        // GET
         
         // PARAMS: name, reserveStart, reserveEnd
         
         // Base Url: https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve
         
-        // https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve?name=abc&reserveStart=2019-12-01T10:30:00:002Z&reserveEnd=2019-12-01T11:30:00:002Z
-        
-        
-        
-        // END
-        
-//        //Process the form.
+        //Process the form.
         $.ajax({
             async         :true,   
             type          :'POST',
             url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve',
-          data          : {
+            data          : {
                     name:  formData.name,
                     reserveStart: formData.reserveStart,
                     reserveEnd: formData.reserveEnd        
