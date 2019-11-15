@@ -1,6 +1,6 @@
 //form processing.js
 
-//var myServer = new XMLHttpRequest();
+var myServer = new XMLHttpRequest();
 
 $(document).ready(function(){
     
@@ -17,17 +17,17 @@ $(document).ready(function(){
             'reserveEnd'    :$('input[id=inputTimeEnd]').val(),  
         };
         
-        alert(formData.name + formData.reserveEnd + formData.reserveStart);
-        alert("name: '" + formData.name + "'," +
-                           "reserveStart: '" + formData.reserveStart + ":00:002Z'," +
-                           "reserveEnd: '" + formData.reserveEnd+ ":00:002Z'");
-        
-        //myServer.open("POST", "uranium.snu.ac.kr:7780/reserve", true);
-        
-        //do i have to parse the data? in what form should i parse it?
-        //myServer.send("name: '" + formData.name + "'," +
+        //alert(formData.name + formData.reserveEnd + formData.reserveStart);
+        //alert("name: '" + formData.name + "'," +
         //                   "reserveStart: '" + formData.reserveStart + ":00:002Z'," +
         //                   "reserveEnd: '" + formData.reserveEnd+ ":00:002Z'");
+        
+        myServer.open("POST", "uranium.snu.ac.kr:7780/reserve", true);
+        
+        //do i have to parse the data? in what form should i parse it?
+        myServer.send("name: '" + formData.name + "'," +
+                           "reserveStart: '" + formData.reserveStart + ":00:002Z'," +
+                           "reserveEnd: '" + formData.reserveEnd+ ":00:002Z'");
         
 //        //Process the form.
 //        $.ajax({
