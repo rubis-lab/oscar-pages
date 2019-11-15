@@ -46,11 +46,11 @@ $(document).ready(function(){
 //       
 //        })
         
-        .done(function(data){
+//        .done(function(data){
               //log data to the console so we can see
-              console.log(data); //idk what this does
+//              console.log(data); //idk what this does
               
-              });
+//             });
     
         //stop the form from submitting the normal way and refreshing the page
                    
