@@ -17,29 +17,34 @@ $(document).ready(function(){
             'reserveEnd'    :$('input[id=inputTimeEnd]').val(),  
         };
         
-        //alert(formData.name + formData.reserveEnd + formData.reserveStart);
+        alert(formData.name + formData.reserveEnd + formData.reserveStart);
+        alert("name: '" + formData.name + "'," +
+                           "reserveStart: '" + formData.reserveStart + ":00:002Z'," +
+                           "reserveEnd: '" + formData.reserveEnd+ ":00:002Z'"));
         
-        //myServer.open("POST", "https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve", true);
+        //myServer.open("POST", "uranium.snu.ac.kr:7780/reserve", true);
         
         //do i have to parse the data? in what form should i parse it?
-        //myServer.send(formData);
+        //myServer.send("name: '" + formData.name + "'," +
+        //                   "reserveStart: '" + formData.reserveStart + ":00:002Z'," +
+        //                   "reserveEnd: '" + formData.reserveEnd+ ":00:002Z'");
         
-        //Process the form.
-        $.ajax({
-            async         :true,   
-            type          :'POST',
-            url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve',
-            data          :"name=" + formData.name + 
-                           "reserveStart=" + formData.reserveStart + 
-                           "reserveEnd=" + formData.reserveEnd,
-            dataType      :'json', //what type of data do we expect back from the server?
-            encode        :true,
-            success: function(formData){
-                               alert(formData);
-                               }
-            
-       
-        })
+//        //Process the form.
+//        $.ajax({
+//            async         :true,   
+//            type          :'POST',
+//            url           :'uranium.snu.ac.kr:7780/reserve',
+//            data          : "?" + "name=" + formData.name + "&" +
+//                           "reserveStart=" + formData.reserveStart + ":00:002Z&" +
+//                           "reserveEnd=" + formData.reserveEnd+ ":00:002Z",
+//            dataType      :'json', //what type of data do we expect back from the server?
+//            encode        :true,
+//            success: function(formData){
+//                               alert(formData);
+//                               }
+//            
+//       
+//        })
         
         .done(function(data){
               //log data to the console so we can see
