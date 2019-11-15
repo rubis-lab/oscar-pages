@@ -20,7 +20,7 @@ $(document).ready(function(){
         alert(formData.name + formData.reserveEnd + formData.reserveStart);
         alert("name: '" + formData.name + "'," +
                            "reserveStart: '" + formData.reserveStart + ":00:002Z'," +
-                           "reserveEnd: '" + formData.reserveEnd+ ":00:002Z'"));
+                           "reserveEnd: '" + formData.reserveEnd+ ":00:002Z'");
         
         //myServer.open("POST", "uranium.snu.ac.kr:7780/reserve", true);
         
