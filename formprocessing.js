@@ -17,10 +17,8 @@ $(document).ready(function(){
             'reserveEnd'    :$('input[id=inputTimeEnd]').val() + ":00:002Z",  
         };
         
-        alert(formData);
-        //alert("name: '" + formData.name + "'," +
-        //                   "reserveStart: '" + formData.reserveStart + ":00:002Z'," +
-        //                   "reserveEnd: '" + formData.reserveEnd+ ":00:002Z'");
+        //alert(formData);
+        alert(formData.name + formData.reserveStart + formData.reserveEnd);
         
         //myServer.open("POST", "https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve", true);
         
