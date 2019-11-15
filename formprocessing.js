@@ -19,23 +19,7 @@ $(document).ready(function(){
         
         //alert(formData);
         //alert(formData.name + formData.reserveStart + formData.reserveEnd);
-        $.ajax({
-            url: 'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve',
-            type: 'GET',
-            data: {
-                name: 'ABC',
-                reserveStart: '2019-12-01T10:30:00:002Z',
-                reserveEnd: '2019-12-01T11:30:00:002Z'
-            },
-            headers: {
-                Origin: 'https://google.se'   //If your header name has spaces or any other char not appropriate
-                //"Header Name Two": 'Header Value Two'  //for object property name, use quoted notation shown in second
-            },
-            dataType: 'json',
-            success: function (data) {
-                console.info(data);
-            }
-        });
+
         //myServer.open("GET", "https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve", true);
         
         //do i have to parse the data? in what form should i parse it?
@@ -57,27 +41,29 @@ $(document).ready(function(){
         // END
         
 //        //Process the form.
-//        $.ajax({
-//            async         :true,   
-//            type          :'POST',
-//            url           :'uranium.snu.ac.kr:7780/reserve',
-//            data          : "?" + "name=" + formData.name + "&" +
-//                           "reserveStart=" + formData.reserveStart + ":00:002Z&" +
-//                           "reserveEnd=" + formData.reserveEnd+ ":00:002Z",
-//            dataType      :'json', //what type of data do we expect back from the server?
-//            encode        :true,
-//            success: function(formData){
-//                               alert(formData);
-//                               }
-//            
-//       
-//        })
+        $.ajax({
+            async         :true,   
+            type          :'POST',
+            url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve',
+          data          : {
+                    name:  formData.name,
+                    reserveStart: formData.reserveStart,
+                    reserveEnd: formData.reserveEnd        
+                },
+            dataType      :'json', //what type of data do we expect back from the server?
+            encode        :true,
+            success: function(formData){
+                               alert(formData);
+                               }
+            
+       
+        })
         
-//        .done(function(data){
+        .done(function(data){
               //log data to the console so we can see
-//              console.log(data); //idk what this does
+              console.log(data); //idk what this does
               
-//             });
+             });
     
         //stop the form from submitting the normal way and refreshing the page
                    
