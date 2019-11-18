@@ -79,14 +79,14 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
     <div class="row">
     <div class="col-6">
     <label for="inputTimeStart"><small>Start</small></label>
-    <input type="datetime-local" class="form-control" id="inputTimeStart" placeholder="Reservation Start Time" step=1800>
+    <input type="datetime-local" class="form-control" id="inputTimeStart" min = "2019-01-01T00:00:00" placeholder="Reservation Start Time" step=1800>
         
     </div>
     
     <div class="col-6">      
     <label for="inputTimeEnd"><small>Finish</small></label>
     
-    <input type="datetime-local" class="form-control" id="inputTimeEnd" placeholder="Reservation End Time" step=1800>
+    <input type="datetime-local" class="form-control" id="inputTimeEnd" min = "2019-01-01T00:00:00" placeholder="Reservation End Time" step=1800>
     </div>
     </div>
     <small id="timeSlotBlock" class="form-text text-muted">
@@ -102,7 +102,7 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
         <input type="file" accept=".dockerfile" class="form-control-file" id="dockerFile">
     </div>
   </div> -->
-    
+<!-- Will add pin functionality later    
   <div class="form-group row">
     <label for="inputPin" class="col-sm-2 col-form-label">Pin</label>
     <div class="col-sm-10">
@@ -112,6 +112,8 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
         </small>
     </div>
     </div>
+
+-->
   <div class="form-group row">
     <div class="col-sm-10">
       <button type="submit" class="btn btn-primary">Request Reservation</button> <!--what do i do with the button?-->
@@ -268,6 +270,11 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 
 }(jQuery));
 
+ $(function(){
+    $('[type="datetime-local"]').prop('min', function(){
+        return new Date().toJSON().split('T')[0];
+    });
+});
         
         
 </script>
