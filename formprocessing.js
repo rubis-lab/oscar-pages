@@ -31,11 +31,12 @@ $(document).ready(function(){
                 },
             dataType      :'json', //what type of data do we expect back from the server?
             encode        :true,
-            success       : function(formData){
+            success       : function(response){
                                alert("hi");
                                },
-            error         : function(formData){
-                               alert("hello");
+            error         : function(response){
+                               var r = jQuery.parseJSON(response.responseText);
+                               alert("Message:" + r.Message);
                                }
             
        
