@@ -35,8 +35,8 @@ $(document).ready(function(){
                                alert("hi");
                                },
             error         : function(response){
-                               var r = jQuery.parseJSON(response.responseText);
-                               alert("Message:" + r.Message);
+                               var r = jQuery.parseJSON(response);
+                               alert("Message:" + r);
                                }
             
        
