@@ -34,9 +34,9 @@ $(document).ready(function(){
             success       : function(response){
                                alert("hi");
                                },
-            error         : function(response){
+            error         : function(req,err){
                                //var r = jQuery.parseJSON(response.responseText);
-                               alert("Message:" + response.responseText);
+                               alert("Message:" + err);
                                }
             
        
