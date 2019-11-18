@@ -17,11 +17,6 @@ $(document).ready(function(){
             'reserveEnd'    :$('input[id=inputTimeEnd]').val() + ":00:002Z",  
         };
         
-        //alert(formData);
-        //alert(formData.name + formData.reserveStart + formData.reserveEnd);
-        
-        // PARAMS: name, reserveStart, reserveEnd
-        
         // Base Url: https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve
         
         //Process the form.
@@ -30,14 +25,17 @@ $(document).ready(function(){
             type          :'POST',
             url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve',
             data          : {
-                    name:  formData.name,
-                    reserveStart: formData.reserveStart,
-                    reserveEnd: formData.reserveEnd        
+                                name:  formData.name,
+                                reserveStart: formData.reserveStart,
+                                reserveEnd: formData.reserveEnd        
                 },
             dataType      :'json', //what type of data do we expect back from the server?
             encode        :true,
-            success: function(formData){
-                               alert(formData);
+            success       : function(formData){
+                               alert("hi");
+                               },
+            error         : function(formData){
+                               alert("hello");
                                }
             
        
