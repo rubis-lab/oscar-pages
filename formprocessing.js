@@ -58,8 +58,10 @@ $(document).ready(function(){
                             dataType    :'text',
                             success     : function(response) {
                                                 console.log(response);
-                                                currentData = JSON.stringify(response);
-                                                console.log(currentData);
+                                                var try = Papa.unparse(response);
+                                                console.log(try);
+                                                //currentData = JSON.stringify(response);
+                                                //console.log(currentData);
                                           }
                   });
                   
