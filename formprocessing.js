@@ -57,20 +57,10 @@ $(document).ready(function(){
                             url         : 'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/list',
                             //dataType    :'text',
                             success     : function(response) {
-                                                
-                                                response2 = JSON.stringify(response);
-                                                response2 = response2.replace(/_/g,'');
-                                                response2 = response2.replace(/id/g,'"id"');                                
-                                                response2 = response2.replace(/name/g,'"name"');
-                                                response2 = response2.replace(/reserveStart/g,'"reserveStart"');
-                                                response2 = response2.replace(/reserveEnd/g,'"reserveEnd"');
-                                                response2 = response2.replace(/createdAt/g,'"reserveStart"');  
-                                                response2 = response2.replace(/updatedAt/g,'"updatedAt"');    
-                                                response2 = response2.replace(/v/g,'"v"');
-                                                console.log(response2);
-                                                ourData = JSON.parse(response2);
-                                                console.log(ourData);
-  
+                                                var filepath = "/calendarEvents/events.csv";
+                                                var fileObject = fso.OpenTextFile(filepath, 8, true);
+                                                file.WriteLine(formData.name +",");
+                                                fileObject.close();
                                           }
                   });
                   
