@@ -59,7 +59,7 @@ $(document).ready(function(){
                             success     : function(response) {
                                                 
                                                 response2 = JSON.stringify(response);
-                                                response2 = response2.replace("/_/g","");
+                                                response2 = response2.replace(/_/g,'');
                                                 console.log(response2);
                                                 ourData = JSON.parse(response2);
                                                 console.log(ourData);
