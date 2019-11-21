@@ -57,6 +57,7 @@ $(document).ready(function(){
                             url         : 'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/list',
                             //dataType    :'text',
                             success     : function(response) {
+                                                response = response.replace("_","");
                                                 ourData = JSON.parse(response);
                                                 console.log(ourData);
                                           }
