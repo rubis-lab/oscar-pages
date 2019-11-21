@@ -51,7 +51,8 @@ $(document).ready(function(){
                   alert("This time slot is taken. Check the calendar and choose a new time slot.");
               }
               else if (data.includes("reservation is started")== true ){
-                  if(!alert("Reservation successfully created")){//window.location.reload();}
+                  if(!alert("Reservation successfully created")){       //window.location.reload();
+                  }
                   
                   $.get({
                             url         : 'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/list',
