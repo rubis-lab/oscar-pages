@@ -58,8 +58,8 @@ $(document).ready(function(){
                             dataType    :'text',
                             success     : function(response) {
                                                 console.log(response);
-                                                currentData = JSON.parse(response);
-                                                console.log(response.name);
+                                                currentData = JSON.stringify(response);
+                                                console.log(currentData);
                                           }
                   });
                   
