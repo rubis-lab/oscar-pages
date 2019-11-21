@@ -57,10 +57,7 @@ $(document).ready(function(){
                             url         : 'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/list',
                             //dataType    :'text',
                             success     : function(response) {
-                                                var filepath = "/calendarEvents/events.csv";
-                                                var fileObject = fso.OpenTextFile(filepath, 8, true);
-                                                file.WriteLine(formData.name +",");
-                                                fileObject.close();
+
                                           }
                   });
                   
