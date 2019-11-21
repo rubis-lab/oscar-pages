@@ -60,7 +60,10 @@ $(document).ready(function(){
                                                 response = response.replace("/_/g","");
                                                 response = JSON.stringify(response);
                                                 ourData = JSON.parse(response);
-                                                console.log(ourData);
+                                                //console.log(ourData);
+                                                for(x in ourData){
+                                                console.log(ourData[x]);
+                                                }   
                                           }
                   });
                   
