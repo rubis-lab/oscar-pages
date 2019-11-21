@@ -52,6 +52,14 @@ $(document).ready(function(){
               }
               else if (data.includes("reservation is started")== true ){
                   if(!alert("Reservation successfully created")){window.location.reload();}
+                  
+                  $.get({
+                            url: 'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/list',
+                            success: function(response) {
+                                    console.log(response);
+                                    }
+                  });
+              
               }
               else {
                   alert("this shouldn't be triggered");
