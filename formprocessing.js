@@ -46,12 +46,12 @@ $(document).ready(function(){
               //log data to the console so we can see
               console.log(data); //idk what this does
               if (data.includes("duplicate")== true ){
-                  alert("There is currently an active reservation under this email. Please wait until after your appointment date to reserve again.");
+                  if(!alert("There is currently an active reservation under this email. Please wait until after your appointment date to reserve again.")){window.location.reload;}
               }else if (data.includes("Change the time")== true ){
                   alert("This time slot is taken. Check the calendar and choose a new time slot.");
               }
               else if (data.includes("reservation is started")== true ){
-                  alert("Reservation successfully created");
+                  if(!alert("Reservation successfully created")){window.location.reload;}
               }
               else {
                   alert("this shouldn't be triggered");
