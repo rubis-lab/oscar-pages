@@ -32,7 +32,6 @@ $(document).ready(function(){
             dataType      :'text', //what type of data do we expect back from the server?
             encode        :true,
             success       : function(response){
-                               alert("hi");
                                },
             error         : function(req,err){
                                //var r = jQuery.parseJSON(response.responseText);
@@ -61,7 +60,8 @@ $(document).ready(function(){
                                           }
                   });
                   
-                  if(!alert("Reservation successfully created")){       //window.location.reload();
+                  if(!alert("Reservation successfully created")){       
+                                    window.location.reload();
                   }
               }
               else {
