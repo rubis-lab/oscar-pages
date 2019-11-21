@@ -58,6 +58,7 @@ $(document).ready(function(){
                             //dataType    :'text',
                             success     : function(response) {
                                                 response = response.replace("_","");
+                                                response = JSON.stringify(response);
                                                 ourData = JSON.parse(response);
                                                 console.log(ourData);
                                           }
