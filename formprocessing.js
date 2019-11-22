@@ -64,11 +64,10 @@ $(document).ready(function(){
                   }
               }
               else {
-                  alert("this shouldn't be triggered");
+                  alert("ERROR");
               }
              });
     
-        //stop the form from submitting the normal way and refreshing the page
                    
     });
 });
