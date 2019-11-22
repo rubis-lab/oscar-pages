@@ -64,10 +64,11 @@ $(document).ready(function(){
                                                 var i = 0;
                                                 var entryArr = [];
                                                 for (entry of resArr){
-                                                    entryArr[i] = entry.split("\n");
-                                                    i++;
+                                                    console.log(entry + "EEEEEEEEEEEEEEEE");
+                                                    //entryArr[i] = entry.split("\n");
+                                                    //i++;
                                                 }
-                                                console.log(entryArr[0] + entryArr[1]);
+                                                //console.log(entryArr[0] + entryArr[1]);
                                           }
                   });
                   
