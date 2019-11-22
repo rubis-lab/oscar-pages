@@ -59,7 +59,7 @@ $(document).ready(function(){
                                           }
                   });
                   
-                  if(!alert("Reservation successfully created")){       
+                  if(!alert("Reservation successfully created. Reservation will be confirmed in 24-48 hours.")){       
                                     window.location.reload();
                   }
               }
