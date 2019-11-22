@@ -64,7 +64,7 @@ $(document).ready(function(){
                   });
                   
                   if(!alert("Reservation successfully created")){       
-                                    window.location.reload();
+                                    //window.location.reload();
                   }
               }
               else {
