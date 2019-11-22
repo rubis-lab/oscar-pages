@@ -62,6 +62,7 @@ $(document).ready(function(){
                                                 
                                                 var entry;
                                                 var i = 0;
+                                                var entryArr = [];
                                                 for (entry of resArr){
                                                     entryArr[i] = entry.split("\n");
                                                     i++;
