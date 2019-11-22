@@ -56,27 +56,11 @@ $(document).ready(function(){
                             url         : 'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/list',
                             //dataType    :'text',
                             success     : function(response) {
-                                                response = JSON.stringify(response);
-                                                //response = JSON.parse(response);
-                                                resArr = response.split("}");
-                                                
-                                                var entry;
-                                                var i = 0;
-                                                var entryArr = [];
-                                                for (entry of resArr){
-                                                    //console.log(entry + "EEEEEEEEEEEEEEEE");
-                                                    entryArr[i] = entry.split("\n");
-                                                    i++;
-                                                }
-                                                var x;
-                                                for(x of entryArr[0]){                 
-                                                    console.log(x + "EEEEEE");
-                                                }
                                           }
                   });
                   
                   if(!alert("Reservation successfully created")){       
-                                    //window.location.reload();
+                                    window.location.reload();
                   }
               }
               else {
