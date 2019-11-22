@@ -59,7 +59,14 @@ $(document).ready(function(){
                                                 response = JSON.stringify(response);
                                                 //response = JSON.parse(response);
                                                 resArr = response.split("}");
-                                                console.log(resArr[0]);
+                                                
+                                                var entry;
+                                                var i = 0;
+                                                for (entry of resArr){
+                                                    entryArr[i] = entry.split("\n");
+                                                    i++;
+                                                }
+                                                console.log(entryArr[0] + entryArr[1]);
                                           }
                   });
                   
