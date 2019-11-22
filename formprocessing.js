@@ -57,9 +57,9 @@ $(document).ready(function(){
                             //dataType    :'text',
                             success     : function(response) {
                                                 response = JSON.stringify(response);
-                                                response = JSON.parse(response);
-                                                console.log(response);
-                                                alert(response.dataType);
+                                                //response = JSON.parse(response);
+                                                resArr = response.split("}");
+                                                console.log(resArr[0]);
                                           }
                   });
                   
