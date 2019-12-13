@@ -146,7 +146,8 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
   "use strict";
 
   // parse CSV to JSON
-  Papa.parse("{{ site.baseurl }}/{{ page.calendar_csv }}", {
+  //Papa.parse("{{ site.baseurl }}/{{ page.calendar_csv }}", {
+  Papa.parse("{{ page.calendar_csv }}", {
     download: true,
     header: false,
     complete: function(results) {
