@@ -19,27 +19,42 @@ $(document).ready(function(){
         
         // Base Url: https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve
         
-        //Process the form.
-        $.ajax({
-            async         :true,   
-            type          :'POST',
-            url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve',
-            data          : {
-                                name:  formData.name,
-                                reserveStart: formData.reserveStart,
-                                reserveEnd: formData.reserveEnd        
-                },
-            dataType      :'text', //what type of data do we expect back from the server?
-            encode        :true,
-            success       : function(response){
-                               },
-            error         : function(req,err){
-                               //var r = jQuery.parseJSON(response.responseText);
-                               alert("Message:" + err);
-                               }
+        var event = {
+          'summary': formData.name,
+          'start': {
+            'dateTime': formData.reserveStart,
+          },
+          'end': {
+            'dateTime': formData.reserveEnd,
+          },
             
-       
-        })
+          'attendees': [
+            {'email': formData.name},
+          ]                 
+        }
+        
+           
+        //Process the form.
+//        $.ajax({
+//            async         :true,   
+//            type          :'POST',
+//            url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve',
+//            data          : {
+//                                name:  formData.name,
+//                                reserveStart: formData.reserveStart,
+//                                reserveEnd: formData.reserveEnd        
+//                },
+//            dataType      :'text', //what type of data do we expect back from the server?
+//            encode        :true,
+//            success       : function(response){
+//                               },
+//            error         : function(req,err){
+//                               //var r = jQuery.parseJSON(response.responseText);
+//                               alert("Message:" + err);
+//                               }
+//            
+//       
+//        })
         
         .done(function(data){
               //log data to the console so we can see
