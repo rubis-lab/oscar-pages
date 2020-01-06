@@ -33,6 +33,15 @@ $(document).ready(function(){
           ]                 
         }
         
+         var request = gapi.client.calendar.events.insert({
+          'calendarId': 'am0rpini3sba36l82vt2434pbg@group.calendar.google.com',
+          'resource': event
+        });
+
+        request.execute(function(event) {
+          appendPre('Event created: ' + event.htmlLink);
+        });       
+        
            
         //Process the form.
 //        $.ajax({
