@@ -157,7 +157,10 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 
     console.log(current_data);
    
-    var some = '{ "name":"John", "birth":"1986-12-14", "city":"New York"}';
+    data_str = JSON.stringify(current_data);
+    
+    
+    var some = '{ "name":"John", "reserveStart":"2021-12-01T10:30", "reserveEnd":"2021-12-01T10:30"}';
     var parsed_data = JSON.parse(some);
     console.log(parsed_data);
   
