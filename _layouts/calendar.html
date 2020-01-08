@@ -148,14 +148,15 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
     var current_data = $.ajax({
             url         : 'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/list',
             type        : 'GET',
-            dataType    : 'text',
+            dataType    : 'json',
             async       : false,
             success     : function(response) {
-                            alert("abb:");
+                            alert("bbbb:");
                           }
         }).responseText;    
 
   console.log(current_data);
+  current_data.parse
 
   // parse CSV to JSON
   Papa.parse("{{ site.baseurl }}/{{ page.calendar_csv }}", {
