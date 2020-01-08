@@ -13,36 +13,9 @@ $(document).ready(function(){
         var formData = {
             //Setting the input to be the id
             'name'          :$('input[id=inputEmail]').val(),
-            'reserveStart'  :$('input[id=inputTimeStart]').val(), //+ ":00:002Z",
-            'reserveEnd'    :$('input[id=inputTimeEnd]').val(), //+ ":00:002Z",  
-        };
-        
-        
-        
-        var event = {
-          'summary': formData.name,
-          'start': {
-            'dateTime': '2020-01-08T09:00:00+09:00',
-            'timeZone': 'Asia/Seoul'
-          },
-          'end': {
-            'dateTime': '2020-01-08T12:00:00+09:00',
-            'timeZone': 'Asia/Seoul'
-          },
-            
-          'attendees': [
-            {'email': formData.name},
-          ]                 
-        }
-        
-         var request = gapi.client.calendar.events.insert({
-          'calendarId': 'am0rpini3sba36l82vt2434pbg@group.calendar.google.com',
-          'resource': event
-        });
-
-        request.execute(function(event) {
-          appendPre('Event created: ' + event.htmlLink);
-        });       
+            'reserveStart'  :$('input[id=inputTimeStart]').val() + ":00:002Z",
+            'reserveEnd'    :$('input[id=inputTimeEnd]').val() + ":00:002Z",  
+        };     
         
         // Base Url: https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve   
         
