@@ -149,8 +149,9 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
             url         : 'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/list',
             type        : 'GET',
             dataType    : 'text',
+            async       : false,
             success     : function(response) {
-                            alert("aaa:");
+                            alert("abb:");
                           }
         }).responseText;    
 
