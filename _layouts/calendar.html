@@ -145,10 +145,10 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 (function($) {
    "use strict";  
     
-   var current_data =
-       $.get({
+   var current_data =   $.ajax({
             url         : 'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/list',
-            dataType    :'text',
+            type        : 'GET',
+            dataType    : 'json',
             success     : function(response) {
                             
                           }
