@@ -13,19 +13,21 @@ $(document).ready(function(){
         var formData = {
             //Setting the input to be the id
             'name'          :$('input[id=inputEmail]').val(),
-            'reserveStart'  :$('input[id=inputTimeStart]').val() + ":00:002Z",
-            'reserveEnd'    :$('input[id=inputTimeEnd]').val() + ":00:002Z",  
+            'reserveStart'  :$('input[id=inputTimeStart]').val(), //+ ":00:002Z",
+            'reserveEnd'    :$('input[id=inputTimeEnd]').val(), //+ ":00:002Z",  
         };
         
-        // Base Url: https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve
+        
         
         var event = {
           'summary': formData.name,
           'start': {
-            'dateTime': formData.reserveStart,
+            'dateTime': '2020-01-08T09:00:00+09:00',
+            'timeZone': 'Asia/Seoul'
           },
           'end': {
-            'dateTime': formData.reserveEnd,
+            'dateTime': '2020-01-08T12:00:00+09:00',
+            'timeZone': 'Asia/Seoul'
           },
             
           'attendees': [
@@ -42,7 +44,8 @@ $(document).ready(function(){
           appendPre('Event created: ' + event.htmlLink);
         });       
         
-           
+        // Base Url: https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve   
+        
         //Process the form.
 //        $.ajax({
 //            async         :true,   
