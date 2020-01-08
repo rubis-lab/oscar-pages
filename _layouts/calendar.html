@@ -156,8 +156,9 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
         }).responseText;    
 
     console.log(current_data);
-    //var parsed_data = JSON.parse(current_data);
-    var parsed_data = '{ "name":"John", "birth":"1986-12-14", "city":"New York"}';
+   
+    var some = '{ "name":"John", "birth":"1986-12-14", "city":"New York"}';
+    var parsed_data = JSON.parse(some);
     console.log(parsed_data);
   
   // parse CSV to JSON
