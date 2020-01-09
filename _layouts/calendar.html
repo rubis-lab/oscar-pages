@@ -83,8 +83,6 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
         </small>
     </div>
     </div>
-
-
     
   <div class="form-group row">
     <label class="col-sm-2 col-form-label">Time</label>
@@ -160,7 +158,7 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
     //Saves server data in a string
     var some_str = '{ "name":"000@gmail.com", "reserveStart":"2020-01-08T10:30:00:002Z", "reserveEnd":"2020-01-08T12:30:00:002Z"},{ "name":"111@gmail.com", "reserveStart":"2020-01-09T10:30:00:002Z", "reserveEnd":"2020-01-09T11:30:00:002Z"}';
     
-    //array of entries in the format {"name":"ex@sample.com", "reserveStart": "YYYY-MM-DDT00:00:00:002Z"}
+    //array of entries in the format {"name":"ex@sample.com", "reserveStart": "YYYY-MM-DDT00:00:00:002Z", "reserveEnd": "YYYY-MM-DDT00:00:00:002Z"}
     var some_split = some_str.split("},");      
     var i = 0;
     for(i=0;i<some_split.length-1;i++){
