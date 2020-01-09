@@ -168,13 +168,14 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
     
     var some_parsed_arr = new Array();
     some_split.forEach(function(item){
-                 console.log(item);
-                 console.log(JSON.parse(item));
                  some_parsed_arr.push(JSON.parse(item));
                  });
     
     some_parsed_arr.forEach(function(item){
-                 console.log(item);
+                console.log(item);
+                console.log(item.name);
+                console.log(item.reservationStart);
+                console.log(item.reservationEnd);
     });
     
     
