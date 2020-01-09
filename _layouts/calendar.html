@@ -190,9 +190,15 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
                 console.log(item.reserveEnd);
     });
     
-
+    //loadCalendar(parseEvents());
+    
+    //try making a long string?
     
     
+    //parse JSON to CSV?
+    var some_csv = Papa.unparse(some_parsed_arr);
+    
+    console.log(some_csv);
 
   // parse CSV to JSON
   Papa.parse("{{ site.baseurl }}/{{ page.calendar_csv }}", {
