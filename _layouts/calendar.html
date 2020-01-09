@@ -201,7 +201,8 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
     console.log(some_csv);
 
   // parse CSV to JSON
-  Papa.parse("{{ site.baseurl }}/{{ page.calendar_csv }}", {
+  //Papa.parse("{{ site.baseurl }}/{{ page.calendar_csv }}", {
+  Papa.parse(some_csv, {
     download: true,
     header: false,
     complete: function(results) {
@@ -227,8 +228,8 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
       var start = columns[1] + ' {{ page.calendar_timezone_offset }}'; // add timezone offset
       var end   = columns[2] + ' {{ page.calendar_timezone_offset }}';
 
-      formattedEvent['start'] = moment(start, inputDateFormat).valueOf(); // Unix milliseconds
-      formattedEvent['end']   = moment(end, inputDateFormat).valueOf();
+      formattedEvent['start'] = moment(start).valueOf(); // Unix milliseconds
+      formattedEvent['end']   = moment(end).valueOf();
 
       if (!_.isEmpty(columns[3]))
         formattedEvent['class'] = 'event-' + columns[3].toLowerCase(); // predefined CSS classname
