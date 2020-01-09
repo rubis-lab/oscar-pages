@@ -159,11 +159,8 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
    
     //var data_str = JSON.stringify(current_data);
     
-    
-    var some = [
-        { "name":"000@gmail.com", "reserveStart":"2020-01-08T10:30", "reserveEnd":"2020-01-08T12:30"},
-        { "name":"111@gmail.com", "reserveStart":"2020-01-09T10:30", "reserveEnd":"2020-01-09T11:30"}
-    ];
+        var some_str = '{ "name":"000@gmail.com", "reserveStart":"2020-01-08T10:30", "reserveEnd":"2020-01-08T12:30"},{ "name":"111@gmail.com", "reserveStart":"2020-01-09T10:30", "reserveEnd":"2020-01-09T11:30"}';
+    var some = [some_str];
     
     some.forEach(function(item){
                  console.log(item.name);
