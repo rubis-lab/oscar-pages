@@ -171,6 +171,11 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
                  some_parsed_arr.push(JSON.parse(item));
                  });
     
+    for(i=0; i<some_parsed_arr.length; i++){
+    some_parsed_arr[i].reserveStart.replace(/T/g, "");
+    some_parsed_arr[i].reserveEnd.replace(/T/g, "");
+    }
+    
     some_parsed_arr.forEach(function(item){
                 console.log(item);
                 console.log(item.name);
@@ -178,10 +183,7 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
                 console.log(item.reserveEnd);
     });
     
-    for(i=0; i<some_parsed_arr.length; i++){
-        some_parsed_arr[i].reserveStart.replace(/T/g, "");
-        some_parsed_arr[i].reserveEnd.replace(/T/g, "");
-    }
+
     
     
 
