@@ -40,15 +40,14 @@ $(document).ready(function(){
         })
         
         .done(function(data){
-              //log data to the console so we can see
-              console.log(data); //idk what this does
               if (data.includes("duplicate")== true ){
-                  if(!alert("There is currently an active reservation under this email. Please wait until after your appointment date to reserve again.")){window.location.reload();}
+                  if(!alert("There is currently an active reservation under this email. Please wait until after your appointment date to reserve again.")){
+                      window.location.reload();
+                  }
               }else if (data.includes("Change the time")== true ){
                   alert("This time slot is taken. Check the calendar and choose a new time slot.");
-              }
-              else if (data.includes("reservation is started")== true ){
-                
+                  
+              }else if (data.includes("reservation is started")== true ){
                   if(!alert("Reservation successfully created. Reservation will be confirmed in 24-48 hours.")){       
                                     window.location.reload();
                   }
