@@ -156,8 +156,10 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
         }).responseText;    
 
     console.log(current_data);
+    console.log();
     
-    current_data.name.forEach(function(item){
+    current_data.forEach(function(item){
+        console.log(item);
         console.log(item.name);
     });
    
