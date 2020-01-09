@@ -162,11 +162,11 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
         var some_str = '{ "name":"000@gmail.com", "reserveStart":"2020-01-08T10:30", "reserveEnd":"2020-01-08T12:30"},{ "name":"111@gmail.com", "reserveStart":"2020-01-09T10:30", "reserveEnd":"2020-01-09T11:30"}';
     
     var some_split = some_str.split("},");      //array of {} entries
-    
-    some_split.forEach(function(item){
-        item = item + "}";  
-    });
 
+    for(let i=0;i<=some_split.length;i++){
+        some_split[i] = some_split[i] + "}";
+    }
+    
     
     some_split.forEach(function(item){
         console.log(item);
