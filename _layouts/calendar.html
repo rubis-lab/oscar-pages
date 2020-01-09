@@ -172,8 +172,8 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
                  });
     
     for(i=0; i<some_parsed_arr.length; i++){
-    some_parsed_arr[i].reserveStart.replace(/T/g, "");
-    some_parsed_arr[i].reserveEnd.replace(/T/g, "");
+        some_parsed_arr[i].reserveStart = some_parsed_arr[i].reserveStart.replace(/T/g, "");
+        some_parsed_arr[i].reserveEnd = some_parsed_arr[i].reserveEnd.replace(/T/g, "");
     }
     
     some_parsed_arr.forEach(function(item){
