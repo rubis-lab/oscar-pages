@@ -48,7 +48,7 @@ $(document).ready(function(){
                   alert("This time slot is taken. Check the calendar and choose a new time slot.");
                   
               }else if (data.includes("reservation is started")== true ){
-                  if(!alert("Reservation successfully created. Reservation will be confirmed in 24-48 hours.")){       
+                  if(!alert("Reservation successfully created.")){       
                                     window.location.reload();
                   }
               }
