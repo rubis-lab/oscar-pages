@@ -145,39 +145,35 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 (function($) {
    "use strict";  
     
+    //Receives information from the server
     var current_sdata = $.ajax({
             url         : 'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/list',
             type        : 'GET',
             dataType    : 'json',
             async       : false,
             success     : function(response) {
-                            alert("b--bbb:");
                           }
         }).responseText;    
 
     console.log(current_sdata);
     
+    //Saves server data in a string
     var some_str = '{ "name":"000@gmail.com", "reserveStart":"2020-01-08T10:30:00:002Z", "reserveEnd":"2020-01-08T12:30:00:002Z"},{ "name":"111@gmail.com", "reserveStart":"2020-01-09T10:30:00:002Z", "reserveEnd":"2020-01-09T11:30:00:002Z"}';
     
-    var some_split = some_str.split("},");      //array of {} entries
-
+    //array of entries in the format {"name":"ex@sample.com", "reserveStart": "YYYY-MM-DDT00:00:00:002Z"}
+    var some_split = some_str.split("},");      
     var i = 0;
     for(i=0;i<some_split.length-1;i++){
         some_split[i] = some_split[i] + "}";
     }
     
+    //Array of parsed entries (jSON objects)
     var some_parsed_arr = new Array();
     some_split.forEach(function(item){
                  some_parsed_arr.push(JSON.parse(item));
                  });
     
-//    //removes the "T"
-//    for(i=0; i<some_parsed_arr.length; i++){
-//        some_parsed_arr[i].reserveStart = some_parsed_arr[i].reserveStart.replace(/T/g, " ");
-//        some_parsed_arr[i].reserveEnd = some_parsed_arr[i].reserveEnd.replace(/T/g, " ");
-//    }
-    
-    //removes the ":002Z"
+    //Removes the ":002Z"
     for(i=0; i<some_parsed_arr.length; i++){
         some_parsed_arr[i].reserveStart = some_parsed_arr[i].reserveStart.replace(/:002Z/g, "");
         some_parsed_arr[i].reserveEnd = some_parsed_arr[i].reserveEnd.replace(/:002Z/g, "");
@@ -190,12 +186,7 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
                 console.log(item.reserveEnd);
     });
     
-    //loadCalendar(parseEvents());
-    
-    //try making a long string?
-    
-    
-    //parse JSON to CSV?
+    //Convert JSON array into a CSV
     var some_csv = Papa.unparse(some_parsed_arr);
     
     console.log(some_csv);
@@ -214,7 +205,7 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
   // Format the events json to be compatible with Bootstrap-Calendar format
   function parseEvents(rows) {
     rows.shift(); // remove header
-    var inputDateFormat = "M/D/YYYY H:mm A Z"; // timezone will be added below
+    //var inputDateFormat = "M/D/YYYY H:mm A Z"; // timezone will be added below
     var result = [];
 
     _.forEach(rows, function(columns, index) {
