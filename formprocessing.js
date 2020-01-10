@@ -20,54 +20,43 @@ $(document).ready(function(){
         // Base Url: https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve   
         
         //Process the form.
-//        $.ajax({
-//            async         :true,   
-//            type          :'POST',
-//            url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve',
-//            data          : {
-//                                name:  formData.name,
-//                                reserveStart: formData.reserveStart,
-//                                reserveEnd: formData.reserveEnd        
-//                },
-//            dataType      :'text', //what type of data do we expect back from the server?
-//            encode        :true,
-//            success       : function(response){
-//                               },
-//            error         : function(req,err){
-//                               //var r = jQuery.parseJSON(response.responseText);
-//                               alert("Message:" + err);
-//                               }
-//            
-//       
-//        })
+        $.ajax({
+            async         :true,   
+            type          :'POST',
+            url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/reserve',
+            data          : {
+                                name        : formData.name,
+                                reserveStart: formData.reserveStart,
+                                reserveEnd  : formData.reserveEnd        
+                },
+            dataType      :'text', 
+            encode        :true,
+            success       : function(response){
+                               },
+            error         : function(req,err){
+                               //var r = jQuery.parseJSON(response.responseText);
+                               }
+            
+        })
         
-//        .done(function(data){
-//              //log data to the console so we can see
-//              console.log(data); //idk what this does
-//              if (data.includes("duplicate")== true ){
-//                  if(!alert("There is currently an active reservation under this email. Please wait until after your appointment date to reserve again.")){window.location.reload();}
-//              }else if (data.includes("Change the time")== true ){
-//                  alert("This time slot is taken. Check the calendar and choose a new time slot.");
-//              }
-//              else if (data.includes("reservation is started")== true ){
-//
-//                  
-//                  $.get({
-//                            url         : 'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/list',
-//                            //dataType    :'text',
-//                            success     : function(response) {
-//                                          }
-//                  });
-//                  
-//                  if(!alert("Reservation successfully created. Reservation will be confirmed in 24-48 hours.")){       
-//                                    window.location.reload();
-//                  }
-//              }
-//              else {
-//                  alert("ERROR");
-//              }
-//             });
-    
-                   
+        .done(function(data){
+              //log data to the console so we can see
+              console.log(data); //idk what this does
+              if (data.includes("duplicate")== true ){
+                  if(!alert("There is currently an active reservation under this email. Please wait until after your appointment date to reserve again.")){window.location.reload();}
+              }else if (data.includes("Change the time")== true ){
+                  alert("This time slot is taken. Check the calendar and choose a new time slot.");
+              }
+              else if (data.includes("reservation is started")== true ){
+                
+                  if(!alert("Reservation successfully created. Reservation will be confirmed in 24-48 hours.")){       
+                                    window.location.reload();
+                  }
+              }
+              else {
+                  alert("ERROR");
+              }
+             });
+              
     });
 });
