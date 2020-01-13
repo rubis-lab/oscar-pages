@@ -1,0 +1,88 @@
+---
+layout: default
+calendar_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootstrap-calendar/css/calendar.css">
+calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootstrap/css/bootstrap.css">
+---
+{% assign PATH_TO_COMPONENTS =  "/components" | prepend: site.baseurl %}
+
+<!-- Page Header -->
+{% if page.background %}
+<header class="masthead" style="background-image: url('{{ page.background | prepend: site.baseurl | replace: '//', '/' }}')">
+{% else %}
+<header class="masthead">
+{% endif %}
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 mx-auto">
+        <div class="page-heading">
+          <h1>{{ page.title }}</h1>
+          {% if page.description %}
+            <span class="subheading">{{ page.description }}</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-10 col-md-10 mx-auto">
+
+      <div>
+  {{ content }}
+<!-- The original contents of "calendar.html" were added below the {{content}} and the "page.html" was wrapped around it -->
+</div>
+
+
+<div class="container" style="width:100%">
+
+<!--Added a form with reservation data-->
+<form action="loginprocessing.js" method="GET">
+  <div class="row" style="height:70px"></div>
+  <div class="form-group row" style="text-align:right">
+    <div class="col-sm-2"></div>
+    <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-6">
+      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+    </div>
+    <div class="col-sm-2"></div>
+  </div>
+
+<!-- Will add password functionality later   -->
+  <div class="form-group row" style="text-align:right">
+      <div class="col-sm-2"></div>
+    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+    <div class="col-sm-6">
+      <input type="password" class="form-control" id="inputPassword" placeholder="Password" aria-describedby="pinBlock">
+        <small id="pinBlock" class="form-text text-muted"></small>
+    </div>
+    <div class="col-sm-2"></div>
+    </div>
+    <div class="row" style="height:30px"></div>
+
+  <div class="form-group row text-center">
+    <div class="col-sm-12">
+      <button type="submit" class="btn btn-primary" id="loginBtn">Login</button>
+      <button type="submit" class="btn btn-primary" id ="signupBtn">Sign Up</button>
+    </div>
+  </div>
+  <div class="row" style="height:70px"></div>
+</form>
+
+</div>
+
+<script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/lodash/lodash.min.js"></script>
+<script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/bootstrap-calendar/js/calendar.js"></script>
+<script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/moment/min/moment.min.js"></script>
+<script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/papaparse/papaparse.min.js"></script>
+
+<script src="loginprocessing.js"></script> <!-- load our javascript file (for processing the form) -->
+
+    </div>
+  </div>
+</div>
