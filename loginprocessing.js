@@ -80,14 +80,6 @@ var url='';
 
 $(document).ready(function(){
 
-    // check whether the login or the signup button is pressed
-    if ($(this).val() == 'login') {
-        url = 'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/login';
-    }
-    else if ($(this).val() == 'signup') {
-        url = 'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/signup'
-    }
-
     $("button").click(function(event){
         event.preventDefault();
 
@@ -103,9 +95,18 @@ $(document).ready(function(){
             window.location.reload();
         }
 
-        console.log(formData);
+        // check whether the login or the signup button is pressed
+        if ($(this).val() == 'login') {
+            url = 'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/login';
+        }
+        else if ($(this).val() == 'signup') {
+            url = 'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/signup'
+        }
+        else {
+            alert('URL: ' + url);
+        }
 
-        //Process the form.
+        // POST through ajax, email and password is sent to server
         $.ajax({
             async         :true,
             type          :'POST',
@@ -114,7 +115,7 @@ $(document).ready(function(){
                                 name        : formData.name,
                                 password    : formData.password,
                 },
-            dataType      :'json',
+            dataType      :'text',
             encode        :true,
             success       :function(response){
                                },
@@ -125,6 +126,7 @@ $(document).ready(function(){
 
         .done(function(data){
             if (data.includes("login success")){
+                alert("login success");
                 // load straight to home page
             }
 
@@ -137,7 +139,7 @@ $(document).ready(function(){
             }
 
             else if (data.includes("signup success")){
-                // load straight to home page
+                alert("signin success");
             }
 
             else if (data.includes("existing email")){
