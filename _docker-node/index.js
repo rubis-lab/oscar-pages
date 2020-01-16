@@ -12,9 +12,9 @@ var mongoose = require('mongoose');
 
 ///////////////Database Connection/////////////
 //local mongodb connection
-mongoose.connect('mongodb://localhost:27017/oscar');
+// mongoose.connect('mongodb://localhost:27017/oscar');
 //docker mongodb connection
-// mongoose.connect('mongodb://oscar-db/oscar');
+mongoose.connect('mongodb://oscar-db/oscar');
 var db = mongoose.connection;
 db.on('error', function(){
     console.log('Connection Failed!');
