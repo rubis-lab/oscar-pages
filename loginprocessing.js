@@ -1,77 +1,3 @@
-// // loginprocessing.js
-// // Sends login/signup data to server and recieves confirmation
-//
-// var myServer = new XMLHttpRequest();
-//
-// $(document).ready(function(){
-//
-//     //process the form data
-//
-//     $("button").click(function(event){
-//         event.preventDefault();
-//
-//         //Get form data from calendar.html
-//         var formData = {
-//             //Setting the input to be the id
-//             'access'        :$(this).val(), // Whether it's login or sign up
-//             'name'          :$('input[id=inputEmail]').val(),
-//             'password'      :$('input[id=inputPassword]').val(),
-//         };
-//
-//         // if one of the fields are not filled in
-//         if (formData['name'] == '' || formData['password']==''){
-//             alert("Both fields are required for login/sign up.");
-//         }
-//
-//         console.log(formData);
-//
-//         //Process the form.
-//         $.ajax({
-//             async         :true,
-//             type          :'POST',
-//             url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/login',
-//             data          : {
-//                                 access      : formData.access,
-//                                 name        : formData.name,
-//                                 password    : formData.password,
-//                 },
-//             dataType      :'json',
-//             encode        :true,
-//             success       :function(response){
-//                                },
-//             error         :function(req,err){
-//                                }
-//
-//         })
-//
-//         .done(function(data){
-//             if (data.includes("login success")){
-//                 // load straight to home page
-//             }
-//
-//             else if (data.includes("wrong password")){
-//                 alert("Wrong pasword; please try again. Note that passwords are case sensitive.");
-//             }
-//
-//             else if (data.includes("account does not exist")){
-//                 alert("There seems to be no account under this email. If you do not have an account, please sign up.");
-//             }
-//
-//             else if (data.includes("signup success")){
-//                 // load straight to home page
-//             }
-//
-//             else if (data.includes("existing email")){
-//                 alert("There seems to be an account that already exists under this email. Please try logging in.");
-//             }
-//             else {
-//                 alert("ERROR");
-//             }
-//         });
-//
-//     });
-// });
-
 // loginprocessing.js
 // Sends login/signup data to server and recieves confirmation
 
@@ -88,6 +14,7 @@ $(document).ready(function(){
             'name'          :$('input[id=inputEmail]').val(),
             'password'      :$('input[id=inputPassword]').val(),
         };
+        localStorage.setItem("email", formData['name']);
 
         // if one of the fields are not filled in
         if (formData['name'] == '' || formData['password']==''){
@@ -125,9 +52,12 @@ $(document).ready(function(){
         })
 
         .done(function(data){
+
+            var queryString = "?name=" + formData['name'];
+
             if (data.includes("login success")){
                 alert("login success");
-                // load straight to home page
+                window.location = "https://rubis-lab.github.io/oscar-pages/userpage";
             }
 
             else if (data.includes("wrong password")){
@@ -140,6 +70,7 @@ $(document).ready(function(){
 
             else if (data.includes("signup success")){
                 alert("signin success");
+                window.location = "https://rubis-lab.github.io/oscar-pages/userpage";
             }
 
             else if (data.includes("existing email")){
