@@ -377,44 +377,44 @@ var server = http.createServer(function(request,response){
         }
       });
     });
-  // }else if(resource == '/addImage'){
-  //   var postdata = '';
-  //   request.on('data', function (data) {
-  //     postdata = postdata + data;
-  //   });
-  //   request.on('end', function () {
-  //     var parsedQuery = querystring.parse(postdata);
-  //     console.log('parsedQuery =',parsedQuery);
-  //     var now = new Date(Date.now()).toISOString().replace('T','_').replace(new RegExp(':','g'),'-').substring(0,19);
-  //     User.findOneAndUpdate({name:parsedQuery.name},{"$push": {images: now.toString()}},null,function(error, user){
-  //       console.log('--- imagelist User ---');
-  //       if(error){
-  //           console.log(error);
-  //           response.end(error);
-  //       }else{
-  //         if(user==null){
-  //           response.writeHead(200, {'Content-Type':'text/html'});
-  //           response.end('account does not exist');
-  //         }else{
-  //           Reservation.findOneAndUpdate({name:parsedQuery.name, reserveStart:parsedQuery.reserveStart},
-  //             {selectedImage:parsedQuery.reserveStart.replace('T','_').replace(new RegExp(':','g'),'-').substring(0,19)},null,function(error,reservation){
-  //               if(error){
-  //                 console.log(error);
-  //               }
-  //               else{
-  //                 if(reservation!=null){
-  //                   console.log('--- Update selectedImage on reservation ---');
-  //                 }else{
-  //                   console.log('no reservation exists');
-  //                 }
-  //               }
-  //             });
-  //           console.log(now);
-  //           response.end(now);
-  //         }
-  //       }
-  //     });
-  //   });
+  }else if(resource == '/addImage'){
+    var postdata = '';
+    request.on('data', function (data) {
+      postdata = postdata + data;
+    });
+    request.on('end', function () {
+      var parsedQuery = querystring.parse(postdata);
+      console.log('parsedQuery =',parsedQuery);
+      var now = new Date(Date.now()).toISOString().replace('T','_').replace(new RegExp(':','g'),'-').substring(0,19);
+      User.findOneAndUpdate({name:parsedQuery.name},{"$push": {images: now.toString()}},null,function(error, user){
+        console.log('--- imagelist User ---');
+        if(error){
+            console.log(error);
+            response.end(error);
+        }else{
+          if(user==null){
+            response.writeHead(200, {'Content-Type':'text/html'});
+            response.end('account does not exist');
+          }else{
+            Reservation.findOneAndUpdate({name:parsedQuery.name, reserveStart:parsedQuery.reserveStart},
+              {selectedImage:parsedQuery.reserveStart.replace('T','_').replace(new RegExp(':','g'),'-').substring(0,19)},null,function(error,reservation){
+                if(error){
+                  console.log(error);
+                }
+                else{
+                  if(reservation!=null){
+                    console.log('--- Update selectedImage on reservation ---');
+                  }else{
+                    console.log('no reservation exists');
+                  }
+                }
+              });
+            console.log(now);
+            response.end(now);
+          }
+        }
+      });
+    });
   }else if(resource == '/busy'){
     Reservation.findOne({ reserveStart : {$lte :  new Date(Date.now()).toISOString()},
     reserveEnd : {$gte:  new Date(Date.now()).toISOString()}}, function(error,reservation){
