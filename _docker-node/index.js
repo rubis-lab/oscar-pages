@@ -339,44 +339,44 @@ var server = http.createServer(function(request,response){
         }
       });
     });
-  // }else if(resource == '/readReservation'){
-  //   var postdata = '';
-  //   request.on('data', function (data) {
-  //     postdata = postdata + data;
-  //   });
-  //   request.on('end', function () {
-  //     var parsedQuery = querystring.parse(postdata);
-  //     Reservation.find({name:parsedQuery.name, reserveStart : {$gte: new Date(Date.now()).toISOString()}},null,{sort :{reserveStart : 1}}, function(error, reservations){
-  //       console.log('--- Reservation list ---');
-  //       console.log(new Date(Date.now()).toISOString());
-  //       if(error){
-  //           console.log(error);
-  //       }else{
-  //         console.log(reservations);
-  //         var parsedList = reservations.toString().split('}');
-  //         var i;
-  //         var res = '';
-  //         var _name;
-  //         var _reserveStart;
-  //         var _reserveEnd;
-  //         var _selectedImage;
-  //         for (i=0; i < parsedList.length-1; i++) {
-  //           if (i!=0) {res = res + ','};
+  }else if(resource == '/readReservation'){
+    var postdata = '';
+    request.on('data', function (data) {
+      postdata = postdata + data;
+    });
+    request.on('end', function () {
+      var parsedQuery = querystring.parse(postdata);
+      Reservation.find({name:parsedQuery.name, reserveStart : {$gte: new Date(Date.now()).toISOString()}},null,{sort :{reserveStart : 1}}, function(error, reservations){
+        console.log('--- Reservation list ---');
+        console.log(new Date(Date.now()).toISOString());
+        if(error){
+            console.log(error);
+        }else{
+          console.log(reservations);
+          var parsedList = reservations.toString().split('}');
+          var i;
+          var res = '';
+          var _name;
+          var _reserveStart;
+          var _reserveEnd;
+          var _selectedImage;
+          for (i=0; i < parsedList.length-1; i++) {
+            if (i!=0) {res = res + ','};
             
-  //           parsedColumn = querystring.parse(parsedList[i].toString(),',\n  ',':',{});
+            parsedColumn = querystring.parse(parsedList[i].toString(),',\n  ',':',{});
             
-  //           _reserveStart = parsedColumn.reserveStart.replace(',','').replace("'",'').replace("'",'').trim();
-  //           _reserveEnd = parsedColumn.reserveEnd.replace(',','').replace("'",'').replace("'",'').trim();
-  //           _selectedImage = parsedColumn.selectedImage.replace(',','').replace("'",'').replace("'",'').trim();
+            _reserveStart = parsedColumn.reserveStart.replace(',','').replace("'",'').replace("'",'').trim();
+            _reserveEnd = parsedColumn.reserveEnd.replace(',','').replace("'",'').replace("'",'').trim();
+            _selectedImage = parsedColumn.selectedImage.replace(',','').replace("'",'').replace("'",'').trim();
             
-  //           res = res.concat('{"reserveStart":"',_reserveStart,'","reserveEnd":"',
-  //             _reserveEnd,'","selectedImage":"',_selectedImage,'"}');
-  //         }
-  //         response.writeHead(200, {'Content-Type':'text/html'});
-  //         response.end(res);
-  //       }
-  //     });
-  //   });
+            res = res.concat('{"reserveStart":"',_reserveStart,'","reserveEnd":"',
+              _reserveEnd,'","selectedImage":"',_selectedImage,'"}');
+          }
+          response.writeHead(200, {'Content-Type':'text/html'});
+          response.end(res);
+        }
+      });
+    });
   // }else if(resource == '/addImage'){
   //   var postdata = '';
   //   request.on('data', function (data) {
