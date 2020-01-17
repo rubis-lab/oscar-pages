@@ -26,7 +26,7 @@ var user = mongoose.Schema(
   {
     name : {type: String, required: true, unique: true},
     password : {type: String, required: true},
-    images : [{type: String, unique: true}]
+    images : [{type: String}]
   },
   {
     autoIndex: true,
@@ -377,6 +377,30 @@ var server = http.createServer(function(request,response){
         }
       });
     });
+  }else if(resource == '/assignImage'){
+    var postdata = '';
+    request.on('data', function (data) {
+      postdata = postdata + data;
+    });
+    request.on('end', function () {
+      var parsedQuery = querystring.parse(postdata);
+      Reservation.findOneAndUpdate({name:parsedQuery.name, reserveStart:parsedQuery.reserveStart},
+        {selectedImage:parsedQuery.selectedImage},null,function(error,reservation){
+        if(error){
+          console.log(error);
+        }else{
+          if(reservation == null){
+            console.log('reservation does not exist');
+            response.writeHead(200, {'Content-Type':'text/html'});
+            response.end('reservation does not exist');
+          }else{
+            console.log('--- Update selectedImage on reservation ---');
+            response.writeHead(200, {'Content-Type':'text/html'});
+            response.end('assign success');
+          }
+        }
+      });
+    });
   }else if(resource == '/addImage'){
     var postdata = '';
     request.on('data', function (data) {
@@ -393,24 +417,13 @@ var server = http.createServer(function(request,response){
             response.end(error);
         }else{
           if(user==null){
+            console.log('account does not exist');
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('account does not exist');
           }else{
-            Reservation.findOneAndUpdate({name:parsedQuery.name, reserveStart:parsedQuery.reserveStart},
-              {selectedImage:parsedQuery.reserveStart.replace('T','_').replace(new RegExp(':','g'),'-').substring(0,19)},null,function(error,reservation){
-                if(error){
-                  console.log(error);
-                }
-                else{
-                  if(reservation!=null){
-                    console.log('--- Update selectedImage on reservation ---');
-                  }else{
-                    console.log('no reservation exists');
-                  }
-                }
-              });
             console.log(now);
-            response.end(now);
+            response.writeHead(200, {'Content-Type':'text/html'});
+            response.end('add image success');
           }
         }
       });
