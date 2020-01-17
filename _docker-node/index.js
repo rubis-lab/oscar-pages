@@ -276,6 +276,68 @@ var server = http.createServer(function(request,response){
         }
       });
     });
+  }else if(resource == '/readReservation'){
+    var postdata = '';
+    request.on('data', function (data) {
+      postdata = postdata + data;
+    });
+    request.on('end', function () {
+      var parsedQuery = querystring.parse(postdata);
+      Reservation.find({name:parsedQuery.name, reserveStart : {$gte: new Date(Date.now()).toISOString()}},null,{sort :{reserveStart : 1}}, function(error, reservations){
+        console.log('--- Reservation list ---');
+        console.log(new Date(Date.now()).toISOString());
+        if(error){
+            console.log(error);
+        }else{
+          console.log(reservations);
+          var parsedList = reservations.toString().split('}');
+          var i;
+          var res = '';
+          var _name;
+          var _reserveStart;
+          var _reserveEnd;
+          var _selectedImage;
+          for (i=0; i < parsedList.length-1; i++) {
+            if (i!=0) {res = res + ','};
+            
+            parsedColumn = querystring.parse(parsedList[i].toString(),',\n  ',':',{});
+            
+            _reserveStart = parsedColumn.reserveStart.replace(',','').replace("'",'').replace("'",'').trim();
+            _reserveEnd = parsedColumn.reserveEnd.replace(',','').replace("'",'').replace("'",'').trim();
+            _selectedImage = parsedColumn.selectedImage.replace(',','').replace("'",'').replace("'",'').trim();
+            
+            res = res.concat('{"reserveStart":"',_reserveStart,'","reserveEnd":"',
+              _reserveEnd,'","selectedImage":"',_selectedImage,'"}');
+          }
+          response.writeHead(200, {'Content-Type':'text/html'});
+          response.end(res);
+        }
+      });
+    });
+  }else if(resource == '/cancelReservation'){
+    var postdata = '';
+    request.on('data', function (data) {
+      postdata = postdata + data;
+    });
+    request.on('end', function () {
+      var parsedQuery = querystring.parse(postdata);
+      Reservation.findOneAndDelete({name:parsedQuery.name, reserveStart:parsedQuery.reserveStart},function(error,reservation){
+        if(error){
+          console.log(error);
+        }else{
+          if(reservation==null){
+            console.log('reservation does not exists');
+            response.writeHead(200, {'Content-Type':'text/html'});
+            response.end('reservation does not exists');
+          }
+          else{
+            console.log('--- delete reservation success ---');
+            response.writeHead(200, {'Content-Type':'text/html'});
+            response.end('delete success');
+          }
+        }
+      });
+    });
   }else if(resource == '/list'){
     Reservation.find(null,null,{sort :{reserveStart : 1}}, function(error, reservations){
       console.log('--- Reservation list ---');
@@ -325,6 +387,7 @@ var server = http.createServer(function(request,response){
         console.log('--- imagelist User ---');
         if(error){
             console.log(error);
+            response.writeHead(200, {'Content-Type':'text/html'});
             response.end(error);
         }else{
           if(user==null){
@@ -336,44 +399,6 @@ var server = http.createServer(function(request,response){
             console.log(parsedUser);
             response.end(parsedUser);
           }
-        }
-      });
-    });
-  }else if(resource == '/readReservation'){
-    var postdata = '';
-    request.on('data', function (data) {
-      postdata = postdata + data;
-    });
-    request.on('end', function () {
-      var parsedQuery = querystring.parse(postdata);
-      Reservation.find({name:parsedQuery.name, reserveStart : {$gte: new Date(Date.now()).toISOString()}},null,{sort :{reserveStart : 1}}, function(error, reservations){
-        console.log('--- Reservation list ---');
-        console.log(new Date(Date.now()).toISOString());
-        if(error){
-            console.log(error);
-        }else{
-          console.log(reservations);
-          var parsedList = reservations.toString().split('}');
-          var i;
-          var res = '';
-          var _name;
-          var _reserveStart;
-          var _reserveEnd;
-          var _selectedImage;
-          for (i=0; i < parsedList.length-1; i++) {
-            if (i!=0) {res = res + ','};
-            
-            parsedColumn = querystring.parse(parsedList[i].toString(),',\n  ',':',{});
-            
-            _reserveStart = parsedColumn.reserveStart.replace(',','').replace("'",'').replace("'",'').trim();
-            _reserveEnd = parsedColumn.reserveEnd.replace(',','').replace("'",'').replace("'",'').trim();
-            _selectedImage = parsedColumn.selectedImage.replace(',','').replace("'",'').replace("'",'').trim();
-            
-            res = res.concat('{"reserveStart":"',_reserveStart,'","reserveEnd":"',
-              _reserveEnd,'","selectedImage":"',_selectedImage,'"}');
-          }
-          response.writeHead(200, {'Content-Type':'text/html'});
-          response.end(res);
         }
       });
     });
@@ -438,10 +463,10 @@ var server = http.createServer(function(request,response){
       }else{
           console.log(reservation);
           if(reservation != null){
-            response.writeHead(200, {'Content-Type':'text/html'});
             var a = JSON.parse(reservation);
-            console.log(a.toString())
-            console.log(reservation.name)
+            console.log(a.toString());
+            console.log(reservation.name);
+            response.writeHead(200, {'Content-Type':'text/html'});
             response.end(reservation.toString());
           }else{
             response.writeHead(200, {'Content-Type':'text/html'});
