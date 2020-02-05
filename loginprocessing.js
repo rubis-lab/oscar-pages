@@ -62,10 +62,12 @@ $(document).ready(function(){
 
             else if (data.includes("wrong password")){
                 alert("Wrong pasword; please try again. Note that passwords are case sensitive.");
+                window.location.reload();
             }
 
             else if (data.includes("account does not exist")){
                 alert("There seems to be no account under this email. If you do not have an account, please sign up.");
+                window.location.reload();
             }
 
             else if (data.includes("signup success")){
@@ -75,6 +77,7 @@ $(document).ready(function(){
 
             else if (data.includes("existing email")){
                 alert("There seems to be an account that already exists under this email. Please try logging in.");
+                window.location.reload();
             }
             else {
                 alert("ERROR");
