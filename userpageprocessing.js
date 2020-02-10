@@ -130,7 +130,7 @@ $(document).ready(function(){
   });
 
   // Add reservation
-  $('#addReservation').submit(function(event){
+  $('#addReservation').click(function(event){
       event.preventDefault();
 
       //Get form data from userpage.html
