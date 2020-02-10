@@ -53,8 +53,6 @@ $(document).ready(function(){
 
         .done(function(data){
 
-            var queryString = "?name=" + formData['name'];
-
             if (data.includes("login success")){
                 alert("login success");
                 window.location = "https://rubis-lab.github.io/oscar-pages/userpage";
