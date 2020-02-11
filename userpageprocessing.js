@@ -66,33 +66,41 @@ $.ajax({
 
 .done(function(response){
 
-  // Parse the input into an array of json elements
-  var data_split = response.split("},");
-  for (var i = 0; i < data_split.length-1; i++) {
-      data_split[i] = data_split[i] + "}";
-  }
+    if (response){
+        // Parse the input into an array of json elements
+        var data_split = response.split("},");
+        for (var i = 0; i < data_split.length-1; i++) {
+            data_split[i] = data_split[i] + "}";
+        }
 
-  var reservationList = new Array();
-  data_split.forEach(function(item){
-    reservationList.push(JSON.parse(item));
-  });
+        var reservationList = new Array();
+        data_split.forEach(function(item){
+            reservationList.push(JSON.parse(item));
+        });
 
-  // Insert the (parsed) reservations into userpage.html
-  for (var count = 0; count < reservationList.length; count++){
+        // Insert the (parsed) reservations into userpage.html
+        for (var count = 0; count < reservationList.length; count++){
 
-    var reservation = '<button type="button" class="reservation list-group-item list-group-item-action">'+
-      '<div><b>Start: </b>' + reservationList[count]['reserveStart'].replace('T', " ").replace(/:00:002Z/g, "") + '</div>' +
-      '<div><b>End: </b>' + reservationList[count]['reserveEnd'].replace('T', " ").replace(/:00:002Z/g, "") + '</div>' +
-      '<div><b>Selected Image: </b>' + reservationList[count]['selectedImage'] + '</div>' +
-    '</button>'
+          var reservation = '<button type="button" class="reservation list-group-item list-group-item-action">'+
+            '<div><b>Start: </b>' + reservationList[count]['reserveStart'].replace('T', " ").replace(/:00:002Z/g, "") + '</div>' +
+            '<div><b>End: </b>' + reservationList[count]['reserveEnd'].replace('T', " ").replace(/:00:002Z/g, "") + '</div>' +
+            '<div><b>Selected Image: </b>' + reservationList[count]['selectedImage'] + '</div>' +
+          '</button>'
 
-    // "Select Docker Image" page
-    document.getElementById('reservationList_docker').innerHTML += reservation;
-    // "Make/Cancel Reservations" Page
-    document.getElementById('reservationList_reserve').innerHTML += reservation;
+          // "Select Docker Image" page
+          document.getElementById('reservationList_docker').innerHTML += reservation;
+          // "Make/Cancel Reservations" Page
+          document.getElementById('reservationList_reserve').innerHTML += reservation;
 
+        }
+    }
 
-  }
+    else {
+        // "Select Docker Image" page
+        document.getElementById('reservationList_docker').innerHTML += "<div>You have no upcoming reservations.</div>";
+        // "Make/Cancel Reservations" Page
+        document.getElementById('reservationList_reserve').innerHTML += "<div>You have no upcoming reservations.</div>";
+    }
 
 });
 
@@ -131,6 +139,7 @@ $(document).ready(function(){
 
   // Add reservation
   $('#addReservation').submit(function(event){
+
       event.preventDefault();
 
       //Get form data from userpage.html
@@ -140,8 +149,6 @@ $(document).ready(function(){
           'reserveStart'  :$('input[id=inputTimeStart]').val() + ":00:002Z",
           'reserveEnd'    :$('input[id=inputTimeEnd]').val() + ":00:002Z",
       };
-
-      console.log(email);
 
       $.ajax({
           async         :true,
@@ -198,8 +205,6 @@ $(document).ready(function(){
             'selectedImage' :selectedImage
         };
 
-        console.log(formData);
-
         $.ajax({
 
             async         :true,
@@ -246,8 +251,6 @@ $(document).ready(function(){
             'name'          :email,
             'reserveStart'  :reserveStart,
         };
-
-        console.log(formData);
 
         $.ajax({
 
