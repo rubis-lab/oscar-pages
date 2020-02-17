@@ -55,7 +55,7 @@ $(document).ready(function(){
 
             if (data.includes("login success")){
                 alert("login success");
-                window.location = "https://rubis-lab.github.io/oscar-pages/userpage";
+                window.location.assign(window.location.href.replace("login", "userpage"));
             }
 
             else if (data.includes("wrong password")){
@@ -70,7 +70,7 @@ $(document).ready(function(){
 
             else if (data.includes("signup success")){
                 alert("signin success");
-                window.location = "https://rubis-lab.github.io/oscar-pages/userpage";
+                window.location.assign(window.location.href.replace("login", "userpage"));
             }
 
             else if (data.includes("existing email")){

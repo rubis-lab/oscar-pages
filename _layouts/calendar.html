@@ -64,17 +64,17 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
   <div class="clearfix"></div>
 
 <!--Added a form with reservation data-->
-<form action="formprocessing.js" method="GET">
+<form action="formprocessing.js" class="mx-auto">
 
-  <div class="form-group row">
+  <!-- <div class="form-group row">
     <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
     <div class="col-sm-10">
       <input type="email" class="form-control" id="inputEmail" placeholder="Email">
     </div>
-  </div>
+  </div> -->
 
 <!-- Will add password functionality later   -->
-  <div class="form-group row">
+  <!-- <div class="form-group row">
     <label for="inputPin" class="col-sm-2 col-form-label">Password</label>
     <div class="col-sm-10">
       <input type="password" class="form-control" id="inputPin" placeholder="Password" aria-describedby="pinBlock">
@@ -105,7 +105,7 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
     </small>
 
     </div>
- </div>
+ </div>-->
 
 <!--Uploading is not necessary now
   <div class="form-group row">
@@ -115,8 +115,8 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
     </div>
   </div> -->
 
-  <div class="form-group row">
-    <div class="col-sm-10">
+  <div class="form-group row mx-auto">
+    <div class="col-sm-12 text-center">
       <button type="submit" class="btn btn-primary">Request Reservation</button>
     </div>
   </div>
@@ -131,7 +131,8 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 <script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/moment/min/moment.min.js"></script>
 <script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/papaparse/papaparse.min.js"></script>
 
-<script src="formprocessing.js"></script> <!-- load our javascript file (for processing the form) -->
+<script src="formprocessing.js"></script>
+<!-- load our javascript file (for processing the form) -->
 
 <script type="text/javascript">
 
