@@ -146,9 +146,14 @@ $(document).ready(function(){
       var formData = {
           //Setting the input to be the id
           'name'          :email,
-          'reserveStart'  :$('input[id=inputTimeStart]').val() + ":00:002Z",
-          'reserveEnd'    :$('input[id=inputTimeEnd]').val() + ":00:002Z",
+          'reserveStart'  :$('input[id=inputDate]').val() + "T" +
+          $('input[id=inputTimeStart]').val() + ":00:002Z",
+          'reserveEnd'    :$('input[id=inputDate]').val() + "T" +
+          $('input[id=inputTimeEnd]').val() + ":00:002Z",
       };
+
+      console.log(formData['reserveStart']);
+      console.log(formData['reserveEnd']);
 
       $.ajax({
           async         :true,
