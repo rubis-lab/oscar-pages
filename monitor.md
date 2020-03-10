@@ -4,8 +4,18 @@ title: Monitor
 description: 
 background: '/img/bg-oscar.png'
 ---
-<img src="http://oscar:rubis301@147.46.215.251:8885/ISAPI/Streaming/channels/102/httpPreview/" width="100%"  height="500px">
-<img src="http://oscar:rubis301@147.46.215.251:8886/ISAPI/Streaming/channels/102/httpPreview/" width="100%"  height="500px">
+<script type="text/javascript">
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://147.46.215.251:8885/ISAPI/Streaming/channels/102/httpPreview/",false,"oscar","rubis301");
+    xhr.setRequestHeader("Authorization", "Basic " + btoa("oscar" + ":" + "rubis301")); 
+    let xhr2 = new XMLHttpRequest();
+    xhr2.open("GET", "http://147.46.215.251:8886/ISAPI/Streaming/channels/102/httpPreview/",false,"oscar","rubis301");
+    xhr2.setRequestHeader("Authorization", "Basic " + btoa("oscar" + ":" + "rubis301"));
+
+</script>
+
+<img src="http://147.46.215.251:8885/ISAPI/Streaming/channels/102/httpPreview/" width="100%"  height="500px">
+<img src="http://147.46.215.251:8886/ISAPI/Streaming/channels/102/httpPreview/" width="100%"  height="500px">
 
 
 <!-- 
