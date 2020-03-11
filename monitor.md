@@ -18,10 +18,10 @@ background: '/img/bg-oscar.png'
     //xhr2.send(null);
 </script>
 
-<img src="http://147.46.215.251:8885/ISAPI/Streaming/channels/102/httpPreview/" width="100%"  height="500px">
+<img src="http://oscar:rubis301@147.46.215.251:8885/ISAPI/Streaming/channels/102/httpPreview/" width="100%"  height="500px">
+<img src="http://147.46.215.251:8886/ISAPI/Streaming/channels/102/httpPreview/" width="100%"  height="500px">
 <!--
 <img src="http://147.46.215.251:8884/ISAPI/Streaming/channels/102/httpPreview/" width="100%"  height="500px">
-<img src="http://147.46.215.251:8886/ISAPI/Streaming/channels/102/httpPreview/" width="100%"  height="500px">
 <img src="http://192.168.0.120:80/ISAPI/Streaming/channels/102/httpPreview/" width="100%"  height="500px">
 <img src="http://192.168.0.122:80/ISAPI/Streaming/channels/102/httpPreview/" width="100%"  height="500px">
 C310 streams MJPEG
