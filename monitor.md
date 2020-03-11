@@ -17,10 +17,26 @@ background: '/img/bg-oscar.png'
 //    xhr2.withCredentials = true; 
     //xhr2.send(null);
 </script>
+<div class="row">
+  <div class="column">
+    <img src="http://oscar:rubis301@147.46.215.251:8885/ISAPI/Streaming/channels/102/httpPreview/" style="width:225px">
+  </div>
+  <div class="column">
+    <img src="http://oscar:rubis301@147.46.215.251:8886/ISAPI/Streaming/channels/102/httpPreview/" style="width:225px">
+  </div>
+    
+  <div class="column">
+    <img src="http://oscar:rubis301@147.46.215.251:8887/ISAPI/Streaming/channels/102/httpPreview/" style="width:225px">
+  </div>
+  <div class="column">
+    <img src="http://oscar:rubis301@147.46.215.251:8888/ISAPI/Streaming/channels/102/httpPreview/" style="width:225px">
+  </div>
+    <!-- -->
+</div>
 
+<!--
 <img src="http://oscar:rubis301@147.46.215.251:8885/ISAPI/Streaming/channels/102/httpPreview/" width="100%"  height="500px">
 <img src="http://oscar:rubis301@147.46.215.251:8886/ISAPI/Streaming/channels/102/httpPreview/" width="100%"  height="500px">
-<!--
 <img src="http://147.46.215.251:8884/ISAPI/Streaming/channels/102/httpPreview/" width="100%"  height="500px">
 <img src="http://192.168.0.120:80/ISAPI/Streaming/channels/102/httpPreview/" width="100%"  height="500px">
 <img src="http://192.168.0.122:80/ISAPI/Streaming/channels/102/httpPreview/" width="100%"  height="500px">
