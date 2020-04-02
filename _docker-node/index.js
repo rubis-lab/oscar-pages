@@ -353,8 +353,8 @@ var server = http.createServer(function(request,response){
         // console.log(data);
         // const user = JSON.parse(JSON.stringify(data).split("[").join("{").split("]").join("}"));
         let users = JSON.parse(JSON.stringify(data));
-        console.log(JSON.stringify(users));
-        let res = '';
+        // console.log(JSON.stringify(users));
+        var res = '';
         for(var i=0; i<users.length;i++){
           for(var j=0; j<users[i].reservations.length;j++){
             res = res.concat('{"name":"',users[i].reservations[j].name,
@@ -362,9 +362,10 @@ var server = http.createServer(function(request,response){
               '","reserveEnd":"',users[i].reservations[j].reserveEnd,'"},')
           }
         }
-        if(res != ''){
+        if(res!=''){
           res = res.slice(0,-1);
         }
+        console.log(res);
         response.writeHead(200, {'Content-Type':'text/html'});
         response.end(res);
       }
@@ -416,8 +417,14 @@ var server = http.createServer(function(request,response){
             }else{
               // console.log(user);
               var parsedUser = JSON.parse(JSON.stringify(user));
+              let startTime = parsedQuery.reserveStart;
+              if(startTime.includes('z') | startTime.includes('Z')){
+                let remover = startTime.lastIndexOf(":");
+                startTime = startTime.replace(/(z|Z)/g,'').substring(0,remover);
+                console.log(startTime);
+              }
               for(var i=0;i<user.reservations.length;i++){
-                if(user.reservations[i].reserveStart == parsedQuery.reserveStart){
+                if(user.reservations[i].reserveStart == startTime){
                   user.reservations[i].selectedImage = parsedQuery.selectedImage;
                 }
               }
