@@ -12,41 +12,47 @@ var mongoose = require('mongoose');
 
 ///////////////Database Connection/////////////
 //local mongodb connection
-// mongoose.connect('mongodb://localhost:27017/oscar');
+// mongoose.connect('mongodb://localhost:27017/oscar-db');
 //docker mongodb connection
 mongoose.connect('mongodb://oscar-db/oscar');
 var db = mongoose.connection;
 db.on('error', function(){
-    console.log('Connection Failed!');
+  console.log('Connection Failed!');
 });
 db.once('open', function() {
-    console.log('Connected!');
+  console.log('Connected!');
 });
 var user = mongoose.Schema(
-  {
-    name : {type: String, required: true, unique: true},
-    password : {type: String, required: true},
-    images : [{type: String}]
-  },
-  {
-    autoIndex: true,
-    timestamps: true
-  }
-);
-var reservation = mongoose.Schema(
-  {
-    name : {type: String, required: true},
-    reserveStart : {type: Object, required: true},
-    reserveEnd : {type: Object, required: true},
+{
+  name : {type: String, required: true, unique: true},
+  password : {type: String, required: true},
+  images : [{type: String}],
+  reservations: [{
+    name : {type: String},
+    reserveStart : {type: Object},
+    reserveEnd : {type: Object},
     selectedImage: String
-  },
-  {
-    autoIndex: true,
-    timestamps: true
-  }
+  }]
+},
+{
+  autoIndex: true,
+  timestamps: true
+}
 );
+// var reservation = mongoose.Schema(
+// {
+//   name : {type: String, required: true},
+//   reserveStart : {type: Object, required: true},
+//   reserveEnd : {type: Object, required: true},
+//   selectedImage: String
+// },
+// {
+//   autoIndex: true,
+//   timestamps: true
+// }
+// );
 var User = mongoose.model('user', user);
-var Reservation = mongoose.model('reservation', reservation);
+// var Reservation = mongoose.model('reservation', reservation);
 
 ///////////////Docker Image FTP Connection/////////////
 var connSettings = {
@@ -62,77 +68,82 @@ var remotePath = '/home/rubis/remotelab/';
 cron.schedule('*/1 * * * *', () => {
   console.log('--- Scheduler ---');
   console.log(new Date(Date.now()).toISOString());
-  ///////////////File Upload/////////////
-  Reservation.findOne({reserveStart : {$gt: new Date(Date.now()).toISOString(),
+  ///////////////IMAGE DEPLOY/////////////
+  User.findOne({"reservations.reserveStart": {$gt: new Date(Date.now()).toISOString(),
     $lte: new Date(Date.now() + 70*1000).toISOString()}},
     function(error, data){
       if(error){
-          console.log(error);
-      }else{
+        console.log(error);
+      }else{        
         if(data != null){
-          console.log('--- File Upload---');
-          console.log(data);
-          var conn = new Client();
-            conn.on('ready', function() {
-              conn.sftp(function(err, sftp) {
-                if (err) throw err;
-                let filename = data.name + '_' + data.selectedImage + '.tar';
-                let remoteFile = remotePath + filename;
-                let localFile = './' + filename;
-                try{
-                  if (fs.existsSync(localFile)) {
-                    console.log("file exists");
-                  } else {
-                    shell.exec('sh generation.sh ' + filename);
-                    console.log("new file is created ", filename);
-                  }
-                } catch(err) {
-                  console.error(err);
-                }
-                console.log('remoteFile', remoteFile);
-                console.log('localFile', localFile);
-                sftp.fastPut(localFile, remoteFile, (err) => {
-                  if (err) throw err;
-                  console.log('Uploaded!');
-                  conn.end();
-                });
-              });
-            }).connect(connSettings);
-        }else{
-          //console.log('--- Upload reservation is not exists. ---');
-        }
-      }
-  });
-  ///////////////File Download/////////////
-  Reservation.findOne({reserveEnd : {$gte: new Date(Date.now()).toISOString(),
-    $lt: new Date(Date.now() + 70*1000).toISOString()}},
-    function(error, data){
-      if(error){
-          console.log(error);
-      }else{
-        if(data != null){
-          console.log('--- File Download---');
+          console.log('--- Image Deploy---');
           console.log(data);
           var conn = new Client();
           conn.on('ready', function() {
             conn.sftp(function(err, sftp) {
               if (err) throw err;
-              let filename = data.name + '_' + data.selectedImage + '.tar';
+              let now = new Date(Date.now()).toISOString().split('T')[0]
+              let filename = data.name + '_' + now + '.tar';
+              let remoteFile = remotePath + data.selectedImage; 
+              let localFile = './' + filename;
+              try{
+                if (fs.existsSync(localFile)) {
+                  console.log("file exists");
+                } else {
+                  shell.exec('sh generation.sh ' + filename);
+                  console.log("new file is created ", filename);
+                }
+              } catch(err) {
+                console.error(err);
+              }
+              console.log('remoteFile', remoteFile);
+              console.log('localFile', localFile);
+              sftp.fastPut(localFile, remoteFile, (err) => {
+                if (err) throw err;
+                console.log('Deployed!');
+                conn.end();
+              });
+            });
+          }).connect(connSettings);
+        }else{
+          //console.log('--- Upload reservation is not exists. ---');
+        }
+      }
+    });
+  ///////////////IMAGE RETRIEVE/////////////
+  User.findOne({"reservations.reserveEnd": {$gte: new Date(Date.now()).toISOString(),
+    $lt: new Date(Date.now() + 70*1000).toISOString()}},
+    function(error, data){
+      if(error){
+        console.log(error);
+      }else{
+        if(data != null){
+          console.log('--- Image Retrieve---');
+          console.log(data);
+          var conn = new Client();
+          conn.on('ready', function() {
+            conn.sftp(function(err, sftp) {
+              if (err) throw err;
+              if(data.selectedImage == 'default'){
+                var filename = 'default.tar';
+              }else{
+                var filename = data.name + '_' + data.selectedImage + '.tar';
+              }
               let remoteFile = remotePath + filename;
               let localFile = './' + filename;
               sftp.fastGet(remoteFile, localFile, (err) => {
                 if (err) throw err;
-                console.log('Downloaded!');
+                console.log('Retrieved!');
                 conn.end();
               });
             });
           }).connect(connSettings);
         //shell.exec('sh test.sh ./');
-        }else{
+      }else{
           //console.log('--- Download reservation is not exists. ---');
         }
       }
-  });
+    });
 });
 
 ///////////////Server/////////////
@@ -175,7 +186,7 @@ var server = http.createServer(function(request,response){
         password: parsedQuery.password, images: ['default']});
       User.findOne({name:parsedQuery.name}, function(error,user){
         if(error){
-            console.log(error);
+          console.log(error);
         }else{
           console.log('--- signup user ---');
           console.log(user);
@@ -185,10 +196,10 @@ var server = http.createServer(function(request,response){
           }else{
             newUser.save(function(error, data){
               if(error){
-                  console.log(error);
+                console.log(error);
               }else{
-                  console.log('--- New User Created ---')
-                  response.end('signup success');
+                console.log('--- New User Created ---')
+                response.end('signup success');
               }
             });
           }
@@ -208,7 +219,7 @@ var server = http.createServer(function(request,response){
         password: parsedQuery.password});
       User.findOne({name:parsedQuery.name}, function(error,user){
         if(error){
-            console.log(error);
+          console.log(error);
         }else{
           console.log('--- login user ---');
           console.log(user);
@@ -217,8 +228,8 @@ var server = http.createServer(function(request,response){
               console.log('--- Login success ---');
               response.end('login success');
             }else{
-            console.log('--- Wrong password ---');
-            response.end('wrong password');
+              console.log('--- Wrong password ---');
+              response.end('wrong password');
             }
           }else{
             console.log('--- Account does not exist ---');
@@ -242,74 +253,120 @@ var server = http.createServer(function(request,response){
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('account does not exist');
           }else{
-            var newReservation = new Reservation({name:parsedQuery.name,
-              reserveStart: parsedQuery.reserveStart,
-              reserveEnd: parsedQuery.reserveEnd,
-              selectedImage: 'default'});
-            Reservation.findOne({reserveStart : {$gte: parsedQuery.reserveStart},
-              reserveEnd : {$lte: parsedQuery.reserveEnd}}, function(error,reservation){
-              if(error){
+            User.findOne({"reservations.reserveStart" : {$gte: parsedQuery.reserveStart},
+              "reservations.reserveEnd" : {$lte: parsedQuery.reserveEnd}}, function(error,reserved){
+                if(error){
                   console.log(error);
-              }else{
-                console.log('--- reservation ---');
-                console.log(reservation);
-                if(reservation != null){
-                  console.log('--- Duplicate Reservation ---');
-                  response.writeHead(200, {'Content-Type':'text/html'});
-                  response.end(reservation.reserveStart.replace('T',' ') + ' ~ ' +
-                  reservation.reserveEnd.replace('T',' ') +
-                   ' is already reserved. Change the time!!');
                 }else{
-                  newReservation.save(function(error, data){
-                    if(error){
-                        console.log(error);
-                    }else{
-                        console.log('--- New Reservation Saved ---')
-                        response.writeHead(200, {'Content-Type':'text/html'});
-                        response.end(parsedQuery.name + ' reservation is started at ' + parsedQuery.reserveStart);
-                    }
-                  });
+                  console.log('--- reservation ---');
+                  console.log(reserved);
+                  if(reserved != null){
+                    console.log('--- Duplicate Reservation ---');
+                    response.writeHead(200, {'Content-Type':'text/html'});
+                    response.end(parsedQuery.reserveStart + ' ~ ' +
+                      parsedQuery.reserveEnd +
+                      ' is already reserved. Change the time!!');
+                  }else{
+                    User.findOneAndUpdate({name: user.name},
+                      {'$push': {reservations: {name:parsedQuery.name,
+                        reserveStart: parsedQuery.reserveStart,
+                        reserveEnd: parsedQuery.reserveEnd,
+                        selectedImage: 'default'}}},
+                        {new: true}
+                        , function(error, data){
+                          if(error){
+                            console.log(error);
+                          }else{
+                            console.log('--- New Reservation Saved ---')
+                            response.writeHead(200, {'Content-Type':'text/html'});
+                            response.end(parsedQuery.name + ' reservation is started at ' + parsedQuery.reserveStart);
+                          }
+                        });
+                  }
                 }
-              }
-            });
+              });
           }
         }
       });
     });
+  }else if(resource == '/readReservation'){
+    var postdata = '';
+    request.on('data', function (data) {
+      postdata = postdata + data;
+    });
+    request.on('end', function () {
+      var parsedQuery = querystring.parse(postdata);
+      User.findOne({"name":parsedQuery.name}, function(error, data){
+        console.log('--- Reservation list ---');
+        console.log(new Date(Date.now()).toISOString());
+        if(error){
+          console.log(error);
+        }else{
+          var res = ''
+          var user = JSON.parse(JSON.stringify(data).replace(/ /g, ''));
+          for(var i=0;i<user.reservations.length;i++){
+            res = res.concat('{"reserveStart":"',user.reservations[i].reserveStart,'","reserveEnd":"',
+              user.reservations[i].reserveEnd,'","selectedImage":"',user.reservations[i].selectedImage,'"},');
+          }
+          if(res != ''){
+            res = res.slice(0,-1);
+          }
+          console.log(res);
+          response.writeHead(200, {'Content-Type':'text/html'});
+          response.end(res);
+        }
+      });
+    });
+  }else if(resource == '/cancelReservation'){
+    var postdata = '';
+    request.on('data', function (data) {
+      postdata = postdata + data;
+    });
+    request.on('end', function () {
+      var parsedQuery = querystring.parse(postdata);
+      User.findOneAndUpdate({name:parsedQuery.name},
+        {$pull:{reservations: {reserveStart: parsedQuery.reserveStart}}},function(error,data){
+          if(error){
+            console.log(error);
+          }else{
+            var user = JSON.parse(JSON.stringify(data));
+            if(user == null){
+              console.log('user does not exists');
+              response.writeHead(200, {'Content-Type':'text/html'});
+              response.end('user does not exists');
+            }
+            else{
+              console.log('--- delete reservation success ---');
+              response.writeHead(200, {'Content-Type':'text/html'});
+              response.end('delete success');
+            }
+          }
+        });
+    });
   }else if(resource == '/list'){
-    Reservation.find(null,null,{sort :{reserveStart : 1}}, function(error, reservations){
+    User.find(null,null,{sort :{'reservations.reserveStart.orderIndex' : 1}}, function(error, data){
       console.log('--- Reservation list ---');
       console.log(new Date(Date.now()).toISOString());
       if(error){
-          console.log(error);
+        console.log(error);
       }else{
-        console.log(reservations);
-        var parsedList = reservations.toString().split('}');
-        var i;
-        var res = '';
-        var temp_a;
-        var temp_b;
-        var temp_c;
-        for (i=0; i < parsedList.length-1; i++) {
-          if (i!=0) {res = res + ','};
-          // console.log(i, parsedList[i]);
-          parsedColumn = querystring.parse(parsedList[i].toString(),',\n  ',':',{});
-          // console.log(parsedColumn);
-          // console.log(parsedColumn.name);
-          // console.log(parsedColumn.reserveStart);
-          temp_a = parsedColumn.name.replace(',','').replace("'",'').replace("'",'').trim();
-          temp_b = parsedColumn.reserveStart.replace(',','').replace("'",'').replace("'",'').trim();
-          temp_c = parsedColumn.reserveEnd.replace(',','').replace("'",'').replace("'",'').trim();
-          // console.log(parsedColumn);
-          // console.log(temp_a);
-          // console.log(temp_b);
-          // console.log(temp_c);
-          res = res.concat('{"name":"',temp_a,'","reserveStart":"',temp_b,'","reserveEnd":"',temp_c,'"}');
+        // console.log(data);
+        // const user = JSON.parse(JSON.stringify(data).split("[").join("{").split("]").join("}"));
+        let users = JSON.parse(JSON.stringify(data));
+        console.log(JSON.stringify(users));
+        let res = '';
+        for(var i=0; i<users.length;i++){
+          for(var j=0; j<users[i].reservations.length;j++){
+            res = res.concat('{"name":"',users[i].reservations[j].name,
+              '","reserveStart":"',users[i].reservations[j].reserveStart,
+              '","reserveEnd":"',users[i].reservations[j].reserveEnd,'"},')
+          }
         }
-        // parsedList = querystring.parse(users.toString(),'\n  ',':',{});
+        if(res != ''){
+          res = res.slice(0,-1);
+        }
         response.writeHead(200, {'Content-Type':'text/html'});
         response.end(res);
-        // response.end(users.toString());
       }
     });
   }else if(resource == '/readImage'){
@@ -324,9 +381,9 @@ var server = http.createServer(function(request,response){
       User.findOne({name:parsedQuery.name},null,null,function(error, user){
         console.log('--- imagelist User ---');
         if(error){
-            console.log(error);
-            response.writeHead(200, {'Content-Type':'text/html'});
-            response.end(error);
+          console.log(error);
+          response.writeHead(200, {'Content-Type':'text/html'});
+          response.end(error);
         }else{
           if(user==null){
             response.writeHead(200, {'Content-Type':'text/html'});
@@ -347,22 +404,38 @@ var server = http.createServer(function(request,response){
     });
     request.on('end', function () {
       var parsedQuery = querystring.parse(postdata);
-      Reservation.findOneAndUpdate({name:parsedQuery.name, reserveStart:parsedQuery.reserveStart},
-        {selectedImage:parsedQuery.selectedImage},null,function(error,reservation){
-        if(error){
-          console.log(error);
-        }else{
-          if(reservation == null){
-            console.log('reservation does not exist');
-            response.writeHead(200, {'Content-Type':'text/html'});
-            response.end('reservation does not exist');
+      console.log(parsedQuery);
+      User.findOne({name:parsedQuery.name},function(error,user){
+          if(error){
+            console.log(error);
           }else{
-            console.log('--- Update selectedImage on reservation ---');
-            response.writeHead(200, {'Content-Type':'text/html'});
-            response.end('assign success');
+            if(user == null){
+              console.log('reservation does not exist');
+              response.writeHead(200, {'Content-Type':'text/html'});
+              response.end('reservation does not exist');
+            }else{
+              // console.log(user);
+              var parsedUser = JSON.parse(JSON.stringify(user));
+              for(var i=0;i<user.reservations.length;i++){
+                if(user.reservations[i].reserveStart == parsedQuery.reserveStart){
+                  user.reservations[i].selectedImage = parsedQuery.selectedImage;
+                }
+              }
+              user.save(function (err,res){
+                if(err){
+                  console.log(err);
+                  response.writeHead(200, {'Content-Type':'text/html'});
+                  response.end(err);
+                }else{
+                  console.log(res);
+                  console.log('--- Update selectedImage on reservation ---');
+                  response.writeHead(200, {'Content-Type':'text/html'});
+                  response.end('assign success');
+                }
+              });
+            }
           }
-        }
-      });
+        });
     });
   }else if(resource == '/addImage'){
     var postdata = '';
@@ -376,8 +449,8 @@ var server = http.createServer(function(request,response){
       User.findOneAndUpdate({name:parsedQuery.name},{"$push": {images: now.toString()}},null,function(error, user){
         console.log('--- imagelist User ---');
         if(error){
-            console.log(error);
-            response.end(error);
+          console.log(error);
+          response.end(error);
         }else{
           if(user==null){
             console.log('account does not exist');
@@ -392,26 +465,24 @@ var server = http.createServer(function(request,response){
       });
     });
   }else if(resource == '/busy'){
-    Reservation.findOne({ reserveStart : {$lte :  new Date(Date.now()).toISOString()},
-    reserveEnd : {$gte:  new Date(Date.now()).toISOString()}}, function(error,reservation){
-      console.log('--- Reservation list ---');
-      console.log(new Date(Date.now()).toISOString());
-      if(error){
+    User.findOne({"reservations.reserveStart": {$lte :  new Date(Date.now()).toISOString()},
+      "reservations.reserveEnd" : {$gte:  new Date(Date.now()).toISOString()}}, function(error,data){
+        console.log('--- Reservation list ---');
+        console.log(new Date(Date.now()).toISOString());
+        if(error){
           console.log(error);
-      }else{
-          console.log(reservation);
-          if(reservation != null){
-            var a = JSON.parse(reservation);
-            console.log(a.toString());
-            console.log(reservation.name);
+        }else{
+          console.log(data);
+          if(data != null){
+            var user = JSON.parse(JSON.stringify(data));
             response.writeHead(200, {'Content-Type':'text/html'});
-            response.end(reservation.toString());
+            response.end('System is reserved by '+user.name);
           }else{
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('System is not busy.');
           }
-      }
-    });
+        }
+      });
   }else{
     response.writeHead(404, {'Content-Type':'text/html'});
     response.end('404 Page Not Found');
@@ -419,5 +490,5 @@ var server = http.createServer(function(request,response){
 });
 
 server.listen(80, function(){
-    console.log('Server is running...');
+  console.log('Server is running...');
 });
