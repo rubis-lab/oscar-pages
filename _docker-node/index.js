@@ -39,29 +39,17 @@ var user = mongoose.Schema(
   timestamps: true
 }
 );
-// var reservation = mongoose.Schema(
-// {
-//   name : {type: String, required: true},
-//   reserveStart : {type: Object, required: true},
-//   reserveEnd : {type: Object, required: true},
-//   selectedImage: String
-// },
-// {
-//   autoIndex: true,
-//   timestamps: true
-// }
-// );
 var User = mongoose.model('user', user);
-// var Reservation = mongoose.model('reservation', reservation);
 
 ///////////////Docker Image FTP Connection/////////////
 var connSettings = {
-  host: 'uranium.snu.ac.kr',
-  port: 2222,
-  username: 'rubis',
-  password: '4542rubis'
+
+  host: '147.46.174.234',
+  port: 2200,
+  username: 'nvidia',
+  password: 'nvidia'
 };
-var remotePath = '/home/rubis/remotelab/';
+var remotePath = '/home/nvidia/remotelab/';
 
 
 ///////////////Scheduler/////////////
@@ -70,33 +58,52 @@ cron.schedule('*/1 * * * *', () => {
   console.log(new Date(Date.now()).toISOString());
   ///////////////IMAGE DEPLOY/////////////
   User.findOne({"reservations.reserveStart": {$gt: new Date(Date.now()).toISOString(),
-    $lte: new Date(Date.now() + 70*1000).toISOString()}},
+    $lte: new Date(Date.now() + 60*1000).toISOString()}},
     function(error, data){
       if(error){
         console.log(error);
       }else{        
         if(data != null){
           console.log('--- Image Deploy---');
+          console.log(new Date(Date.now() + 60*1000).toISOString());
           console.log(data);
+          var user = JSON.parse(JSON.stringify(data));
+          var start = new Date(Date.now());
+              var now = new Date(Date.now() + 70*1000);
+              var end = new Date(Date.now());
+              var filename = data.name + '_' + now.toISOString().split('T')[0] + '.tar';
+              let localFile = '/home/node/' + filename;
+              for(var i=0;i<user.reservations.length;i++){
+                start = Date.parse(user.reservations[i].reserveStart);
+                end = Date.parse(user.reservations[i].reserveEnd);
+                if(start < now && now < end){
+                  if(user.reservations[i].selectedImage != 'default'){
+                    filename = data.name + "_" + user.reservations[i].reserveStart.toISOString().split('T')[0]+".tar";
+                    localFile = user.reservations[i].selectedImage + '.tar';
+                  }
+                  else{
+                    localFile = '/home/node/default.tar';
+                  }
+                }
+              }
+              let remoteFile = remotePath + filename;
           var conn = new Client();
           conn.on('ready', function() {
             conn.sftp(function(err, sftp) {
               if (err) throw err;
-              let now = new Date(Date.now()).toISOString().split('T')[0]
-              let filename = data.name + '_' + now + '.tar';
-              let remoteFile = remotePath + data.selectedImage; 
-              let localFile = './' + filename;
               try{
                 if (fs.existsSync(localFile)) {
                   console.log("file exists");
                 } else {
-                  shell.exec('sh generation.sh ' + filename);
-                  console.log("new file is created ", filename);
+                  // shell.exec('sh generation.sh ' + filename);
+                  console.log("file does not exists ", filename);
                 }
               } catch(err) {
+                console.log('remotePath', remoteFile);
+                console.log('localFile', localFile);
                 console.error(err);
               }
-              console.log('remoteFile', remoteFile);
+              console.log('remotePath', remoteFile);
               console.log('localFile', localFile);
               sftp.fastPut(localFile, remoteFile, (err) => {
                 if (err) throw err;
@@ -112,7 +119,7 @@ cron.schedule('*/1 * * * *', () => {
     });
   ///////////////IMAGE RETRIEVE/////////////
   User.findOne({"reservations.reserveEnd": {$gte: new Date(Date.now()).toISOString(),
-    $lt: new Date(Date.now() + 70*1000).toISOString()}},
+    $lt: new Date(Date.now() + 60*1000).toISOString()}},
     function(error, data){
       if(error){
         console.log(error);
@@ -120,17 +127,22 @@ cron.schedule('*/1 * * * *', () => {
         if(data != null){
           console.log('--- Image Retrieve---');
           console.log(data);
+          var user = JSON.parse(JSON.stringify(data));
           var conn = new Client();
           conn.on('ready', function() {
             conn.sftp(function(err, sftp) {
               if (err) throw err;
-              if(data.selectedImage == 'default'){
-                var filename = 'default.tar';
-              }else{
-                var filename = data.name + '_' + data.selectedImage + '.tar';
+              let now = new Date(Date.now()).toISOString().split('T')[0]
+              let filename = data.name + '_' + now + '.tar';
+              for(var i=0;i<user.reservations.length;i++){
+                if(user.reservations[i].reserveStart < now && user.reservations[i].reserveEnd > now){
+                  filename = data.name + "_" + user.reservations[i].reserveStart.toISOString().split('T')[0]+".tar";
+                }
               }
+              let localFile = '/home/node' + filename;
               let remoteFile = remotePath + filename;
-              let localFile = './' + filename;
+              console.log('remotePath', remoteFile);
+              console.log('localFile', localFile);
               sftp.fastGet(remoteFile, localFile, (err) => {
                 if (err) throw err;
                 console.log('Retrieved!');
@@ -407,18 +419,18 @@ var server = http.createServer(function(request,response){
       var parsedQuery = querystring.parse(postdata);
       console.log(parsedQuery);
       User.findOne({name:parsedQuery.name},function(error,user){
-          if(error){
-            console.log(error);
+        if(error){
+          console.log(error);
+        }else{
+          if(user == null){
+            console.log('reservation does not exist');
+            response.writeHead(200, {'Content-Type':'text/html'});
+            response.end('reservation does not exist');
           }else{
-            if(user == null){
-              console.log('reservation does not exist');
-              response.writeHead(200, {'Content-Type':'text/html'});
-              response.end('reservation does not exist');
-            }else{
               // console.log(user);
               var parsedUser = JSON.parse(JSON.stringify(user));
               let startTime = parsedQuery.reserveStart;
-              if(startTime.includes('z') | startTime.includes('Z')){
+              if(startTime.includes('z') || startTime.includes('Z')){
                 let remover = startTime.lastIndexOf(":");
                 startTime = startTime.replace(/(z|Z)/g,'').substring(0,remover);
                 console.log(startTime);
@@ -490,6 +502,32 @@ var server = http.createServer(function(request,response){
           }
         }
       });
+  }else if(resource == '/removeReservation'){
+    var postdata = '';
+    request.on('data', function (data) {
+      postdata = postdata + data;
+    });
+    request.on('end', function () {
+      var parsedQuery = querystring.parse(postdata);
+      User.findOneAndUpdate({name:parsedQuery.name},
+        {$set:{reservations: []}},function(error,data){
+          if(error){
+            console.log(error);
+          }else{
+            var user = JSON.parse(JSON.stringify(data));
+            if(user == null){
+              console.log('user does not exists');
+              response.writeHead(200, {'Content-Type':'text/html'});
+              response.end('user does not exists');
+            }
+            else{
+              console.log('--- delete reservation success ---');
+              response.writeHead(200, {'Content-Type':'text/html'});
+              response.end('remove success');
+            }
+          }
+        });
+    });
   }else{
     response.writeHead(404, {'Content-Type':'text/html'});
     response.end('404 Page Not Found');

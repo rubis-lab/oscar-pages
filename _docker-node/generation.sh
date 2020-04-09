@@ -1,2 +1,3 @@
 #!/usr/bin/env /node
-cp original.tar $1
+# pwd >> $1
+cp /home/node/default.tar $1
