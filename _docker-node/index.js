@@ -139,7 +139,7 @@ cron.schedule('*/1 * * * *', () => {
                   filename = data.name + "_" + user.reservations[i].reserveStart.toISOString().split('T')[0]+".tar";
                 }
               }
-              let localFile = '/home/node' + filename;
+              let localFile = '/home/node/' + filename;
               let remoteFile = remotePath + filename;
               console.log('remotePath', remoteFile);
               console.log('localFile', localFile);
