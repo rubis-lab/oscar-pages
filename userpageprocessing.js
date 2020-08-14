@@ -85,6 +85,7 @@ $.ajax({
             '<div><b>Start: </b>' + reservationList[count]['reserveStart'].replace('T', " ").replace(/:00:002Z/g, "") + '</div>' +
             '<div><b>End: </b>' + reservationList[count]['reserveEnd'].replace('T', " ").replace(/:00:002Z/g, "") + '</div>' +
             '<div><b>Selected Image: </b>' + reservationList[count]['selectedImage'] + '</div>' +
+              '<div><b>Reservation Password: </b>' + reservationList[count]['password'] + '</div>'
           '</button>'
 
           // "Select Docker Image" page
