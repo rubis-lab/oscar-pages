@@ -31,7 +31,8 @@ var user = mongoose.Schema(
     name : {type: String},
     reserveStart : {type: Object},
     reserveEnd : {type: Object},
-    selectedImage: String
+    selectedImage: String,
+    password: String
   }]
 },
 {
@@ -283,7 +284,8 @@ var server = http.createServer(function(request,response){
                       {'$push': {reservations: {name:parsedQuery.name,
                         reserveStart: parsedQuery.reserveStart,
                         reserveEnd: parsedQuery.reserveEnd,
-                        selectedImage: 'default'}}},
+                        selectedImage: 'default',
+                        password: '20'}}},
                         {new: true}
                         , function(error, data){
                           if(error){
@@ -318,7 +320,8 @@ var server = http.createServer(function(request,response){
           var user = JSON.parse(JSON.stringify(data).replace(/ /g, ''));
           for(var i=0;i<user.reservations.length;i++){
             res = res.concat('{"reserveStart":"',user.reservations[i].reserveStart,'","reserveEnd":"',
-              user.reservations[i].reserveEnd,'","selectedImage":"',user.reservations[i].selectedImage,'"},');
+              user.reservations[i].reserveEnd,'","selectedImage":"',user.reservations[i].selectedImage,
+              user.reservations[i].password'"},');
           }
           if(res != ''){
             res = res.slice(0,-1);
@@ -371,7 +374,8 @@ var server = http.createServer(function(request,response){
           for(var j=0; j<users[i].reservations.length;j++){
             res = res.concat('{"name":"',users[i].reservations[j].name,
               '","reserveStart":"',users[i].reservations[j].reserveStart,
-              '","reserveEnd":"',users[i].reservations[j].reserveEnd,'"},')
+              '","reserveEnd":"',users[i].reservations[j].reserveEnd,
+              '","password":"',users[i].reservations[j].password,'"},')
           }
         }
         if(res!=''){
