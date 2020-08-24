@@ -375,6 +375,7 @@ var server = http.createServer(function(request,response){
             res = res.concat('{"name":"',users[i].reservations[j].name,
               '","reserveStart":"',users[i].reservations[j].reserveStart,
               '","reserveEnd":"',users[i].reservations[j].reserveEnd,
+              '","selectedImage":"', users[i].reservations[j].selectedImage,
               '","password":"',users[i].reservations[j].password,'"},')
           }
         }
