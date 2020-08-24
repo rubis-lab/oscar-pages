@@ -320,8 +320,8 @@ var server = http.createServer(function(request,response){
           var user = JSON.parse(JSON.stringify(data).replace(/ /g, ''));
           for(var i=0;i<user.reservations.length;i++){
             res = res.concat('{"reserveStart":"',user.reservations[i].reserveStart,'","reserveEnd":"',
-              user.reservations[i].reserveEnd,'","selectedImage":"',user.reservations[i].selectedImage,
-              user.reservations[i].password'"},');
+              user.reservations[i].reserveEnd,'","selectedImage":"',user.reservations[i].selectedImage, '","password":"',
+              user.reservations[i].password,'"},');
           }
           if(res != ''){
             res = res.slice(0,-1);
@@ -374,7 +374,7 @@ var server = http.createServer(function(request,response){
           for(var j=0; j<users[i].reservations.length;j++){
             res = res.concat('{"name":"',users[i].reservations[j].name,
               '","reserveStart":"',users[i].reservations[j].reserveStart,
-              //'","reserveEnd":"',users[i].reservations[j].reserveEnd,
+              '","reserveEnd":"',users[i].reservations[j].reserveEnd,
               '","selectedImage":"', users[i].reservations[j].selectedImage,
               '","password":"',users[i].reservations[j].password,'"},')
           }
