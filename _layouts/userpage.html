@@ -38,6 +38,7 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 <ul id="profileTabs" class="nav nav-tabs">
     <li class="nav-item active"><a class="nav-link active" href="#selectImage" data-toggle="tab">Select Docker Image</a></li>
     <li class="nav-item"><a class="nav-link" href="#reserve" data-toggle="tab">Make/Cancel Reservations</a></li>
+    <li class="nav-item"><a class ="nav-link" href="#launch" data-toggle="tab"> Launch Remote Connection</a></li>
 </ul>
   <div class="tab-content" style="margin:5%;">
 <div role="tabpanel" class="tab-pane active active active" id="selectImage">
@@ -167,6 +168,15 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 </div>
 
   </div>
+      
+<div role="tabpanel" class="tab-pane" id="launch">
+    <div class="row text-center">
+        <div class="col-sm-12">
+        <button type="submit" class="btn btn-primary" id="launchReserve"> LAUNCH VNC</button>
+        </div>
+    </div>
+      
+      </div>
 </div>
 
     </div>
