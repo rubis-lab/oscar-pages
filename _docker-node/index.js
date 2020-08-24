@@ -31,8 +31,8 @@ var user = mongoose.Schema(
     name : {type: String},
     reserveStart : {type: Object},
     reserveEnd : {type: Object},
-    selectedImage: String,
-    password: String
+    selectedImage: {type: String},
+    password: {type: String}
   }]
 },
 {
@@ -374,7 +374,7 @@ var server = http.createServer(function(request,response){
           for(var j=0; j<users[i].reservations.length;j++){
             res = res.concat('{"name":"',users[i].reservations[j].name,
               '","reserveStart":"',users[i].reservations[j].reserveStart,
-              '","reserveEnd":"',users[i].reservations[j].reserveEnd,
+              //'","reserveEnd":"',users[i].reservations[j].reserveEnd,
               '","selectedImage":"', users[i].reservations[j].selectedImage,
               '","password":"',users[i].reservations[j].password,'"},')
           }
