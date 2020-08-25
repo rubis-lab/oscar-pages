@@ -118,42 +118,20 @@ cron.schedule('*/1 * * * *', () => {
         }
       }
     });
-  ///////////////IMAGE RETRIEVE/////////////
-  User.findOne({"reservations.reserveEnd": {$gte: new Date(Date.now()).toISOString(),
-    $lt: new Date(Date.now() + 60*1000).toISOString()}},
-    function(error, data){
+    User.findOneAndUpdate({name:data.name},{"$push": {images: filename}},null,function(error, user){
+      console.log('--- imagelist User ---');
       if(error){
         console.log(error);
+        response.end(error);
       }else{
-        if(data != null){
-          console.log('--- Image Retrieve---');
-          console.log(data);
-          var user = JSON.parse(JSON.stringify(data));
-          var conn = new Client();
-          conn.on('ready', function() {
-            conn.sftp(function(err, sftp) {
-              if (err) throw err;
-              let now = new Date(Date.now()).toISOString().split('T')[0]
-              let filename = data.name + '_' + now + '.tar';
-              for(var i=0;i<user.reservations.length;i++){
-                if(user.reservations[i].reserveStart < now && user.reservations[i].reserveEnd > now){
-                  filename = data.name + "_" + user.reservations[i].reserveStart.toISOString().split('T')[0]+".tar";
-                }
-              }
-              let localFile = '/home/node/' + filename;
-              let remoteFile = remotePath + filename;
-              console.log('remotePath', remoteFile);
-              console.log('localFile', localFile);
-              sftp.fastGet(remoteFile, localFile, (err) => {
-                if (err) throw err;
-                console.log('Retrieved!');
-                conn.end();
-              });
-            });
-          }).connect(connSettings);
-        //shell.exec('sh test.sh ./');
-      }else{
-          //console.log('--- Download reservation is not exists. ---');
+        if(user==null){
+          console.log('account does not exist');
+          response.writeHead(200, {'Content-Type':'text/html'});
+          response.end('account does not exist');
+        }else{
+          console.log(now);
+          response.writeHead(200, {'Content-Type':'text/html'});
+          response.end('add image success');
         }
       }
     });
