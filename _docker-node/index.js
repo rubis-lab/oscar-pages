@@ -32,7 +32,7 @@ var user = mongoose.Schema(
     reserveStart : {type: Object},
     reserveEnd : {type: Object},
     selectedImage: {type: String},
-    password: {type: String}
+    vnc_password: {type: String}
   }]
 },
 {
@@ -285,7 +285,7 @@ var server = http.createServer(function(request,response){
                         reserveStart: parsedQuery.reserveStart,
                         reserveEnd: parsedQuery.reserveEnd,
                         selectedImage: 'default',
-                        password: '20'}}},
+                        vnc_password: Math.random().toString(36).substring(7)}}},
                         {new: true}
                         , function(error, data){
                           if(error){
@@ -320,8 +320,8 @@ var server = http.createServer(function(request,response){
           var user = JSON.parse(JSON.stringify(data).replace(/ /g, ''));
           for(var i=0;i<user.reservations.length;i++){
             res = res.concat('{"reserveStart":"',user.reservations[i].reserveStart,'","reserveEnd":"',
-              user.reservations[i].reserveEnd,'","selectedImage":"',user.reservations[i].selectedImage, '","password":"',
-              user.reservations[i].password,'"},');
+              user.reservations[i].reserveEnd,'","selectedImage":"',user.reservations[i].selectedImage,'","vnc_password":"',
+              user.reservations[i].vnc_password'"},');
           }
           if(res != ''){
             res = res.slice(0,-1);
@@ -375,8 +375,7 @@ var server = http.createServer(function(request,response){
             res = res.concat('{"name":"',users[i].reservations[j].name,
               '","reserveStart":"',users[i].reservations[j].reserveStart,
               '","reserveEnd":"',users[i].reservations[j].reserveEnd,
-              '","selectedImage":"', users[i].reservations[j].selectedImage,
-              '","password":"',users[i].reservations[j].password,'"},')
+              '","vnc_password":"',users[i].reservations[j].vnc_password,'"},')
           }
         }
         if(res!=''){
