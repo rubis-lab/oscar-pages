@@ -319,9 +319,10 @@ var server = http.createServer(function(request,response){
           var res = ''
           var user = JSON.parse(JSON.stringify(data).replace(/ /g, ''));
           for(var i=0;i<user.reservations.length;i++){
-            res = res.concat('{"reserveStart":"',user.reservations[i].reserveStart,'","reserveEnd":"',
-              user.reservations[i].reserveEnd,'","selectedImage":"',user.reservations[i].selectedImage,'","vnc_password":"',
-              user.reservations[i].vnc_password'"},');
+            res = res.concat('{"reserveStart":"',user.reservations[i].reserveStart,
+                             '","reserveEnd":"',user.reservations[i].reserveEnd,
+                             '","selectedImage":"',user.reservations[i].selectedImage,
+                             '","vnc_password":"',user.reservations[i].vnc_password,'"},');
           }
           if(res != ''){
             res = res.slice(0,-1);
