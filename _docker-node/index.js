@@ -45,12 +45,12 @@ var User = mongoose.model('user', user);
 ///////////////Docker Image FTP Connection/////////////
 var connSettings = {
 
-  host: '147.46.174.234',
-  port: 2200,
-  username: 'nvidia',
-  password: 'nvidia'
+  host: '147.46.174.56',
+  port: 5022,
+  username: 'rubis',
+  password: '4542rubis'
 };
-var remotePath = '/home/nvidia/remotelab/';
+var remotePath = '/home/rubis/remotelab/';
 
 
 ///////////////Scheduler/////////////
@@ -58,7 +58,7 @@ cron.schedule('*/1 * * * *', () => {
   console.log('--- Scheduler ---');
   console.log(new Date(Date.now()).toISOString());
   ///////////////IMAGE DEPLOY/////////////
-  User.findOne({"reservations.reserveStart": {$gt: new Date(Date.now()).toISOString(),
+  User.findOne({"reservations.reserveStart": {$gt: new Date(Date.now() - 60*1).toISOString(),
     $lte: new Date(Date.now() + 60*1000).toISOString()}},
     function(error, data){
       if(error){
@@ -118,20 +118,59 @@ cron.schedule('*/1 * * * *', () => {
         }
       }
     });
-    User.findOneAndUpdate({name:data.name},{"$push": {images: filename}},null,function(error, user){
-      console.log('--- imagelist User ---');
+   ///////////////IMAGE RETRIEVE/////////////
+  User.findOne({"reservations.reserveEnd": {$gte: new Date(Date.now()).toISOString(),
+    $lt: new Date(Date.now() + 60*1000).toISOString()}},
+    function(error, data){
       if(error){
         console.log(error);
-        response.end(error);
       }else{
-        if(user==null){
-          console.log('account does not exist');
-          response.writeHead(200, {'Content-Type':'text/html'});
-          response.end('account does not exist');
-        }else{
-          console.log(now);
-          response.writeHead(200, {'Content-Type':'text/html'});
-          response.end('add image success');
+        if(data != null){
+          console.log('--- Image Retrieve---');
+          console.log(data);
+          var user = JSON.parse(JSON.stringify(data));
+          var conn = new Client();
+          conn.on('ready', function() {
+            conn.sftp(function(err, sftp) {
+              if (err) throw err;
+              let now = new Date(Date.now()).toISOString().split('T')[0]
+              let filename = data.name + '_' + now + '.tar';
+              for(var i=0;i<user.reservations.length;i++){
+                if(user.reservations[i].reserveStart < now && user.reservations[i].reserveEnd > now){
+                  filename = data.name + "_" + user.reservations[i].reserveStart.toISOString().split('T')[0]+".tar";
+                }
+              }
+              let localFile = '/home/node/' + filename;
+              let remoteFile = remotePath + filename;
+              console.log('remotePath', remoteFile);
+              console.log('localFile', localFile);
+              sftp.fastGet(remoteFile, localFile, (err) => {
+                if (err) throw err;
+                console.log('Retrieved!');
+                conn.end();
+              });
+            });
+          }).connect(connSettings);
+        //shell.exec('sh test.sh ./');
+        User.findOneAndUpdate({name:data.name},{"$push": {images: filename}},null,function(error, user){
+          console.log('--- imagelist User ---');
+          if(error){
+            console.log(error);
+            response.end(error);
+          }else{
+            if(user==null){
+              console.log('account does not exist');
+              response.writeHead(200, {'Content-Type':'text/html'});
+              response.end('account does not exist');
+            }else{
+              console.log(now);
+              response.writeHead(200, {'Content-Type':'text/html'});
+              response.end('add image success');
+            }
+          }
+        });
+      }else{
+          //console.log('--- Download reservation is not exists. ---');
         }
       }
     });
@@ -354,6 +393,7 @@ var server = http.createServer(function(request,response){
             res = res.concat('{"name":"',users[i].reservations[j].name,
               '","reserveStart":"',users[i].reservations[j].reserveStart,
               '","reserveEnd":"',users[i].reservations[j].reserveEnd,
+              '","selectedImage":"',users[i].reservations[j].selectedImage,
               '","vnc_password":"',users[i].reservations[j].vnc_password,'"},')
           }
         }
