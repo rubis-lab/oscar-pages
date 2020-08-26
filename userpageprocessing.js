@@ -191,7 +191,13 @@ $(document).ready(function(){
       if (hourEnd < 10){
           var hourEnd_str = '0'.concat(hourEnd);
       }
-      
+      else{
+        var hourStart_str = hourStart.toString();   //ex: 09
+        var hourEnd_str = hourEnd.toString();
+
+      }
+
+
       var UTC_timeStart = hourStart_str.concat(timeStart.substring(2));
       var UTC_timeEnd = hourEnd_str.concat(timeEnd.substring(2));
 
