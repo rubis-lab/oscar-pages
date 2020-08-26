@@ -143,14 +143,35 @@ $(document).ready(function(){
 
       event.preventDefault();
 
+      var timeStart = $('input[id=inputTimeStart]').val();
+      var timeEnd = $('input[id=inputTimeEnd]').val();
+
+      var hourStart = parseInt(timeStart.substring(0,2));
+      var hourEnd = parseInt(timeEnd.substring(0,2));
+
+      hourStart = hourStart - 9;
+      hourEnd = hourEnd - 9 ;
+
+      if (hourStart < 10){
+          //Append 0 to hour if it is less than 10
+          var hourStart_str = '0'.concat(hourStart);
+      }
+      if (hourEnd < 10){
+          var hourEnd_str = '0'.concat(hourEnd);
+      }
+      
+      var UTC_timeStart = hourStart_str.concat(timeStart.substring(2));
+      var UTC_timeEnd = hourEnd_str.concat(timeEnd.substring(2));
+
+
       //Get form data from userpage.html
       var formData = {
           //Setting the input to be the id
           'name'          :email,
           'reserveStart'  :$('input[id=inputDate]').val() + "T" +
-          $('input[id=inputTimeStart]').val() + ":00:002Z",
+          UTC_timeStart + ":00:002Z",
           'reserveEnd'    :$('input[id=inputDate]').val() + "T" +
-          $('input[id=inputTimeEnd]').val() + ":00:002Z",
+          UTC_timeEnd + ":00:002Z",
       };
 
       console.log(formData['reserveStart']);
@@ -290,5 +311,46 @@ $(document).ready(function(){
 
     });
 
+    $('#launchReserve').click(function(event){
+
+        event.preventDefault();
+
+        //Get form data from userpage.html
+        var formData = {
+            //Setting the input to be the id
+            'name'          :email,
+        };
+
+        $.ajax({
+
+            async         :true,
+            type          :'GET',
+            url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/busy',
+            dataType      :'text',
+            encode        :true,
+            success       : function(response){
+                               },
+            error         : function(req,err){
+                            console.log(err);
+                               }
+        })
+        .done(function(data){
+            if (data.includes("System is not busy.")){
+                alert("No active VNC session. Check your reservation time.");
+            }
+            else if (data.includes(formData.name)){
+                //If the '.../busy' request returns the user's name then it means it is currently their reservation time
+                //It should open a new tab to the VNC session
+                //Not sure how to make a link load. 
+                alert(formData.name);
+                window.location.reload();
+                window.open('www.google.com');
+            }
+            else {
+                alert("ERROR");
+            }
+        });
+
+    });
 
 });
