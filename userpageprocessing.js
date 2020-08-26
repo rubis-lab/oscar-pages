@@ -81,9 +81,41 @@ $.ajax({
         // Insert the (parsed) reservations into userpage.html
         for (var count = 0; count < reservationList.length; count++){
 
+            var timeStart = reservationList[count]['reserveStart'].replace('T', " ").replace(/:00:002Z/g, "");
+            var timeEnd = reservationList[count]['reserveEnd'].replace('T', " ").replace(/:00:002Z/g, "");
+      
+            var date = timeStart.substring(0,11);
+            
+            timeStart = timeStart.substring(11);
+            timeEnd = timeEnd.substring(11);
+
+            var hourStart = parseInt(timeStart.substring(0,2));
+            var hourEnd = parseInt(timeEnd.substring(0,2));
+      
+            hourStart = hourStart + 9;
+            hourEnd = hourEnd + 9 ;
+      
+            if (hourStart < 10){
+                //Append 0 to hour if it is less than 10
+                var hourStart_str = '0'.concat(hourStart);
+            }
+            if (hourEnd < 10){
+                var hourEnd_str = '0'.concat(hourEnd);
+            }
+            else{
+                var hourStart_str = hourStart.toString();
+                var hourEnd_str = hourEnd.toString();
+            }
+
+            var UTC_timeStart = hourStart_str.concat(timeStart.substring(2));
+            var UTC_timeEnd = hourEnd_str.concat(timeEnd.substring(2));
+            //Add back the date
+            var UTC_reserveStart = date.concat(UTC_timeStart);
+            var UTC_reserveEnd = date.concat(UTC_timeEnd);
+
           var reservation = '<button type="button" class="reservation list-group-item list-group-item-action">'+
-            '<div><b>Start: </b>' + reservationList[count]['reserveStart'].replace('T', " ").replace(/:00:002Z/g, "") + '</div>' +
-            '<div><b>End: </b>' + reservationList[count]['reserveEnd'].replace('T', " ").replace(/:00:002Z/g, "") + '</div>' +
+            '<div><b>Start: </b>' + UTC_reserveStart + '</div>' +
+            '<div><b>End: </b>' + UTC_reserveEnd + '</div>' +
             '<div><b>Selected Image: </b>' + reservationList[count]['selectedImage'] + '</div>' +
               '<div><b>Reservation Password: </b>' + reservationList[count]['vnc_password'] + '</div>'
           '</button>'
