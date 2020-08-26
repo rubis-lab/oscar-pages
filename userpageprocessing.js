@@ -338,13 +338,17 @@ $(document).ready(function(){
             if (data.includes("System is not busy.")){
                 alert("No active VNC session. Check your reservation time.");
             }
-            else if (data.includes(formData.name)){
+            else if ((data.includes(formData.name))&& (data.includes("reserved"))){
                 //If the '.../busy' request returns the user's name then it means it is currently their reservation time
-                //It should open a new tab to the VNC session
-                //Not sure how to make a link load. 
+                //Opens new tab with VNC session
                 alert(formData.name);
+                alert("You will be redirected to your VNC session.");
                 window.location.reload();
                 window.open('www.google.com');
+            }
+            else if (data.includes("reserved")){
+                alert("Active VNC session by another user. OscarLab cannot be accessed at this time.");
+                window.location.reload();
             }
             else {
                 alert("ERROR");
