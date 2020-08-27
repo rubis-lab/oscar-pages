@@ -82,6 +82,7 @@ cron.schedule('*/1 * * * *', () => {
           for(var i=0;i<user.reservations.length;i++){
             start = Date.parse(user.reservations[i].reserveStart);
             end = Date.parse(user.reservations[i].reserveEnd);
+            console.log('now: '+now);
             console.log('start: '+start);
             console.log('end: '+end);
             if(start < now && now < end){
@@ -109,7 +110,7 @@ cron.schedule('*/1 * * * *', () => {
             conn.sftp(function(err, sftp) {
               if (err) throw err;
               try{
-                if (fs.existsSync(localFile) && fs.existSync(localUser)) {
+                if (fs.existsSync(localFile)) {
                   console.log("tar file and user info files exist");
                 } else {
                   // shell.exec('sh generation.sh ' + filename);
