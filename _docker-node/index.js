@@ -145,7 +145,7 @@ cron.schedule('*/1 * * * *', () => {
           console.log(data);
           var user = JSON.parse(JSON.stringify(data));
           var conn = new Client();
-          let filename='';
+          var filename='';
           let now;
           conn.on('ready', function() {
             conn.sftp(function(err, sftp) {
