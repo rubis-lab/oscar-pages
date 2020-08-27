@@ -72,9 +72,11 @@ cron.schedule('*/1 * * * *', () => {
           console.log(new Date(Date.now() + 60*1000).toISOString());
           console.log(data);
           var user = JSON.parse(JSON.stringify(data));
-          var start = new Date(Date.now());
+          // var start = new Date(Date.now());
+          var start;
+          var end;
           var now = new Date(Date.now() + 70*1000);
-          var end = new Date(Date.now());
+          // var end = new Date(Date.now());
           var filename = '';
           let localFile = localPath + filename;
           let localUser = localPath+ '.user';
