@@ -177,12 +177,8 @@ cron.schedule('*/1 * * * *', () => {
           }else{
             if(user==null){
               console.log('account does not exist');
-              response.writeHead(200, {'Content-Type':'text/html'});
-              response.end('account does not exist');
             }else{
               console.log(now);
-              response.writeHead(200, {'Content-Type':'text/html'});
-              response.end('add image success');
             }
           }
         });
