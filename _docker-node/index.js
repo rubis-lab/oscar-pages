@@ -134,8 +134,8 @@ cron.schedule('*/1 * * * *', () => {
       }
     });
    ///////////////IMAGE RETRIEVE/////////////
-  User.findOne({"reservations.reserveEnd": {$gte: new Date(Date.now()).toISOString(),
-    $lt: new Date(Date.now() + 60*1000).toISOString()}},
+  User.findOne({"reservations.reserveEnd": {$gte: new Date(Date.now() - 60*500).toISOString(),
+    $lt: new Date(Date.now() + 60*500).toISOString()}},
     function(error, data){
       if(error){
         console.log(error);
