@@ -89,13 +89,12 @@ cron.schedule('*/1 * * * *', () => {
             // string format is wrong 
             start = Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart));
             end = Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd));
-            console.log('now: '+now);
-            console.log('start: '+start);
+            // console.log('now: '+now);
+            // console.log('start: '+start);
             if(start < now && now < end){
               // convert to KST
               var endTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd))+(60*60*1000*9)).toISOString().slice(11, 16); 
               info = info.concat(user.reservations[i].vnc_password, "\n", endTime);
-              console.log('user info: '+info);
               fs.writeFile(localUser, info, function (err) {
                                               if(err) return console.log(err);
                                               });
@@ -109,6 +108,7 @@ cron.schedule('*/1 * * * *', () => {
               }
             }
           }
+          console.log('user info: '+info);
           let remoteFile = remotePath + filename;
           let remoteUser = remotePath + '.user';
           var conn = new Client();
@@ -127,6 +127,8 @@ cron.schedule('*/1 * * * *', () => {
               }
               console.log('remoteFile', remoteFile);
               console.log('remoteUser', remoteUser);
+              console.log('localFile', localFile);
+              console.log('localUser', localUser);
               sftp.fastPut(localUser, remoteUser, (err) => {
                 if(err) throw err;
                 console.log('pwd and end time notice to tx2!');
