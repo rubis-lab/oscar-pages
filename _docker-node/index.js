@@ -55,6 +55,12 @@ var connSettings = {
 var remotePath = '/home/rubis/remotelab/';
 var localPath = 'home/node/';
 
+function getTimeStringfromObject(object){
+  var pieces = object.split(':');
+  var last = pieces[3];
+  var first = pieces[0]+":"+pieces[1]+":"+pieces[2];
+  return first+"."+last;
+}
 
 ///////////////Scheduler/////////////
 cron.schedule('*/1 * * * *', () => {
@@ -72,22 +78,19 @@ cron.schedule('*/1 * * * *', () => {
           console.log(new Date(Date.now() + 60*1000).toISOString());
           console.log(data);
           var user = JSON.parse(JSON.stringify(data));
-          // var start = new Date(Date.now());
-          var start;
-          var end;
+          var start = new Date(Date.now());
           var now = new Date(Date.now() + 70*1000);
-          // var end = new Date(Date.now());
+          var end = new Date(Date.now());
           var filename = '';
           let localFile = localPath + filename;
           let localUser = localPath+ '.user';
           let info = '';
           for(var i=0;i<user.reservations.length;i++){
-            start = Date.parse(user.reservations[i].reserveStart);
-            end = Date.parse(user.reservations[i].reserveEnd);
+            // string format is wrong 
+            start = Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart));
+            end = Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd));
             console.log('now: '+now);
-            console.log('reserve start: '+user.reservations[i].reserveStart);
-            console.log('start: '+start.toString());
-            console.log('end: '+end.toString());
+            console.log('start: '+start);
             if(start < now && now < end){
               // convert to KST
               var endTime = new Date(Date.parse(user.reservations[i].reserveEnd)+(60*60*1000*9)).toISOString().slice(11, 16); 
