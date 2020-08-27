@@ -53,6 +53,7 @@ var connSettings = {
   password: '4542rubis'
 };
 var remotePath = '/home/rubis/remotelab/';
+var localPath = 'home/node/';
 
 
 ///////////////Scheduler/////////////
@@ -74,13 +75,15 @@ cron.schedule('*/1 * * * *', () => {
           var start = new Date(Date.now());
           var now = new Date(Date.now() + 70*1000);
           var end = new Date(Date.now());
-          var filename = data.name + '_' + now.toISOString().split('T')[0] + '.tar';
-          let localFile = '/home/node/' + filename;
-          let localUser = '/home/node/.user';
+          var filename = '';
+          let localFile = localPath + filename;
+          let localUser = localPath+ '.user';
           let info = '';
           for(var i=0;i<user.reservations.length;i++){
             start = Date.parse(user.reservations[i].reserveStart);
             end = Date.parse(user.reservations[i].reserveEnd);
+            console.log('start: '+start);
+            console.log('end: '+end);
             if(start < now && now < end){
               // convert to KST
               var endTime = new Date(Date.parse(user.reservations[i].reserveEnd)+(60*60*1000*9)).toISOString().slice(11, 16); 
@@ -91,10 +94,11 @@ cron.schedule('*/1 * * * *', () => {
                                               });
               if(user.reservations[i].selectedImage != 'default'){
                 filename = data.name + "_" + user.reservations[i].reserveStart.toISOString().split('T')[0]+".tar";
-                localFile = user.reservations[i].selectedImage + '.tar';
+                // localFile = user.reservations[i].selectedImage + '.tar';
+                localFile = localPath + filename;
               }
               else{
-                localFile = '/home/node/default.tar';
+                localFile = localPath + 'default.tar';
               }
             }
           }
@@ -105,26 +109,24 @@ cron.schedule('*/1 * * * *', () => {
             conn.sftp(function(err, sftp) {
               if (err) throw err;
               try{
-                if (fs.existsSync(localFile)) {
-                  console.log("file exists");
+                if (fs.existsSync(localFile) && fs.existSync(localUser)) {
+                  console.log("tar file and user info files exist");
                 } else {
                   // shell.exec('sh generation.sh ' + filename);
                   console.log("file does not exists ", filename);
                 }
               } catch(err) {
-                console.log('remotePath', remoteFile);
-                console.log('localFile', localFile);
                 console.error(err);
               }
-              console.log('remotePath', remoteFile);
-              console.log('localFile', localFile);
+              console.log('remoteFile', remoteFile);
+              console.log('remoteUser', remoteUser);
               sftp.fastPut(localUser, remoteUser, (err) => {
                 if(err) throw err;
                 console.log('pwd and end time notice to tx2!');
               })
               sftp.fastPut(localFile, remoteFile, (err) => {
                 if (err) throw err;
-                console.log('Deployed!');
+                console.log('Tar file is Deployed!');
                 conn.end();
               });
             });
