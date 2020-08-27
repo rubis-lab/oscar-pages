@@ -157,7 +157,8 @@ cron.schedule('*/1 * * * *', () => {
                   filename = data.name + "_" + user.reservations[i].reserveStart.toISOString().split('T')[0]+".tar";
                 }
               }
-              User.findOneAndUpdate({name:data.name},{"$push": {images: filename}},{new: true},function(error, user){
+              let imagename = filename.split('_')[1].slice(0, 10);
+              User.findOneAndUpdate({name:data.name},{"$push": {images: imagename}},{new: true},function(error, user){
                 if(error){
                   console.log(error);
                   response.end(error);
