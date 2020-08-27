@@ -157,6 +157,16 @@ cron.schedule('*/1 * * * *', () => {
                   filename = data.name + "_" + user.reservations[i].reserveStart.toISOString().split('T')[0]+".tar";
                 }
               }
+              User.findOneAndUpdate({name:data.name},{"$push": {images: filename}},{new: true},function(error, user){
+                if(error){
+                  console.log(error);
+                  response.end(error);
+                }else{
+                  console.log('--- imagelist User ---');
+                  console.log(filename);
+                  console.log(data.images);
+                }
+              });
               let localFile = '/home/node/' + filename;
               let remoteFile = remotePath + filename;
               console.log('remotePath', remoteFile);
@@ -169,21 +179,6 @@ cron.schedule('*/1 * * * *', () => {
             });
           }).connect(connSettings);
         //shell.exec('sh test.sh ./');
-        User.findOneAndUpdate({name:data.name},{"$push": {images: filename}},{new: true},function(error, user){
-          console.log('--- imagelist User ---');
-          console.log(filename);
-          console.log(data.images);
-          if(error){
-            console.log(error);
-            response.end(error);
-          }else{
-            if(user==null){
-              console.log('account does not exist');
-            }else{
-              console.log(now);
-            }
-          }
-        });
       }else{
           //console.log('--- Download reservation is not exists. ---');
         }
