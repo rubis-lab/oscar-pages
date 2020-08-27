@@ -61,7 +61,7 @@ cron.schedule('*/1 * * * *', () => {
   console.log(new Date(Date.now()).toISOString());
   ///////////////IMAGE DEPLOY/////////////
   User.findOne({"reservations.reserveStart": {$gt: new Date(Date.now() - 60*500).toISOString(),
-    $lte: new Date(Date.now() + 60*500).toISOString()}},
+    $lt: new Date(Date.now() + 60*500).toISOString()}},
     function(error, data){
       if(error){
         console.log(error);
@@ -85,6 +85,7 @@ cron.schedule('*/1 * * * *', () => {
               // convert to KST
               var endTime = new Date(Date.parse(user.reservations[i].reserveEnd)+(60*60*1000*9)).toISOString().slice(11, 16); 
               info = info.concat(user.reservations[i].vnc_password, "\n", endTime);
+              console.log('user info: '+info);
               fs.writeFile(localUser, info, function (err) {
                                               if(err) return console.log(err);
                                               });
