@@ -53,7 +53,7 @@ var connSettings = {
   password: '4542rubis'
 };
 var remotePath = '/home/rubis/remotelab/';
-var localPath = 'home/node/';
+var localPath = '/home/node/';
 
 function getTimeStringfromObject(object){
   var pieces = object.split(':');
