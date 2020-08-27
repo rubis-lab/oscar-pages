@@ -80,8 +80,8 @@ cron.schedule('*/1 * * * *', () => {
           let localUser = localPath+ '.user';
           let info = '';
           for(var i=0;i<user.reservations.length;i++){
-            start = Date.parse(user.reservations[i].reserveStart);
-            end = Date.parse(user.reservations[i].reserveEnd);
+            start = new Date(Date.parse(user.reservations[i].reserveStart));
+            end = new Date(Date.parse(user.reservations[i].reserveEnd));
             console.log('now: '+now);
             console.log('start: '+start);
             console.log('end: '+end);
