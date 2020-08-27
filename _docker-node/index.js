@@ -9,6 +9,8 @@ var mime = require('mime');
 var shell = require('shelljs');
 var cron = require('node-cron');
 var mongoose = require('mongoose');
+var fs = require('fs');
+
 
 ///////////////Database Connection/////////////
 //local mongodb connection
@@ -58,8 +60,8 @@ cron.schedule('*/1 * * * *', () => {
   console.log('--- Scheduler ---');
   console.log(new Date(Date.now()).toISOString());
   ///////////////IMAGE DEPLOY/////////////
-  User.findOne({"reservations.reserveStart": {$gt: new Date(Date.now() - 60*1).toISOString(),
-    $lte: new Date(Date.now() + 60*1000).toISOString()}},
+  User.findOne({"reservations.reserveStart": {$gt: new Date(Date.now() - 60*500).toISOString(),
+    $lte: new Date(Date.now() + 60*500).toISOString()}},
     function(error, data){
       if(error){
         console.log(error);
@@ -70,24 +72,33 @@ cron.schedule('*/1 * * * *', () => {
           console.log(data);
           var user = JSON.parse(JSON.stringify(data));
           var start = new Date(Date.now());
-              var now = new Date(Date.now() + 70*1000);
-              var end = new Date(Date.now());
-              var filename = data.name + '_' + now.toISOString().split('T')[0] + '.tar';
-              let localFile = '/home/node/' + filename;
-              for(var i=0;i<user.reservations.length;i++){
-                start = Date.parse(user.reservations[i].reserveStart);
-                end = Date.parse(user.reservations[i].reserveEnd);
-                if(start < now && now < end){
-                  if(user.reservations[i].selectedImage != 'default'){
-                    filename = data.name + "_" + user.reservations[i].reserveStart.toISOString().split('T')[0]+".tar";
-                    localFile = user.reservations[i].selectedImage + '.tar';
-                  }
-                  else{
-                    localFile = '/home/node/default.tar';
-                  }
-                }
+          var now = new Date(Date.now() + 70*1000);
+          var end = new Date(Date.now());
+          var filename = data.name + '_' + now.toISOString().split('T')[0] + '.tar';
+          let localFile = '/home/node/' + filename;
+          let localUser = '/home/node/.user';
+          let info = '';
+          for(var i=0;i<user.reservations.length;i++){
+            start = Date.parse(user.reservations[i].reserveStart);
+            end = Date.parse(user.reservations[i].reserveEnd);
+            if(start < now && now < end){
+              // convert to KST
+              var endTime = new Date(Date.parse(user.reservations[i].reserveEnd)+(60*60*1000*9)).toISOString().slice(11, 16); 
+              info = info.concat(user.reservations[i].vnc_password, "\n", endTime);
+              fs.writeFile(localUser, info, function (err) {
+                                              if(err) return console.log(err);
+                                              });
+              if(user.reservations[i].selectedImage != 'default'){
+                filename = data.name + "_" + user.reservations[i].reserveStart.toISOString().split('T')[0]+".tar";
+                localFile = user.reservations[i].selectedImage + '.tar';
               }
-              let remoteFile = remotePath + filename;
+              else{
+                localFile = '/home/node/default.tar';
+              }
+            }
+          }
+          let remoteFile = remotePath + filename;
+          let remoteUser = remotePath + '.user';
           var conn = new Client();
           conn.on('ready', function() {
             conn.sftp(function(err, sftp) {
@@ -106,6 +117,10 @@ cron.schedule('*/1 * * * *', () => {
               }
               console.log('remotePath', remoteFile);
               console.log('localFile', localFile);
+              sftp.fastPut(localUser, remoteUser, (err) => {
+                if(err) throw err;
+                console.log('pwd and end time notice to tx2!');
+              })
               sftp.fastPut(localFile, remoteFile, (err) => {
                 if (err) throw err;
                 console.log('Deployed!');
@@ -302,7 +317,8 @@ var server = http.createServer(function(request,response){
                         reserveStart: parsedQuery.reserveStart,
                         reserveEnd: parsedQuery.reserveEnd,
                         selectedImage: 'default',
-                        vnc_password: Math.random().toString(36).substring(7)}}},
+                        vnc_password: Math.random().toString(36).substring(7)},
+                      }},
                         {new: true}
                         , function(error, data){
                           if(error){
