@@ -169,8 +169,9 @@ cron.schedule('*/1 * * * *', () => {
             });
           }).connect(connSettings);
         //shell.exec('sh test.sh ./');
-        User.findOneAndUpdate({name:data.name},{"$push": {images: filename}},null,function(error, user){
+        User.findOneAndUpdate({name:data.name},{"$push": {images: filename}},{new: true},function(error, user){
           console.log('--- imagelist User ---');
+          console.log(filename);
           console.log(data.images);
           if(error){
             console.log(error);
