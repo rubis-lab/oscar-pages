@@ -93,7 +93,7 @@ cron.schedule('*/1 * * * *', () => {
             console.log('start: '+start);
             if(start < now && now < end){
               // convert to KST
-              var endTime = new Date(Date.parse(user.reservations[i].reserveEnd)+(60*60*1000*9)).toISOString().slice(11, 16); 
+              var endTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd))+(60*60*1000*9)).toISOString().slice(11, 16); 
               info = info.concat(user.reservations[i].vnc_password, "\n", endTime);
               console.log('user info: '+info);
               fs.writeFile(localUser, info, function (err) {
