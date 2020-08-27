@@ -84,8 +84,8 @@ cron.schedule('*/1 * * * *', () => {
             end = Date.parse(user.reservations[i].reserveEnd);
             console.log('now: '+now);
             console.log('reserve start: '+user.reservations[i].reserveStart);
-            console.log('start: '+start);
-            console.log('end: '+end);
+            console.log('start: '+start.toString());
+            console.log('end: '+end.toString());
             if(start < now && now < end){
               // convert to KST
               var endTime = new Date(Date.parse(user.reservations[i].reserveEnd)+(60*60*1000*9)).toISOString().slice(11, 16); 
