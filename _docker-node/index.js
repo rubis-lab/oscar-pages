@@ -145,11 +145,12 @@ cron.schedule('*/1 * * * *', () => {
           console.log(data);
           var user = JSON.parse(JSON.stringify(data));
           var conn = new Client();
+          let filename = data.name + '_' + now + '.tar';
           conn.on('ready', function() {
             conn.sftp(function(err, sftp) {
               if (err) throw err;
               let now = new Date(Date.now()).toISOString().split('T')[0]
-              let filename = data.name + '_' + now + '.tar';
+              // let filename = data.name + '_' + now + '.tar';
               for(var i=0;i<user.reservations.length;i++){
                 if(user.reservations[i].reserveStart < now && user.reservations[i].reserveEnd > now){
                   filename = data.name + "_" + user.reservations[i].reserveStart.toISOString().split('T')[0]+".tar";
