@@ -307,8 +307,29 @@ $(document).ready(function(){
 
         event.preventDefault();
 
-        // var reserveSplit = $('.reservation.active').text().split(": ");
-        // var reserveStart = reserveSplit[1].replace("End","").replace(" ", "T") + ":00:002Z"
+  
+       
+        // var hourStart = parseInt(timeStart.substring(0,2));
+  
+        // hourStart = hourStart - 9;
+  
+        // if (hourStart < 10){
+        //     //Append 0 to hour if it is less than 10
+        //     var hourStart_str = '0'.concat(hourStart);
+        // }
+        // else{
+        //   var hourStart_str = hourStart.toString();   //ex: 09
+  
+        // }
+  
+  
+        // var UTC_timeStart = hourStart_str.concat(timeStart.substring(2));
+        
+        
+        var reserveSplit = $('.reservation.active').text().split(": ");
+        console.log(reserveSplit);
+        var vnc_password = reserveSplit[4];
+        console.log(vnc_password);
 
         //Get form data from userpage.html
         var formData = {
