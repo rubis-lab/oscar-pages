@@ -480,6 +480,7 @@ var server = http.createServer(function(request,response){
               }
               for(var i=0;i<user.reservations.length;i++){
                 if(user.reservations[i].reserveStart == startTime){
+                  console.log('selected image is changed');
                   user.reservations[i].selectedImage = parsedQuery.selectedImage;
                 }
               }
