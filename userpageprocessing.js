@@ -306,28 +306,8 @@ $(document).ready(function(){
     $('#cancelReservation').click(function(event){
 
         event.preventDefault();
-
-  
-       
-        // var hourStart = parseInt(timeStart.substring(0,2));
-  
-        // hourStart = hourStart - 9;
-  
-        // if (hourStart < 10){
-        //     //Append 0 to hour if it is less than 10
-        //     var hourStart_str = '0'.concat(hourStart);
-        // }
-        // else{
-        //   var hourStart_str = hourStart.toString();   //ex: 09
-  
-        // }
-  
-  
-        // var UTC_timeStart = hourStart_str.concat(timeStart.substring(2));
-        
         
         var reserveSplit = $('.reservation.active').text().split(": ");
-        console.log(reserveSplit);
         var vnc_password = reserveSplit[4];
         console.log(vnc_password);
 
