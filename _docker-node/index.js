@@ -86,11 +86,8 @@ cron.schedule('*/1 * * * *', () => {
           let localUser = localPath+ '.user';
           let info = '';
           for(var i=0;i<user.reservations.length;i++){
-            // string format is wrong 
             start = Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart));
             end = Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd));
-            // console.log('now: '+now);
-            // console.log('start: '+start);
             if(start < now && now < end){
               // convert to KST
               var endTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd))+(60*60*1000*9)).toISOString().slice(11, 16); 
@@ -100,7 +97,6 @@ cron.schedule('*/1 * * * *', () => {
                                               });
               if(user.reservations[i].selectedImage != 'default'){
                 filename = data.name + "_" + user.reservations[i].reserveStart.toISOString().split('T')[0]+".tar";
-                // localFile = user.reservations[i].selectedImage + '.tar';
                 localFile = localPath + filename;
               }
               else{
@@ -494,7 +490,7 @@ var server = http.createServer(function(request,response){
                   response.end(err);
                 }else{
                   console.log(res);
-                  console.log('--- Update selectedImage on reservation ---');
+                  console.log('--- Update selectedImage on reservation ---', res);
                   response.writeHead(200, {'Content-Type':'text/html'});
                   response.end('assign success');
                 }
