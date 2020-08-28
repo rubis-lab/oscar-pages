@@ -307,14 +307,14 @@ $(document).ready(function(){
 
         event.preventDefault();
 
-        var reserveSplit = $('.reservation.active').text().split(": ");
-        var reserveStart = reserveSplit[1].replace("End","").replace(" ", "T") + ":00:002Z"
+        // var reserveSplit = $('.reservation.active').text().split(": ");
+        // var reserveStart = reserveSplit[1].replace("End","").replace(" ", "T") + ":00:002Z"
 
         //Get form data from userpage.html
         var formData = {
             //Setting the input to be the id
             'name'          :email,
-            'reserveStart'  :reserveStart,
+            'vnc_password'  :vnc_password,
         };
 
         $.ajax({
@@ -324,7 +324,7 @@ $(document).ready(function(){
             url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/cancelReservation',
             data          : {
                                 name            : formData.name,
-                                reserveStart    : formData.reserveStart,
+                                vnc_password    : formData.vnc_password,
                 },
             dataType      :'text',
             encode        :true,
