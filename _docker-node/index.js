@@ -539,14 +539,15 @@ var server = http.createServer(function(request,response){
           if(data != null){
             var user = JSON.parse(JSON.stringify(data));
             var now = new Date(Date.now()).toISOString().split('T')[0];
+            var startTime, endTime, pwd;
             for(var i=0;i<user.reservations.length;i++){
               start = Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart));
               end = Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd));
               if(start < now && now < end){
                 // convert to KST
-                var startTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart))+(60*60*1000*9)).toISOString().slice(11, 16); 
-                var endTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd))+(60*60*1000*9)).toISOString().slice(11, 16);
-                var pwd = user.reservations[i].vnc_password; 
+                startTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart))+(60*60*1000*9)).toISOString().slice(11, 16); 
+                endTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd))+(60*60*1000*9)).toISOString().slice(11, 16);
+                pwd = user.reservations[i].vnc_password; 
               }
             }
             response.writeHead(200, {'Content-Type':'text/html'});
