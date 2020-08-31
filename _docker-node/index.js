@@ -537,6 +537,7 @@ var server = http.createServer(function(request,response){
         }else{
           console.log(data);
           if(data != null){
+            var user = JSON.parse(JSON.stringify(data));
             var now = new Date(Date.now()).toISOString().split('T')[0];
             for(var i=0;i<user.reservations.length;i++){
               start = Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart));
@@ -548,7 +549,6 @@ var server = http.createServer(function(request,response){
                 var pwd = user.reservations[i].vnc_password; 
               }
             }
-            var user = JSON.parse(JSON.stringify(data));
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('System is reserved by '+user.name+'('+startTime+', '+endTime+', '+vnc_password+')');
           }else{
