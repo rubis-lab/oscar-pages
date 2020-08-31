@@ -548,6 +548,7 @@ var server = http.createServer(function(request,response){
                 startTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart))+(60*60*1000*9)).toISOString().slice(11, 16); 
                 endTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd))+(60*60*1000*9)).toISOString().slice(11, 16);
                 pwd = user.reservations[i].vnc_password; 
+                console.log(now, startTime, endTime, pwd, start, end);
               }
             }
             response.writeHead(200, {'Content-Type':'text/html'});
