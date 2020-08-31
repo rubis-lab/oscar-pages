@@ -378,7 +378,7 @@ var server = http.createServer(function(request,response){
     request.on('end', function () {
       var parsedQuery = querystring.parse(postdata);
       User.findOneAndUpdate({name:parsedQuery.name},
-        {$pull:{reservations: {reserveStart: parsedQuery.reserveStart}}},function(error,data){
+        {$pull:{reservations: {vnc_password: parsedQuery.vnc_password}}},function(error,data){
           if(error){
             console.log(error);
           }else{

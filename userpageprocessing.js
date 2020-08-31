@@ -306,15 +306,16 @@ $(document).ready(function(){
     $('#cancelReservation').click(function(event){
 
         event.preventDefault();
-
+        
         var reserveSplit = $('.reservation.active').text().split(": ");
-        var reserveStart = reserveSplit[1].replace("End","").replace(" ", "T") + ":00:002Z"
+        var vnc_password = reserveSplit[4];
+        console.log(vnc_password);
 
         //Get form data from userpage.html
         var formData = {
             //Setting the input to be the id
             'name'          :email,
-            'reserveStart'  :reserveStart,
+            'vnc_password'  :vnc_password,
         };
 
         $.ajax({
@@ -324,7 +325,7 @@ $(document).ready(function(){
             url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/cancelReservation',
             data          : {
                                 name            : formData.name,
-                                reserveStart    : formData.reserveStart,
+                                vnc_password    : formData.vnc_password,
                 },
             dataType      :'text',
             encode        :true,
@@ -379,10 +380,10 @@ $(document).ready(function(){
             else if ((data.includes(formData.name))&& (data.includes("reserved"))){
                 //If the '.../busy' request returns the user's name then it means it is currently their reservation time
                 //Opens new tab with VNC session
-                alert(formData.name);
+                //alert(formData.name);
                 alert("You will be redirected to your VNC session.");
                 window.location.reload();
-                window.open('www.google.com');
+                window.open('https://www.google.com/');
             }
             else if (data.includes("reserved")){
                 alert("Active VNC session by another user. OscarLab cannot be accessed at this time.");
