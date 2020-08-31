@@ -380,10 +380,10 @@ $(document).ready(function(){
             else if ((data.includes(formData.name))&& (data.includes("reserved"))){
                 //If the '.../busy' request returns the user's name then it means it is currently their reservation time
                 //Opens new tab with VNC session
-                alert(formData.name);
+                //alert(formData.name);
                 alert("You will be redirected to your VNC session.");
                 window.location.reload();
-                window.open('www.google.com');
+                window.open('https://www.google.com/');
             }
             else if (data.includes("reserved")){
                 alert("Active VNC session by another user. OscarLab cannot be accessed at this time.");
