@@ -125,14 +125,14 @@ cron.schedule('*/1 * * * *', () => {
               console.log('remoteUser', remoteUser);
               console.log('localFile', localFile);
               console.log('localUser', localUser);
-              sftp.fastPut(localUser, remoteUser, (err) => {
-                if(err) throw err;
-                console.log('pwd and end time notice to tx2!');
-              })
               sftp.fastPut(localFile, remoteFile, (err) => {
                 if (err) throw err;
                 console.log('Tar file is Deployed!');
                 conn.end();
+              });
+              sftp.fastPut(localUser, remoteUser, (err) => {
+                if(err) throw err;
+                console.log('pwd and end time notice to tx2!');
               });
             });
           }).connect(connSettings);
@@ -539,7 +539,7 @@ var server = http.createServer(function(request,response){
           if(data != null){
             var user = JSON.parse(JSON.stringify(data));
             response.writeHead(200, {'Content-Type':'text/html'});
-            response.end('System is reserved by '+user.name);
+            response.end('System is reserved by '+user.name+'('+user.startTime+', '+user.endTime+', '+user.vnc_password+')');
           }else{
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('System is not busy.');
