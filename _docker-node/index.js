@@ -543,7 +543,6 @@ var server = http.createServer(function(request,response){
             for(var i=0;i<user.reservations.length;i++){
               start = Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart));
               end = Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd));
-              console.log(start, now, end);
               if(start < now && now < end){
                 // convert to KST
                 startTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart))+(60*60*1000*9)).toISOString().slice(11, 16); 
@@ -553,7 +552,7 @@ var server = http.createServer(function(request,response){
               }
             }
             response.writeHead(200, {'Content-Type':'text/html'});
-            response.end('System is reserved by '+user.name+'('+startTime+', '+endTime+', '+pwd+')');
+            response.end('System is reserved by '+user.name+'_'+startTime+'_'+endTime+'_'+pwd);
           }else{
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('System is not busy.');
