@@ -543,12 +543,13 @@ var server = http.createServer(function(request,response){
             for(var i=0;i<user.reservations.length;i++){
               start = Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart));
               end = Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd));
+              console.log(start, now, end);
               if(start < now && now < end){
                 // convert to KST
                 startTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart))+(60*60*1000*9)).toISOString().slice(11, 16); 
                 endTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd))+(60*60*1000*9)).toISOString().slice(11, 16);
                 pwd = user.reservations[i].vnc_password; 
-                console.log(now, startTime, endTime, pwd, start, end);
+                console.log(startTime, endTime, pwd);
               }
             }
             response.writeHead(200, {'Content-Type':'text/html'});
