@@ -550,7 +550,7 @@ var server = http.createServer(function(request,response){
               }
             }
             response.writeHead(200, {'Content-Type':'text/html'});
-            response.end('System is reserved by '+user.name+'('+startTime+', '+endTime+', '+vnc_password+')');
+            response.end('System is reserved by '+user.name+'('+startTime+', '+endTime+', '+pwd+')');
           }else{
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('System is not busy.');
