@@ -479,8 +479,10 @@ var server = http.createServer(function(request,response){
                 console.log(startTime);
               }
               for(var i=0;i<user.reservations.length;i++){
-                console.log(user.reservations[i].reserveStart);
-                if(user.reservations[i].reserveStart == startTime){
+                let reserveStart = user.reservations[i].reserveStart;
+                let remover = reserveStart.lastIndexOf(":");
+                reserveStart = reserveStart.replace(/(z|Z)/g,'').substring(0, remover);
+                if(reserveStart == startTime){
                   console.log('selected image is changed');
                   user.reservations[i].selectedImage = parsedQuery.selectedImage;
                 }
