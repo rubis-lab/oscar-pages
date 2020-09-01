@@ -474,16 +474,10 @@ var server = http.createServer(function(request,response){
               var parsedUser = JSON.parse(JSON.stringify(user));
               let startTime = parsedQuery.reserveStart;
               startTime = new Date(Date.parse(getTimeStringfromObject(startTime))).toISOString().slice(0, 16);
-              console.log('start time ', startTime);
-              // if(startTime.includes('z') || startTime.includes('Z')){
-              //   let remover = startTime.lastIndexOf(":");
-              //   startTime = startTime.replace(/(z|Z)/g,'').substring(0,remover);
-              //   console.log(startTime);
-              // }
+              
               for(var i=0;i<user.reservations.length;i++){
                 let reserveStart = user.reservations[i].reserveStart;
                 reserveStart = new Date(Date.parse(getTimeStringfromObject(reserveStart))+(60*60*1000*9)).toISOString().slice(0, 16);
-                console.log('reserve start ', reserveStart);
                 if(reserveStart == startTime){
                   console.log('selected image is changed');
                   user.reservations[i].selectedImage = parsedQuery.selectedImage;
