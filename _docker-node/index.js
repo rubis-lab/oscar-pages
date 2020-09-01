@@ -473,13 +473,12 @@ var server = http.createServer(function(request,response){
               // console.log(user);
               var parsedUser = JSON.parse(JSON.stringify(user));
               let startTime = parsedQuery.reserveStart;
-              if(startTime.includes('z') || startTime.includes('Z')){
-                let remover = startTime.lastIndexOf(":");
-                startTime = startTime.replace(/(z|Z)/g,'').substring(0,remover);
-                console.log(startTime);
-              }
+              startTime = new Date(Date.parse(getTimeStringfromObject(startTime))).toISOString().slice(0, 16);
+              
               for(var i=0;i<user.reservations.length;i++){
-                if(user.reservations[i].reserveStart == startTime){
+                let reserveStart = user.reservations[i].reserveStart;
+                reserveStart = new Date(Date.parse(getTimeStringfromObject(reserveStart))+(60*60*1000*9)).toISOString().slice(0, 16);
+                if(reserveStart == startTime){
                   console.log('selected image is changed');
                   user.reservations[i].selectedImage = parsedQuery.selectedImage;
                 }
@@ -539,7 +538,7 @@ var server = http.createServer(function(request,response){
           if(data != null){
             var user = JSON.parse(JSON.stringify(data));
             var now = new Date(Date.now());
-            var startTime, endTime, pwd;
+            var startTime, endTime, pwd, selImage;
             for(var i=0;i<user.reservations.length;i++){
               start = Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart));
               end = Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd));
@@ -547,12 +546,13 @@ var server = http.createServer(function(request,response){
                 // convert to KST
                 startTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart))+(60*60*1000*9)).toISOString().slice(11, 16); 
                 endTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd))+(60*60*1000*9)).toISOString().slice(11, 16);
+                selImage = user.reservations[i].selectedImage;
                 pwd = user.reservations[i].vnc_password; 
                 console.log(startTime, endTime, pwd);
               }
             }
             response.writeHead(200, {'Content-Type':'text/html'});
-            response.end('System is reserved by '+user.name+'_'+startTime+'_'+endTime+'_'+pwd);
+            response.end('System is reserved by '+user.name+'_'+startTime+'_'+endTime+'_'+pwd+'_'+selImage);
           }else{
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('System is not busy.');
