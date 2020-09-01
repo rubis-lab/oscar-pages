@@ -1,24 +1,36 @@
 ---
-layout: page
-title: Monitor
+layout: vnc_connection
+title: Remote Connection
 description: 
 background: '/img/bg-oscar.png'
 ---
+<!-- Overwrites the styling so that vnc window can be positioned properly -->
+<style>
 
-<script type="text/javascript">
-//    var xhr = new XMLHttpRequest();
-//    xhr.open("GET", "https://cors-anywhere.herokuapp.com/http://147.46.215.251:8885/ISAPI/Streaming/channels/102/httpPreview/",true);
-//    xhr.setRequestHeader("Authorization", "Basic " + btoa("oscar:rubis301")); 
-//    //xhr.withCredentials = true; 
-//    xhr.send(null);
-//    var xhr2 = new XMLHttpRequest();
-//    xhr2.open("GET", "http://147.46.215.251:8886/ISAPI/Streaming/channels/102/httpPreview/",false,"oscar","rubis301");
-//    //xhr2.setRequestHeader("Authorization", "Basic " + btoa("oscar" + ":" + "rubis301"));
-//    xhr2.withCredentials = true; 
-    //xhr2.send(null);
-</script>
+.page-heading {
+  padding: 75px 0 !important;
+
+}
+.container{
+  
+}
+.container2{
+  margin:auto !important;
+  width: 100%;
+  max-width: 2440px;
+}
+
+
+</style>
+
+
+<div class="container2">
+
+<iframe src="http://147.46.174.56:6080/" height="900" width="2000" title="vnc_session"></iframe>
+</div>
+
 <div class="row">
-    
+    <!--
   <div class="column">
     <img src="http://oscar:rubis301@147.46.215.251:8885/ISAPI/Streaming/channels/102/httpPreview/" style="width:300px">   
   </div>
@@ -31,11 +43,14 @@ background: '/img/bg-oscar.png'
   <div class="column">
     <img src="http://oscar:rubis301@147.46.215.251:8888/ISAPI/Streaming/channels/102/httpPreview/" style="width:300px">
   </div>
+  -->
+  
   <!--
   <img src="http://oscar:rubis301@147.46.215.167:8885/ISAPI/Streaming/channels/102/httpPreview/" style="width:225px">
   -->
-  <iframe src="https://rubis-lab.github.io/oscar-pages/" height="900" width="1200" title="vnc_session"></iframe>
+  
 </div>
+
 
 <!--
 
