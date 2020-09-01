@@ -25,7 +25,7 @@ background: '/img/bg-oscar.png'
 
 
 <div class="container2">
-<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
+
 
 <iframe src="http://147.46.174.56:6080/" height="900" width="2000" title="vnc_session"></iframe>
 
