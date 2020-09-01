@@ -27,23 +27,23 @@ background: '/img/bg-oscar.png'
 <div class="container2">
 
 <iframe src="http://147.46.174.56:6080/" height="900" width="2000" title="vnc_session"></iframe>
-</div>
 
-<div class="row">
-    <!--
+
+
+    
   <div class="column">
-    <img src="http://oscar:rubis301@147.46.215.251:8885/ISAPI/Streaming/channels/102/httpPreview/" style="width:300px">   
+    <img src="http://oscar:rubis301@147.46.215.251:8885/ISAPI/Streaming/channels/102/httpPreview/" style="width:500px">   
   </div>
   <div class="column">
-    <img src="http://oscar:rubis301@147.46.215.251:8886/ISAPI/Streaming/channels/102/httpPreview/" style="width:300px">
+    <img src="http://oscar:rubis301@147.46.215.251:8886/ISAPI/Streaming/channels/102/httpPreview/" style="width:500px">
   </div>
   <div class="column">
-    <img src="http://oscar:rubis301@147.46.215.251:8887/ISAPI/Streaming/channels/102/httpPreview/" style="width:300px">
+    <img src="http://oscar:rubis301@147.46.215.251:8887/ISAPI/Streaming/channels/102/httpPreview/" style="width:500px">
   </div>
   <div class="column">
-    <img src="http://oscar:rubis301@147.46.215.251:8888/ISAPI/Streaming/channels/102/httpPreview/" style="width:300px">
+    <img src="http://oscar:rubis301@147.46.215.251:8888/ISAPI/Streaming/channels/102/httpPreview/" style="width:500px">
   </div>
-  -->
+  
   
   <!--
   <img src="http://oscar:rubis301@147.46.215.167:8885/ISAPI/Streaming/channels/102/httpPreview/" style="width:225px">
