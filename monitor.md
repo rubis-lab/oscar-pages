@@ -7,7 +7,7 @@ background: '/img/bg-oscar.png'
 <!-- Overwrites the styling so that vnc window can be positioned properly -->
 
 <head>
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
+  <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
   <iframe src="http://147.46.174.56:6080/" height="900" width="2000" title="vnc_session"></iframe>
 
 
