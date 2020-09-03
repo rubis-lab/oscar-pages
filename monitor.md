@@ -43,16 +43,16 @@ background: '/img/bg-oscar.png'
 
     
   <div class="column">
-    <img src="http://oscar:rubis301@147.46.215.251:8885/ISAPI/Streaming/channels/102/httpPreview/" style="width:250px">   
+    <img src="http://147.46.215.251:8885/ISAPI/Streaming/channels/102/httpPreview/" style="width:250px">   
   </div>
   <div class="column">
-    <img src="http://oscar:rubis301@147.46.215.251:8886/ISAPI/Streaming/channels/102/httpPreview/" style="width:250px">
+    <img src="http://147.46.215.251:8886/ISAPI/Streaming/channels/102/httpPreview/" style="width:250px">
   </div>
   <div class="column">
-    <img src="http://oscar:rubis301@147.46.215.251:8887/ISAPI/Streaming/channels/102/httpPreview/" style="width:250px">
+    <img src="http://147.46.215.251:8887/ISAPI/Streaming/channels/102/httpPreview/" style="width:250px">
   </div>
   <div class="column">
-    <img src="http://oscar:rubis301@147.46.215.251:8888/ISAPI/Streaming/channels/102/httpPreview/" style="width:250px">
+    <img src="http://147.46.215.251:8888/ISAPI/Streaming/channels/102/httpPreview/" style="width:250px">
   </div>
   <p></p>
   <p></p>
