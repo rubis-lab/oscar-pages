@@ -49,13 +49,13 @@ background: '/img/bg-oscar.png'
     
   <div class="pie">
   
-    <img src="http://147.46.215.251:8885/ISAPI/Streaming/channels/102/httpPreview/" style="width:495px">   
+    <img src="http://oscar:rubis301@147.46.215.251:8885/ISAPI/Streaming/channels/102/httpPreview/" style="width:495px">   
 
-    <img src="http://147.46.215.251:8886/ISAPI/Streaming/channels/102/httpPreview/" style="width:495px">
+    <img src="http://oscar:rubis301@147.46.215.251:8886/ISAPI/Streaming/channels/102/httpPreview/" style="width:495px">
 
-    <img src="http://147.46.215.251:8887/ISAPI/Streaming/channels/102/httpPreview/" style="width:495px">
+    <img src="http://oscar:rubis301@147.46.215.251:8887/ISAPI/Streaming/channels/102/httpPreview/" style="width:495px">
 
-    <img src="http://147.46.215.251:8888/ISAPI/Streaming/channels/102/httpPreview/" style="width:495px">
+    <img src="http://oscar:rubis301@147.46.215.251:8888/ISAPI/Streaming/channels/102/httpPreview/" style="width:495px">
     
   </div>
   </center>
