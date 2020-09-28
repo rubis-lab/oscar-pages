@@ -232,7 +232,7 @@ var server = http.createServer(function(request,response){
       console.log('parsedQuery =',parsedQuery);
       response.writeHead(200, {'Content-Type':'text/html'});
       var newUser = new User({name:parsedQuery.name,
-        password: parsedQuery.password, images: []});
+        password: parsedQuery.password, images: ['default']});
       User.findOne({name:parsedQuery.name}, function(error,user){
         if(error){
           console.log(error);
@@ -316,17 +316,6 @@ var server = http.createServer(function(request,response){
                       parsedQuery.reserveEnd +
                       ' is already reserved. Change the time!!');
                   }else{
-                    User.findOneAndUpdate({name: user.name},
-                      {'$push':{images: 'default'}},
-                      {new: true}
-                      , function(error, data){
-                        if(error){
-                          console.log(error);
-                        }else{
-                          console.log('default image is added to image list');
-                        }
-                      }
-                    );
                     User.findOneAndUpdate({name: user.name},
                       {'$push':{reservations: {name:parsedQuery.name,
                         reserveStart: parsedQuery.reserveStart,
