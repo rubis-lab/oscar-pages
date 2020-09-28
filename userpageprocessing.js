@@ -383,7 +383,7 @@ $(document).ready(function(){
                 //alert(formData.name);
                 alert("You will be redirected to your VNC session.");
                 window.location.reload();
-                window.open('https://www.google.com/');
+                window.open('https://rubis-lab.github.io/oscar-pages/monitor');
             }
             else if (data.includes("reserved")){
                 alert("Active VNC session by another user. OscarLab cannot be accessed at this time.");
