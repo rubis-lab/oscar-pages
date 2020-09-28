@@ -232,7 +232,7 @@ var server = http.createServer(function(request,response){
       console.log('parsedQuery =',parsedQuery);
       response.writeHead(200, {'Content-Type':'text/html'});
       var newUser = new User({name:parsedQuery.name,
-        password: parsedQuery.password, images: ['default']});
+        password: parsedQuery.password, images: []});
       User.findOne({name:parsedQuery.name}, function(error,user){
         if(error){
           console.log(error);
@@ -320,7 +320,7 @@ var server = http.createServer(function(request,response){
                       {'$push': {reservations: {name:parsedQuery.name,
                         reserveStart: parsedQuery.reserveStart,
                         reserveEnd: parsedQuery.reserveEnd,
-                        selectedImage: 'default',
+                        selectedImage: user.name+':default',
                         vnc_password: Math.random().toString(36).substring(7)},
                       }},
                         {new: true}
