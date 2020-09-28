@@ -42,8 +42,9 @@ background: '/img/bg-oscar.png'
 
 <div class="container2">
 <center>
+<!--
 <iframe src="https://147.46.174.56:6081/" height="900" width="2000" title="vnc_session"></iframe>
-
+-->
 
 
     
