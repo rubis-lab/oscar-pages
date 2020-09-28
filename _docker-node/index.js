@@ -317,12 +317,23 @@ var server = http.createServer(function(request,response){
                       ' is already reserved. Change the time!!');
                   }else{
                     User.findOneAndUpdate({name: user.name},
+                      {'$push':{images: 'default'}},
+                      {new: true}
+                      , function(error, data){
+                        if(error){
+                          console.log(error);
+                        }else{
+                          console.log('default image is added to image list');
+                        }
+                      }
+                    );
+                    User.findOneAndUpdate({name: user.name},
                       {'$push':{reservations: {name:parsedQuery.name,
                         reserveStart: parsedQuery.reserveStart,
                         reserveEnd: parsedQuery.reserveEnd,
                         selectedImage: user.name+':default',
                         vnc_password: Math.random().toString(36).substring(7)},
-                      }, '$push':{images: 'default'}},
+                      }},
                         {new: true}
                         , function(error, data){
                           if(error){
