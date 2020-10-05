@@ -571,7 +571,7 @@ var server = http.createServer(function(request,response){
           console.log(data);
           if(data != null){
             var user = JSON.parse(JSON.stringify(data));
-            var now = new Date(Date.now());
+            var now = new Date(Date.now() + 300000);
             var startTime, endTime, pwd, selImage;
             for(var i=0;i<user.reservations.length;i++){
               start = Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart));
