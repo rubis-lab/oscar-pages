@@ -559,6 +559,45 @@ var server = http.createServer(function(request,response){
           }
         }
       });
+  }else if(resource == '/soon'){
+    //Same as busy function but is true five minutes before
+    User.findOne({"reservations.reserveStart": {$gte :  new Date(Date.now()).toISOString()},
+      "reservations.reserveStart" : {$lte:  new Date(Date.now()).toISOString()+ 300000}}, function(error,data){
+        console.log('--- Reservation list ---');
+        console.log(new Date(Date.now()+ 300000).toISOString());
+        if(error){
+          console.log(error);
+        }else{
+          console.log(data);
+          if(data != null){
+            var user = JSON.parse(JSON.stringify(data));
+            var now = new Date(Date.now());
+            var startTime, endTime, pwd, selImage;
+            for(var i=0;i<user.reservations.length;i++){
+              start = Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart));
+              end = Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd));
+              if(start < now && now < end){
+                // convert to KST
+                startTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart))+(60*60*1000*9)).toISOString().slice(11, 16); 
+                endTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd))+(60*60*1000*9)).toISOString().slice(11, 16);
+                selImage = user.reservations[i].selectedImage;
+                pwd = user.reservations[i].vnc_password; 
+                console.log(startTime, endTime, pwd);
+              }
+            }
+            response.writeHead(200, {'Content-Type':'text/html'});
+            response.end('System will be reserved by '+user.name+'_'+startTime+'_'+endTime+'_'+pwd+'_'+selImage+'\n');
+          }else{
+            response.writeHead(200, {'Content-Type':'text/html'});
+            response.end('There are no reservations for the next 5 minutes.\n');
+          }
+        }
+
+
+
+
+
+    });
   }else if(resource == '/removeReservation'){
     var postdata = '';
     request.on('data', function (data) {
