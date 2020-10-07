@@ -591,10 +591,13 @@ var server = http.createServer(function(request,response){
                 selImage = user.reservations[i].selectedImage;
                 pwd = user.reservations[i].vnc_password; 
                 console.log(startTime, endTime, pwd);
+                response.writeHead(200, {'Content-Type':'text/html'});
+                response.end('System will be reserved by '+user.name+'_'+startTime+'_'+endTime+'_'+pwd+'_'+selImage+' soon.\n');
               }
             }
             response.writeHead(200, {'Content-Type':'text/html'});
-            response.end('System will be reserved by '+user.name+'_'+startTime+'_'+endTime+'_'+pwd+'_'+selImage+' sooooon.\n' + user);
+            response.end('There are no reservations for the next 5 minutes.\n');
+
           }else{
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('There are no reservations for the next 5 minutes.\n');
