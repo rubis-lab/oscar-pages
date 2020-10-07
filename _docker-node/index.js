@@ -534,8 +534,8 @@ var server = http.createServer(function(request,response){
       });
     });
   }else if(resource == '/busy'){
-    User.findOne({"reservations.reserveStart": {$lte :  new Date(Date.now()).toISOString()},
-      "reservations.reserveEnd" : {$gte:  new Date(Date.now()).toISOString()}}, function(error,data){
+    User.findOne({$and: [{"reservations.reserveStart": {$lte :  new Date(Date.now()).toISOString()}},
+      {"reservations.reserveEnd" : {$gte:  new Date(Date.now()).toISOString()}}]}, function(error,data){
         console.log('--- Reservation list ---');
         console.log(new Date(Date.now()).toISOString());
         if(error){
@@ -556,10 +556,12 @@ var server = http.createServer(function(request,response){
                 selImage = user.reservations[i].selectedImage;
                 pwd = user.reservations[i].vnc_password; 
                 console.log(startTime, endTime, pwd);
+                response.writeHead(200, {'Content-Type':'text/html'});
+                response.end('System is reserved by '+user.name+'_'+startTime+'_'+endTime+'_'+pwd+'_'+selImage+'\n');
               }
             }
             response.writeHead(200, {'Content-Type':'text/html'});
-            response.end('System is reserved by '+user.name+'_'+startTime+'_'+endTime+'_'+pwd+'_'+selImage+'\n');
+            response.end('System is not busy.\n');
           }else{
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('System is not busy.\n');
