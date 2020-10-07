@@ -562,8 +562,8 @@ var server = http.createServer(function(request,response){
       });
   }else if(resource == '/soon'){
     //Same as busy function but is true five minutes before
-    User.findOne({$or: [{"reservations.reserveStart":{ $gte :  new Date(Date.now()).toISOString()}},{"reservations.reserveStart": { $lte:  new Date(Date.now()+ 300000).toISOString()}}]
-                 }, function(error,data){
+    User.findOne({"reservations.reserveStart":{ $gte :  new Date(Date.now()).toISOString()}, "reservations.reserveStart": { $lte:  new Date(Date.now()+ 300000).toISOString()}}
+                 , function(error,data){
         console.log('--- Reservation list ---');
         console.log(new Date(Date.now()+ 300000).toISOString());
         if(error){
