@@ -1,5 +1,7 @@
 // userpageprocessing.js
 
+const { post } = require("jquery");
+
 var myServer = new XMLHttpRequest();
 
 // Displays user's email on the userpage
@@ -246,8 +248,10 @@ $(document).ready(function(){
                 if(!alert("Reservation successfully created.")){
                                   window.location.reload();
                 }
-            }
-            else {
+            }else if (data.includes("Reservations cannot be made for the past") == true){
+                alert("Reservations cannot be made for the past. Please try again.");
+                
+            }else {
                 alert("ERROR");
             }
           });
