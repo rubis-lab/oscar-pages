@@ -302,6 +302,11 @@ var server = http.createServer(function(request,response){
           if(user == null){
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('account does not exist');
+          }else if(parsedQuery.reserveStart <= new Date(Date.now()).toISOString()){
+            console.log("Reservations cannot be made for the past.");
+            response.writeHead(200, {'Content-Type':'text/html'});
+            response.end(parsedQuery.reserveStart + ' is in the past. Cannot reserve. Try again. ');
+
           }else{
             User.findOne({"reservations.reserveStart" : {$gte: parsedQuery.reserveStart},
               "reservations.reserveEnd" : {$lte: parsedQuery.reserveEnd}}, function(error,reserved){
@@ -562,7 +567,8 @@ var server = http.createServer(function(request,response){
       });
   }else if(resource == '/soon'){
     //Same as busy function but is true five minutes before
-    User.findOne({"reservations.reserveStart":{ $gte :  new Date(Date.now()).toISOString()}, "reservations.reserveStart": { $lte:  new Date(Date.now()+ 300000).toISOString()}}
+    User.findOne({"reservations.reserveStart":{ $lte :  new Date(Date.now()).toISOString()}, "reservations.reserveStart": { $gte:  new Date(Date.now()+ 300000).toISOString()},
+    "reservations.reserveEnd": {$gte: new Date(Date.now()).toISOString()}}
                  , function(error,data){
         console.log('--- Reservation list ---');
         console.log(new Date(Date.now()+ 300000).toISOString());
