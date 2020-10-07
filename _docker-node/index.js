@@ -308,6 +308,7 @@ var server = http.createServer(function(request,response){
             response.end(parsedQuery.reserveStart + ' is in the past. Cannot reserve. Try again.');
 
           }else{
+            // ** This is not working as expected. If a reservation matches the first condition, it returns duplicate
             User.findOne({"reservations.reserveStart" : {$gte: parsedQuery.reserveStart},
               "reservations.reserveEnd" : {$lte: parsedQuery.reserveEnd}}, function(error,reserved){
                 if(error){
@@ -567,12 +568,7 @@ var server = http.createServer(function(request,response){
       });
   }else if(resource == '/soon'){
     //Same as busy function but is true five minutes before
-    var now = new Date (Date.now());
-    var now_plus_five = new Date (Date.now());
-
-    // User.findOne({"reservations.reserveStart":{ $gte :  now.toISOString()}, "reservations.reserveStart": { $lte: now_plus_five.toISOString()},
-    // "reservations.reserveEnd": {$gte: new Date(Date.now()).toISOString()}}
-    User.findOne({"reservations.reserveStart":{ $lte : now.toISOString()}}
+    User.findOne({"reservations.reserveStart":{ $gte : new Date(Date.now()).toISOString()}, "reservations.reserveStart": { $lte: new Date(Date.now() + 300000).toISOString()}}
                  , function(error,data){
         console.log('--- Reservation list ---');
         console.log(new Date(Date.now()+ 300000).toISOString());
@@ -588,17 +584,17 @@ var server = http.createServer(function(request,response){
             for(var i=0;i<user.reservations.length;i++){
               start = Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart));
               end = Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd));
-              // if(start >= now && (start <= now_plus_five)){
+              if(start >= now && (start <= now_plus_five)){
                 // convert to KST
-              startTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart))+(60*60*1000*9)).toISOString(); 
-              endTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd))+(60*60*1000*9)).toISOString().slice(11, 16);
-              selImage = user.reservations[i].selectedImage;
-              pwd = user.reservations[i].vnc_password; 
-              console.log(startTime, endTime, pwd);
-              // }
+                startTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart))+(60*60*1000*9)).toISOString(); 
+                endTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd))+(60*60*1000*9)).toISOString().slice(11, 16);
+                selImage = user.reservations[i].selectedImage;
+                pwd = user.reservations[i].vnc_password; 
+                console.log(startTime, endTime, pwd);
+              }
             }
             response.writeHead(200, {'Content-Type':'text/html'});
-            response.end('System will be reserved by '+user.name+'_'+startTime+'_'+endTime+'_'+pwd+'_'+selImage+' sooooon.\n');
+            response.end('System will be reserved by '+user.name+'_'+startTime+'_'+endTime+'_'+pwd+'_'+selImage+' sooooon.\n' + user);
           }else{
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('There are no reservations for the next 5 minutes.\n');
