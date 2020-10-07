@@ -10,6 +10,7 @@ var shell = require('shelljs');
 var cron = require('node-cron');
 var mongoose = require('mongoose');
 var fs = require('fs');
+const { DH_UNABLE_TO_CHECK_GENERATOR } = require('constants');
 
 
 ///////////////Database Connection/////////////
@@ -561,7 +562,8 @@ var server = http.createServer(function(request,response){
       });
   }else if(resource == '/soon'){
     //Same as busy function but is true five minutes before
-    User.findOne({$and: [{"reservations.reserveStart": { $lte:  new Date(Date.now()+ 300000).toISOString()}},{"reservations.reserveStart":{ $gte :  new Date(Date.now()).toISOString()}}]}, function(error,data){
+    User.findOne({$and: [{"reservations.reserveStart":{ $gte :  new Date(Date.now()).toISOString()}},{"reservations.reserveStart": { $lte:  new Date(Date.now()+ 300000).toISOString()}}]
+                 }, function(error,data){
         console.log('--- Reservation list ---');
         console.log(new Date(Date.now()+ 300000).toISOString());
         if(error){
@@ -570,12 +572,13 @@ var server = http.createServer(function(request,response){
           console.log(data);
           if(data != null){
             var user = JSON.parse(JSON.stringify(data));
-            var now = new Date(Date.now() + 300000);
+            var now_plus_five = new Date(Date.now() + 300000);
+            var now = new Date(Date.now());
             var startTime, endTime, pwd, selImage;
             for(var i=0;i<user.reservations.length;i++){
               start = Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart));
               end = Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd));
-              if(start <= now){
+              if(start >= now && (start <= now_plus_five)){
                 // convert to KST
                 startTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart))+(60*60*1000*9)).toISOString().slice(11, 16); 
                 endTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd))+(60*60*1000*9)).toISOString().slice(11, 16);
