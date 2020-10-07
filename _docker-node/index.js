@@ -570,8 +570,9 @@ var server = http.createServer(function(request,response){
     var now = new Date (Date.now());
     var now_plus_five = new Date (Date.now());
 
-    User.findOne({"reservations.reserveStart":{ $gte :  now.toISOString()}, "reservations.reserveStart": { $lte: now_plus_five.toISOString()},
-    "reservations.reserveEnd": {$gte: new Date(Date.now()).toISOString()}}
+    // User.findOne({"reservations.reserveStart":{ $gte :  now.toISOString()}, "reservations.reserveStart": { $lte: now_plus_five.toISOString()},
+    // "reservations.reserveEnd": {$gte: new Date(Date.now()).toISOString()}}
+    User.findOne({"reservations.reserveStart":{ $gte :  now.toISOString()}, "reservations.reserveStart": { $lte: now_plus_five.toISOString()}
                  , function(error,data){
         console.log('--- Reservation list ---');
         console.log(new Date(Date.now()+ 300000).toISOString());
@@ -597,7 +598,7 @@ var server = http.createServer(function(request,response){
               }
             }
             response.writeHead(200, {'Content-Type':'text/html'});
-            response.end('System will be reserved by '+user.name+'_'+startTime+'_'+endTime+'_'+pwd+'_'+selImage+'\n');
+            response.end('System will be reserved by '+user.name+'_'+startTime+'_'+endTime+'_'+pwd+'_'+selImage+'soon.\n');
           }else{
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('There are no reservations for the next 5 minutes.\n');
