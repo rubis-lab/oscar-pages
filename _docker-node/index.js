@@ -572,7 +572,7 @@ var server = http.createServer(function(request,response){
 
     // User.findOne({"reservations.reserveStart":{ $gte :  now.toISOString()}, "reservations.reserveStart": { $lte: now_plus_five.toISOString()},
     // "reservations.reserveEnd": {$gte: new Date(Date.now()).toISOString()}}
-    User.findOne({"reservations.reserveStart":{ $gte :  now.toISOString()}, "reservations.reserveStart": { $lte: now_plus_five.toISOString()}
+    User.findOne({"reservations.reserveStart":{ $gte :  now.toISOString()}}
                  , function(error,data){
         console.log('--- Reservation list ---');
         console.log(new Date(Date.now()+ 300000).toISOString());
