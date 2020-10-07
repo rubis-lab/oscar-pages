@@ -559,7 +559,6 @@ var server = http.createServer(function(request,response){
             }
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('System is reserved by '+user.name+'_'+startTime+'_'+endTime+'_'+pwd+'_'+selImage+'\n');
-            response.end('start:' + user.reservations[i].reserveStart + 'end:'  +user.reservations[i].reserveEnd);
           }else{
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('System is not busy.\n');
@@ -599,7 +598,7 @@ var server = http.createServer(function(request,response){
               // }
             }
             response.writeHead(200, {'Content-Type':'text/html'});
-            response.end('System will be reserved by '+user.name+'_'+startTime+'_'+endTime+'_'+pwd+'_'+selImage+' soon.\n');
+            response.end('System will be reserved by '+user.name+'_'+startTime+'_'+endTime+'_'+pwd+'_'+selImage+ ' sooooon.\n start:' + user.reservations[i].reserveStart + 'end:'  +user.reservations[i].reserveEnd);
           }else{
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('There are no reservations for the next 5 minutes.\n');
