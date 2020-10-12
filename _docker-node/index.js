@@ -319,17 +319,6 @@ var server = http.createServer(function(request,response){
                   var reserve_accepted = 0;
                   for(var i=0; i<users.length;i++){
                     for(var j=0; j<users[i].reservations.length;j++){
-                      
-                      //Case: new end overlaps with old start
-                        // if (((users[i].reservations[j].reserveStart > parsedQuery.reserveStart) && 
-                        // (users[i].reservations[j].reserveStart > parsedQuery.reserveEnd)) || 
-                        // ((users[i].reservations[j].reserveEnd < parsedQuery.reserveStart)&&
-                        // (users[i].reservations[j].reserveEnd < parsedQuery.reserveEnd))){
-                        //   response.writeHead(200, {'Content-Type':'text/html'});
-                        //   response.end('goodgood');
-                          
-
-                        // }else if ((users[i].reservations[j].reserveEnd > parsedQuery.reserveEnd) &&
                         if ((users[i].reservations[j].reserveEnd > parsedQuery.reserveEnd) &&
                         (users[i].reservations[j].reserveStart < parsedQuery.reserveEnd)){
                           reserve_accepted = 1;
