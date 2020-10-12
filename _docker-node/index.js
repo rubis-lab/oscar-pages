@@ -35,6 +35,7 @@ var user = mongoose.Schema(
     reserveStart : {type: Object},
     reserveEnd : {type: Object},
     selectedImage: {type: String},
+    status: {type: String},
     vnc_password: {type: String}
   }]
 },
@@ -308,9 +309,6 @@ var server = http.createServer(function(request,response){
             response.end(parsedQuery.reserveStart + ' is in the past. Cannot reserve. Try again.');
 
           }else{
-            // ** This is not working as expected. If a reservation matches the first condition, it returns duplicate
-            // User.findOne({$and :[{"reservations.reserveEnd" : {$gte: parsedQuery.reserveEnd}}, {"reservations.reserveStart" : {$gte: parsedQuery.reserveStart}},
-            //   {"reservations.reserveStart" : {$lte: parsedQuery.reserveEnd}}]}, function(error,reserved){
               User.find(null,null,{sort :{'reservations.reserveStart.orderIndex' : 1}}, function(error, data){
                 if(error){
                   console.log(error);
@@ -330,8 +328,7 @@ var server = http.createServer(function(request,response){
                           reserve_accepted = 1;
                         }
                         else{
-                          console.log(reserve_accepted);
-
+                          console.log('No conflict.');
                         }
                     }
                   }
@@ -341,6 +338,7 @@ var server = http.createServer(function(request,response){
                         reserveStart: parsedQuery.reserveStart,
                         reserveEnd: parsedQuery.reserveEnd,
                         selectedImage: user.name+':default',
+                        status: 'Pending',
                         vnc_password: Math.random().toString(36).substring(7)},
                       }},
                         {new: true}
@@ -385,6 +383,7 @@ var server = http.createServer(function(request,response){
             res = res.concat('{"reserveStart":"',user.reservations[i].reserveStart,
                              '","reserveEnd":"',user.reservations[i].reserveEnd,
                              '","selectedImage":"',user.reservations[i].selectedImage,
+                             '","status":"',user.reservations[i].status,
                              '","vnc_password":"',user.reservations[i].vnc_password,'"},');
           }
           if(res != ''){
@@ -440,6 +439,7 @@ var server = http.createServer(function(request,response){
               '","reserveStart":"',users[i].reservations[j].reserveStart,
               '","reserveEnd":"',users[i].reservations[j].reserveEnd,
               '","selectedImage":"',users[i].reservations[j].selectedImage,
+              '","status":"',users[i].reservations[j].status,
               '","vnc_password":"',users[i].reservations[j].vnc_password,'"},')
           }
         }
@@ -652,6 +652,35 @@ var server = http.createServer(function(request,response){
           }
         });
     });
+  }else if(resource == '/approve'){
+    //Changes status from pending to approved
+    var postdata = '';
+    request.on('data', function (data) {
+      postdata = postdata + data;
+    });
+    request.on('end', function () {
+      var parsedQuery = querystring.parse(postdata);
+      User.findOneAndUpdate({name:parsedQuery.name},
+        {$set:{"reservations.status": "Approved"}},function(error,data){
+          if(error){
+            console.log(error);
+          }else{
+            var user = JSON.parse(JSON.stringify(data));
+            if(user == null){
+              console.log('user does not exists');
+              response.writeHead(200, {'Content-Type':'text/html'});
+              response.end('user does not exists');
+            }
+            else{
+
+              console.log('--- status changed to approve success ---');
+              response.writeHead(200, {'Content-Type':'text/html'});
+              response.end('Reservation by ' + parsedQuery.name+ ' at '+ startTime+'-'+endTime+' is approved!');
+            }
+          }
+        });
+    });
+
   }else{
     response.writeHead(404, {'Content-Type':'text/html'});
     response.end('404 Page Not Found');
