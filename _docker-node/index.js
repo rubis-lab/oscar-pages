@@ -311,7 +311,8 @@ var server = http.createServer(function(request,response){
             // ** This is not working as expected. If a reservation matches the first condition, it returns duplicate
             // User.findOne({$and :[{"reservations.reserveEnd" : {$gte: parsedQuery.reserveEnd}}, {"reservations.reserveStart" : {$gte: parsedQuery.reserveStart}},
             //   {"reservations.reserveStart" : {$lte: parsedQuery.reserveEnd}}]}, function(error,reserved){
-              User.findOne({"reservations.reserveStart" : {$lte: parsedQuery.reserveStart}}, function(error,reserved){
+              User.findOne({$and :[{"reservations.reserveStart" : {$lte: parsedQuery.reserveStart}}, {"reservations.reserveStart" : {$eq : new Date(Date.now()).toISOString()}}]},
+               function(error,reserved){
                 if(error){
                   console.log(error);
                 }else{
