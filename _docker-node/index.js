@@ -319,7 +319,7 @@ var server = http.createServer(function(request,response){
                   if(reserved != null){
                     console.log('--- Duplicate Reservation ---');
                     response.writeHead(200, {'Content-Type':'text/html'});
-                    response.end(parsedQuery.reserveStart + ' ~ ' +
+                    response.end('[[[['+ reserved.reserveStart+ ',' + reserved.reserveEnd +']]]'+ parsedQuery.reserveStart + ' ~ ' +
                       parsedQuery.reserveEnd +
                       ' is already reserved. Change the time!!');
                   }else{
