@@ -251,6 +251,7 @@ $(document).ready(function(){
                 alert("Reservations cannot be made for the past. Please try again.");
             }else {
                 alert(data);
+                window.location.reload();
             }
           });
      });
