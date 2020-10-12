@@ -333,22 +333,16 @@ var server = http.createServer(function(request,response){
                         if ((users[i].reservations[j].reserveEnd > parsedQuery.reserveEnd) &&
                         (users[i].reservations[j].reserveStart < parsedQuery.reserveEnd)){
                           reserve_accepted = 1;
-                          response.writeHead(200, {'Content-Type':'text/html'});
-                          response.end('new end is within an existing reservation');
                         }else if((users[i].reservations[j].reserveEnd > parsedQuery.reserveStart) && 
                         (users[i].reservations[j].reserveStart < parsedQuery.reserveStart)){
                           reserve_accepted = 1;
-                          response.writeHead(200, {'Content-Type':'text/html'});
-                          response.end('new start is within an existing reservation');
                         }else if ((users[i].reservations[j].reserveStart > parsedQuery.reserveStart) && 
                         (users[i].reservations[j].reserveEnd < parsedQuery.reserveEnd)){
                           reserve_accepted = 1;
-                          response.writeHead(200, {'Content-Type':'text/html'});
-                          response.end('new emcompasses entire existing reservation');
                         }
                         else{
-                          response.writeHead(200, {'Content-Type':'text/html'});
-                          response.end('idk, might be okay');
+                          console.log(reserve_accepted);
+
                         }
                     }
                   }
@@ -373,7 +367,7 @@ var server = http.createServer(function(request,response){
                   } else {
                     console.log('--- Duplicate Reservation ---');
                     response.writeHead(200, {'Content-Type':'text/html'});
-                    response.end('[[[['+ reserved.reserveStart+ ',' + reserved.reserveEnd + ']]]' + reserved + parsedQuery.reserveStart + ' ~ ' +
+                    response.end( parsedQuery.reserveStart + ' ~ ' +
                       parsedQuery.reserveEnd +
                       ' is already reserved. Change the time!!');
                   }
