@@ -247,10 +247,10 @@ $(document).ready(function(){
                 if(!alert("Reservation successfully created.")){
                                   window.location.reload();
                 }
-            }else if (data.includes("Reservations cannot be made for the past") == true){
+            }else if (data.includes("past") == true){
                 alert("Reservations cannot be made for the past. Please try again.");
             }else {
-                alert("ERROR");
+                alert(data);
             }
           });
      });
