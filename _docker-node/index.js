@@ -311,6 +311,7 @@ var server = http.createServer(function(request,response){
             // ** This is not working as expected. If a reservation matches the first condition, it returns duplicate
             User.findOne({$and :[{"reservations.reserveStart" : {$gte: parsedQuery.reserveStart}},
               {"reservations.reserveEnd" : {$lte: parsedQuery.reserveEnd}}]}, function(error,reserved){
+                var conflict_reservation = querystring.parse(reserved);
                 if(error){
                   console.log(error);
                 }else{
@@ -319,7 +320,7 @@ var server = http.createServer(function(request,response){
                   if(reserved != null){
                     console.log('--- Duplicate Reservation ---');
                     response.writeHead(200, {'Content-Type':'text/html'});
-                    response.end('[[[['+ reserved.reserveStart+ ',' + reserved.reserveEnd +']]]'+ parsedQuery.reserveStart + ' ~ ' +
+                    response.end('[[[['+ conflict_reservation.reserveStart+ ',' + conflict_reservation.reserveEnd +']]]' + reserved + parsedQuery.reserveStart + ' ~ ' +
                       parsedQuery.reserveEnd +
                       ' is already reserved. Change the time!!');
                   }else{
