@@ -311,20 +311,44 @@ var server = http.createServer(function(request,response){
             // ** This is not working as expected. If a reservation matches the first condition, it returns duplicate
             // User.findOne({$and :[{"reservations.reserveEnd" : {$gte: parsedQuery.reserveEnd}}, {"reservations.reserveStart" : {$gte: parsedQuery.reserveStart}},
             //   {"reservations.reserveStart" : {$lte: parsedQuery.reserveEnd}}]}, function(error,reserved){
-              User.findOne({$and :[{"reservations.reserveStart" : {$gte: parsedQuery.reserveStart}}, {"reservations.reserveEnd" : {$lte: parsedQuery.reserveEnd}}]},
-               function(error,reserved){
+              User.find(null,null,{sort :{'reservations.reserveStart.orderIndex' : 1}}, function(error, data){
                 if(error){
                   console.log(error);
                 }else{
-                  console.log('--- reservation ---');
-                  console.log(reserved);
-                  if(reserved != null){
-                    console.log('--- Duplicate Reservation ---');
-                    response.writeHead(200, {'Content-Type':'text/html'});
-                    response.end('[[[['+ reserved.reserveStart+ ',' + reserved.reserveEnd + ']]]' + reserved + parsedQuery.reserveStart + ' ~ ' +
-                      parsedQuery.reserveEnd +
-                      ' is already reserved. Change the time!!');
-                  }else{
+                  let users = JSON.parse(JSON.stringify(data));
+                  var reserve_accepted = 0;
+                  for(var i=0; i<users.length;i++){
+                    for(var j=0; j<users[i].reservations.length;j++){
+                      
+                      //Case: new end overlaps with old start
+                        if (((users[i].reservations[j].reserveStart > parsedQuery.reserveStart) && 
+                        (users[i].reservations[j].reserveStart > parsedQuery.reserveEnd)) || 
+                        ((users[i].reservations[j].reserveEnd < parsedQuery.reserveStart)&&
+                        (users[i].reservations[j].reserveEnd < parsedQuery.reserveEnd))){
+                          response.writeHead(200, {'Content-Type':'text/html'});
+                          response.end('goodgood');
+                          reserve_accepted = 1;
+
+                        }else if ((users[i].reservations[j].reserveEnd > parsedQuery.reserveEnd) && 
+                        (users[i].reservations[j].reserveStart < parsedQuery.reserveEnd)){
+                          response.writeHead(200, {'Content-Type':'text/html'});
+                          response.end('new end is within an existing reservation');
+                        }else if((users[i].reservations[j].reserveEnd > parsedQuery.reserveStart) && 
+                        (users[i].reservations[j].reserveStart < parsedQuery.reserveStart)){
+                          response.writeHead(200, {'Content-Type':'text/html'});
+                          response.end('new start is within an existing reservation');
+                        }else if ((users[i].reservations[j].reserveStart > parsedQuery.reserveStart) && 
+                        (users[i].reservations[j].reserveEnd < parsedQuery.reserveEnd)){
+                          response.writeHead(200, {'Content-Type':'text/html'});
+                          response.end('new emcompasses entire existing reservation');
+                        }
+                        else{
+                          response.writeHead(200, {'Content-Type':'text/html'});
+                          response.end('idk');
+                        }
+                    }
+                  }
+                  if(reserve_accepted == 1){
                     User.findOneAndUpdate({name: user.name},
                       {'$push':{reservations: {name:parsedQuery.name,
                         reserveStart: parsedQuery.reserveStart,
@@ -342,6 +366,12 @@ var server = http.createServer(function(request,response){
                             response.end(parsedQuery.name + ' reservation is started at ' + parsedQuery.reserveStart);
                           }
                         });
+                  } else {
+                    console.log('--- Duplicate Reservation ---');
+                    response.writeHead(200, {'Content-Type':'text/html'});
+                    response.end('[[[['+ reserved.reserveStart+ ',' + reserved.reserveEnd + ']]]' + reserved + parsedQuery.reserveStart + ' ~ ' +
+                      parsedQuery.reserveEnd +
+                      ' is already reserved. Change the time!!');
                   }
                 }
               });
