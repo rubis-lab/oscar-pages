@@ -241,16 +241,15 @@ $(document).ready(function(){
                 }
             }else if (data.includes("Change the time")== true ){
                 alert("This time slot is taken. Check the calendar and choose a new time slot.");
-                alert(data);
 
             }else if (data.includes("reservation is started")== true ){
                 if(!alert("Reservation successfully created.")){
-                                  window.location.reload();
+                    window.location.reload();
                 }
             }else if (data.includes("past") == true){
                 alert("Reservations cannot be made for the past. Please try again.");
             }else {
-                alert(data);
+                alert("Some error has occurred!");
                 window.location.reload();
             }
           });
