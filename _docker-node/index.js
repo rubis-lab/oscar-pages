@@ -321,6 +321,10 @@ var server = http.createServer(function(request,response){
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('account does not exist');
           }else{
+            var fetch = require('node-fetch');
+            var name = parsedQuery.name.replace('@', '.');
+            fetch('http://uranium.snu.ac.kr:5000/v2/'+name+'/tags/list');
+            console.log(fetch);
             console.log(user.toString());
             parsedUser = '{'+user.toString().split('[')[1].split(']')[0].replace(new RegExp('\n','g'),'').replace(new RegExp(' ','g'),'')+'}';
             console.log(parsedUser);

@@ -34,8 +34,6 @@ $.ajax({
   }
   var imageList = new Array();
   data_split.forEach(function(item){
-      // debug code
-    console.log("data_split- \n", item);
     imageList.push(item);
   });
 
