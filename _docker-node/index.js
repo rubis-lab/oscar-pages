@@ -302,7 +302,7 @@ var server = http.createServer(function(request,response){
       }
     });
   }else if(resource == '/pendinglist'){
-    User.find({status: "Pending" },null,{sort :{'reservations.reserveStart.orderIndex' : 1}}, function(error, data){
+    User.find({"reservations.status": "Pending" },null,{sort :{'reservations.reserveStart.orderIndex' : 1}}, function(error, data){
       console.log('--- Reservation list ---');
       console.log(new Date(Date.now()).toISOString());
       if(error){
@@ -332,7 +332,7 @@ var server = http.createServer(function(request,response){
       }
     });
   }else if(resource == '/approvelist'){
-      User.find({status: "Approved" },null,{sort :{'reservations.reserveStart.orderIndex' : 1}}, function(error, data){
+      User.find({"reservations.status": "Approved" },null,{sort :{'reservations.reserveStart.orderIndex' : 1}}, function(error, data){
         console.log('--- Reservation list ---');
         console.log(new Date(Date.now()).toISOString());
         if(error){
