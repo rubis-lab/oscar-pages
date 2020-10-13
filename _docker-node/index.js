@@ -187,7 +187,7 @@ var server = http.createServer(function(request,response){
                       {'$push':{reservations: {name:parsedQuery.name,
                         reserveStart: parsedQuery.reserveStart,
                         reserveEnd: parsedQuery.reserveEnd,
-                        selectedImage: user.name+':default',
+                        selectedImage: 'default',
                         status: 'Pending',
                         vnc_password: Math.random().toString(36).substring(7)},
                       }},
