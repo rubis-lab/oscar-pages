@@ -1,0 +1,181 @@
+---
+layout: default
+calendar_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootstrap-calendar/css/calendar.css">
+calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootstrap/css/bootstrap.css">
+---
+{% assign PATH_TO_COMPONENTS =  "/components" | prepend: site.baseurl %}
+
+<!-- Page Header -->
+{% if page.background %}
+<header class="masthead" style="background-image: url('{{ page.background | prepend: site.baseurl | replace: '//', '/' }}')">
+{% else %}
+<header class="masthead">
+{% endif %}
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 mx-auto">
+        <div class="page-heading">
+          <h1>{{ page.title }}</h1>
+          {% if page.description %}
+            <span class="subheading">{{ page.description }}</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-10 col-md-10 mx-auto">
+
+      <div class="row" style="margin-bottom:5%">
+          <h3 id='username'>Welcome, user </h3>
+      </div>
+
+<ul id="profileTabs" class="nav nav-tabs">
+    <li class="nav-item active"><a class="nav-link active" href="#manageReservations" data-toggle="tab">Approve / Disapprove Reservations</a></li>
+    <li class="nav-item"><a class="nav-link" href="#cs1" data-toggle="tab">Coming Soon</a></li>
+    <li class="nav-item"><a class ="nav-link" href="#cs2" data-toggle="tab"> Coming Soon</a></li>
+</ul>
+
+<div class="tab-content" style="margin:5%;">
+<div role="tabpanel" class="tab-pane active active active" id="manageReservations">
+    <div class="row">
+
+    <!-- Reservations -->
+    <div class="col-md-6">
+    <h4 class = "text-center">All Reservations</h4>
+
+    <ul class="list-group list-group-flush" id="admin_reservationList"
+    style="overflow-y:scroll;
+          margin:5%;
+          max-height:50vh"
+          >
+    </ul>
+    </div>
+
+    </div>
+    <div class="row text-center">
+      <div class="col-sm-12">
+        <button type="submit" class="btn btn-primary" id="deny">Deny Reservation</button>
+        <button type="submit" class="btn btn-primary" id="approve">Approve Reservation</button>
+      </div>
+    </div></div>
+
+<div role="tabpanel" class="tab-pane" id="cs1">
+
+
+</div>
+      
+<div role="tabpanel" class="tab-pane" id="cs2">
+
+</div>
+</div>
+
+    </div>
+</div>
+</div>
+
+<script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/lodash/lodash.min.js"></script>
+<script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/bootstrap-calendar/js/calendar.js"></script>
+<script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/moment/min/moment.min.js"></script>
+<script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/papaparse/papaparse.min.js"></script>
+
+<!-- <script type="text/javascript" src="reserveprocessing.js"></script> -->
+<!--<script type="text/javascript" src="userpageprocessing.js"></script> -->
+
+<script type="text/javascript">
+    var name = localStorage.getItem("name");
+    document.getElementById('username').innerHTML += name + '!';
+
+// Load user reservation
+$.ajax({
+  type          :'POST',
+  url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/approvelist',
+  dataType      :'text',
+  async         :false,
+  encode        :true,
+  error         :function(req, err){
+                    console.log(err);
+                 }
+})
+
+.done(function(response){
+
+    if (response){
+        // Parse the input into an array of json elements
+        var data_split = response.split("},");
+        for (var i = 0; i < data_split.length-1; i++) {
+            data_split[i] = data_split[i] + "}";
+        }
+
+        var reservationList = new Array();
+        data_split.forEach(function(item){
+            reservationList.push(JSON.parse(item));
+        });
+
+        // Insert the (parsed) reservations into userpage.html
+        for (var count = 0; count < reservationList.length; count++){
+
+            var timeStart = reservationList[count]['reserveStart'].replace('T', " ").replace(/:00:002Z/g, "");
+            var timeEnd = reservationList[count]['reserveEnd'].replace('T', " ").replace(/:00:002Z/g, "");
+      
+            var date = timeStart.substring(0,11);
+            
+            timeStart = timeStart.substring(11);
+            timeEnd = timeEnd.substring(11);
+
+            var hourStart = parseInt(timeStart.substring(0,2));
+            var hourEnd = parseInt(timeEnd.substring(0,2));
+      
+            hourStart = hourStart + 9;
+            hourEnd = hourEnd + 9 ;
+      
+            if (hourStart < 10){
+                //Append 0 to hour if it is less than 10
+                var hourStart_str = '0'.concat(hourStart);
+            }
+            if (hourEnd < 10){
+                var hourEnd_str = '0'.concat(hourEnd);
+            }
+            else{
+                var hourStart_str = hourStart.toString();
+                var hourEnd_str = hourEnd.toString();
+            }
+
+            var UTC_timeStart = hourStart_str.concat(timeStart.substring(2));
+            var UTC_timeEnd = hourEnd_str.concat(timeEnd.substring(2));
+            //Add back the date
+            var UTC_reserveStart = date.concat(UTC_timeStart);
+            var UTC_reserveEnd = date.concat(UTC_timeEnd);
+
+          var reservation = '<button type="button" class="reservation list-group-item list-group-item-action">'+
+            '<div><b>Email: </b>' + reservationList[count]['name'] + '</div>' +
+            '<div><b>Start: </b>' + UTC_reserveStart + '</div>' +
+            '<div><b>End: </b>' + UTC_reserveEnd + '</div>' +
+            '<div><b>Selected Image: </b>' + reservationList[count]['selectedImage'] + '</div>' +
+              '<div><b>Status: </b>' + reservationList[count]['status'] + '</div>'
+          '</button>'
+
+          document.getElementById('admin_reservationList').innerHTML += reservation;
+
+        }
+    }
+
+    else {
+        document.getElementById('admin_reservationList').innerHTML += "<div>There are currently no reservations.</div>";
+
+    }
+
+});
+
+(function($){
+   
+  });
+
+</script>
