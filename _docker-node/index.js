@@ -301,6 +301,66 @@ var server = http.createServer(function(request,response){
         response.end(res);
       }
     });
+  }else if(resource == '/pendinglist'){
+    User.find({status: "Pending" },null,{sort :{'reservations.reserveStart.orderIndex' : 1}}, function(error, data){
+      console.log('--- Reservation list ---');
+      console.log(new Date(Date.now()).toISOString());
+      if(error){
+        console.log(error);
+      }else{
+        // console.log(data);
+        // const user = JSON.parse(JSON.stringify(data).split("[").join("{").split("]").join("}"));
+        let users = JSON.parse(JSON.stringify(data));
+        // console.log(JSON.stringify(users));
+        var res = '';
+        for(var i=0; i<users.length;i++){
+          for(var j=0; j<users[i].reservations.length;j++){
+            res = res.concat('{"name":"',users[i].reservations[j].name,
+              '","reserveStart":"',users[i].reservations[j].reserveStart,
+              '","reserveEnd":"',users[i].reservations[j].reserveEnd,
+              '","selectedImage":"',users[i].reservations[j].selectedImage,
+              '","status":"',users[i].reservations[j].status,
+              '","vnc_password":"',users[i].reservations[j].vnc_password,'"},')
+          }
+        }
+        if(res!=''){
+          res = res.slice(0,-1);
+        }
+        console.log(res);
+        response.writeHead(200, {'Content-Type':'text/html'});
+        response.end(res);
+      }
+    });
+  }else if(resource == '/approvelist'){
+      User.find({status: "Approved" },null,{sort :{'reservations.reserveStart.orderIndex' : 1}}, function(error, data){
+        console.log('--- Reservation list ---');
+        console.log(new Date(Date.now()).toISOString());
+        if(error){
+          console.log(error);
+        }else{
+          // console.log(data);
+          // const user = JSON.parse(JSON.stringify(data).split("[").join("{").split("]").join("}"));
+          let users = JSON.parse(JSON.stringify(data));
+          // console.log(JSON.stringify(users));
+          var res = '';
+          for(var i=0; i<users.length;i++){
+            for(var j=0; j<users[i].reservations.length;j++){
+              res = res.concat('{"name":"',users[i].reservations[j].name,
+                '","reserveStart":"',users[i].reservations[j].reserveStart,
+                '","reserveEnd":"',users[i].reservations[j].reserveEnd,
+                '","selectedImage":"',users[i].reservations[j].selectedImage,
+                '","status":"',users[i].reservations[j].status,
+                '","vnc_password":"',users[i].reservations[j].vnc_password,'"},')
+            }
+          }
+          if(res!=''){
+            res = res.slice(0,-1);
+          }
+          console.log(res);
+          response.writeHead(200, {'Content-Type':'text/html'});
+          response.end(res);
+        }
+      });
   }else if(resource == '/readImage'){
     var postdata = '';
     request.on('data', function (data) {
