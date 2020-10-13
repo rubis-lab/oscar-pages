@@ -32,9 +32,10 @@ $.ajax({
   for (var i = 0; i < data_split.length; i++) {
       data_split[i] = data_split[i].replace(/'/g,"");
   }
-
   var imageList = new Array();
   data_split.forEach(function(item){
+      // debug code
+    console.log("data_split- \n", item);
     imageList.push(item);
   });
 
