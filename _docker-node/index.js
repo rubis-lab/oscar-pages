@@ -13,6 +13,40 @@ var fs = require('fs');
 const { DH_UNABLE_TO_CHECK_GENERATOR } = require('constants');
 
 
+///////////////Database Connection/////////////
+//local mongodb connection
+// mongoose.connect('mongodb://localhost:27017/oscar-db');
+//docker mongodb connection
+mongoose.connect('mongodb://oscar-db/oscar');
+var db = mongoose.connection;
+db.on('error', function(){
+  console.log('Connection Failed!');
+});
+db.once('open', function() {
+  console.log('Connected!');
+});
+var user = mongoose.Schema(
+{
+  name : {type: String, required: true, unique: true},
+  password : {type: String, required: true},
+  images : [{type: String}],
+  reservations: [{
+    name : {type: String},
+    reserveStart : {type: Object},
+    reserveEnd : {type: Object},
+    selectedImage: {type: String},
+    status: {type: String},
+    vnc_password: {type: String}
+  }]
+},
+{
+  autoIndex: true,
+  timestamps: true
+}
+);
+var User = mongoose.model('user', user);
+
+
 ///////////////Server/////////////
 var server = http.createServer(function(request,response){
   console.log('url = ' + request.url);
