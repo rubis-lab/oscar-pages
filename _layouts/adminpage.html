@@ -168,10 +168,10 @@ $.ajax({
             var UTC_reserveEnd = date.concat(UTC_timeEnd);
 
           var reservation = '<button type="button" class="reservation_pending list-group-item list-group-item-action">'+
-            '<div><b>Email: </b>' + reservationList[count]['name'] + '</div>' +
-            '<div><b>Start: </b>' + UTC_reserveStart + '</div>' +
-            '<div><b>End: </b>' + UTC_reserveEnd + '</div>' +
-            '<div><b>Selected Image: </b>' + reservationList[count]['selectedImage'] + '</div>' +
+            '<div><b>Email: </b>' + reservationList[count]['name'] + '\n</div>' +
+            '<div><b>Start: </b>' + UTC_reserveStart + '\n</div>' +
+            '<div><b>End: </b>' + UTC_reserveEnd + '\n</div>' +
+            '<div><b>VNC Password: </b>' + reservationList[count]['vnc_password'] + '\n</div>' +
               '<div><b>Status: </b>' + reservationList[count]['status'] + '</div>'
           '</button>'
 
@@ -250,10 +250,10 @@ $.ajax({
             var UTC_reserveEnd = date.concat(UTC_timeEnd);
 
           var reservation = '<button type="button" class="reservation_approved list-group-item list-group-item-action">'+
-            '<div><b>Email: </b>' + reservationList[count]['name'] + '</div>' +
-            '<div><b>Start: </b>' + UTC_reserveStart + '</div>' +
-            '<div><b>End: </b>' + UTC_reserveEnd + '</div>' +
-            '<div><b>Selected Image: </b>' + reservationList[count]['vnc_password'] + '</div>' +
+            '<div><b>Email: </b>' + reservationList[count]['name'] + '\n</div>' +
+            '<div><b>Start: </b>' + UTC_reserveStart + '\n</div>' +
+            '<div><b>End: </b>' + UTC_reserveEnd + '\n</div>' +
+            '<div><b>VNC Password: </b>' + reservationList[count]['vnc_password'] + '\n</div>' +
             '<div><b>Status: </b>' + reservationList[count]['status'] + '</div>'
           '</button>'
 
@@ -306,16 +306,21 @@ $(document).ready(function(){
     $('#approve').click(function(event){
 
         event.preventDefault();
+        var reserveSplit= [];
 
-        var reserveSplit = $('.reservation.active').text().split(": ");
-        var vnc_password = reserveSplit[4];
-        console.log(vnc_password);
+       $('.reservation_pending.active').text().split(": ").forEach(function(value){
+            reserveSplit.push(value.split("\n"));
+        });
+        
+        console.log(reserveSplit[1][0]); //name
+        console.log(reserveSplit[4][0]); //vnc password
+
 
         //Get form data from userpage.html
         var formData = {
             //Setting the input to be the id
-            'name'          :email,
-            'vnc_password'  :vnc_password,
+            'name'          :reserveSplit[1][0],
+            'vnc_password'  :reserveSplit[4][0],
         };
 
     $.ajax({
@@ -336,11 +341,11 @@ $(document).ready(function(){
                         }
     })
     .done(function(data){
-        if (data.includes("reservation does not exists")){
-            alert("There seems to be an error. Please contact RUBIS Lab.");
+        if (data.includes("does not exists")){
+            alert("User does not exist.");
         }
-        else if (data.includes("success")){
-            alert("Reservation was successfully deleted.");
+        else if (data.includes("approved!")){
+            alert("Reservation was successfully approved.");
             window.location.reload();
         }
         else {
