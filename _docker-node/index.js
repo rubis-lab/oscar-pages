@@ -375,6 +375,7 @@ var server = http.createServer(function(request,response){
           images = fs.readdirSync(tag_dir);
           images.forEach(tag => console.log(tag));
           images.forEach(tag => tags_ary.push(tag));
+          console.log("tags_ary : ", tags_ary);
         }
       });
       // images.forEach(tag => console.log(tag));
