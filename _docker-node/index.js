@@ -588,7 +588,7 @@ var server = http.createServer(function(request,response){
     });
     request.on('end', function () {
       var parsedQuery = querystring.parse(postdata);
-      User.findOneAndUpdate({name:parsedQuery.name},
+      User.findOneAndUpdate({$and: [{name:parsedQuery.name}, {reservations: {vnc_password: parsedQuery.vnc_password}}]},
         {$set:{"reservations.status": "Approved"}},function(error,data){
           if(error){
             console.log(error);
