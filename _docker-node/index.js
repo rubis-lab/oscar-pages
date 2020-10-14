@@ -319,12 +319,14 @@ var server = http.createServer(function(request,response){
         var res = '';
         for(var i=0; i<users.length;i++){
           for(var j=0; j<users[i].reservations.length;j++){
-            res = res.concat('{"name":"',users[i].reservations[j].name,
-              '","reserveStart":"',users[i].reservations[j].reserveStart,
-              '","reserveEnd":"',users[i].reservations[j].reserveEnd,
-              '","selectedImage":"',users[i].reservations[j].selectedImage,
-              '","status":"',users[i].reservations[j].status,
-              '","vnc_password":"',users[i].reservations[j].vnc_password,'"},')
+            if(user[i].reservations[j].status == "Pending"){
+              res = res.concat('{"name":"',users[i].reservations[j].name,
+                '","reserveStart":"',users[i].reservations[j].reserveStart,
+                '","reserveEnd":"',users[i].reservations[j].reserveEnd,
+                '","selectedImage":"',users[i].reservations[j].selectedImage,
+                '","status":"',users[i].reservations[j].status,
+                '","vnc_password":"',users[i].reservations[j].vnc_password,'"},')
+            }
           }
         }
         if(res!=''){
@@ -346,13 +348,15 @@ var server = http.createServer(function(request,response){
           var res = '';
           for(var i=0; i<users.length;i++){
             for(var j=0; j<users[i].reservations.length;j++){
-              res = res.concat('{"name":"',users[i].reservations[j].name,
-                '","reserveStart":"',users[i].reservations[j].reserveStart,
-                '","reserveEnd":"',users[i].reservations[j].reserveEnd,
-                '","selectedImage":"',users[i].reservations[j].selectedImage,
-                '","status":"',users[i].reservations[j].status,
-                '","vnc_password":"',users[i].reservations[j].vnc_password,'"},')
-            }
+              if(user[i].reservations[j].status == "Approved"){
+                res = res.concat('{"name":"',users[i].reservations[j].name,
+                  '","reserveStart":"',users[i].reservations[j].reserveStart,
+                  '","reserveEnd":"',users[i].reservations[j].reserveEnd,
+                  '","selectedImage":"',users[i].reservations[j].selectedImage,
+                  '","status":"',users[i].reservations[j].status,
+                  '","vnc_password":"',users[i].reservations[j].vnc_password,'"},')
+                }
+              }
           }
           if(res!=''){
             res = res.slice(0,-1);
