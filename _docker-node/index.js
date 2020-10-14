@@ -364,7 +364,21 @@ var server = http.createServer(function(request,response){
       var parsedQuery = querystring.parse(postdata);
       console.log('parsedQuery =',parsedQuery);
 
-      User.findOne({name:parsedQuery.name},null,null,function(error, user){
+      // get image list from (mounted) registry and update the user's image 
+      var tag_dir = '/docker-registry/repositories/'+parsedQuery.name.replace('@','.')+'/_manifests/tags/';
+      const tags_ary = ['default'];
+      var images;
+      fs.access(tag_dir, function(error) {
+        if (error) {
+          console.log("User image list is empty.")
+        } else {
+          images = fs.readdirSync(tag_dir);
+        }
+      });
+      images.forEach(tag => tags_ary.push(tag));
+      console.log(tags_ary);            
+
+      User.findOneAndUpdate({name:parsedQuery.name},{"$push": {images: tags_ary}},null,function(error, user){
         console.log('--- imagelist User ---');
         if(error){
           console.log(error);
@@ -372,42 +386,63 @@ var server = http.createServer(function(request,response){
           response.end(error);
         }else{
           if(user==null){
+            console.log('account does not exist');
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('account does not exist');
           }else{
-            // update image list 
-            var tag = '/docker-registry/repositories/'+parsedQuery.name.replace('@','.')+'/_manifests/tags/';
-            var files = fs.readdirSync(tag);
-            console.log(files);
-            const files_ary = ['default'];
-
-            // add files to files_ary
-            User.findOneAndUpdate({name:parsedQuery.name},{"$push": {images: files_ary}},null,function(error, user){
-              console.log('--- imagelist User ---');
-              if(error){
-                console.log(error);
-                response.end(error);
-              }else{
-                if(user==null){
-                  console.log('account does not exist');
-                  response.writeHead(200, {'Content-Type':'text/html'});
-                  response.end('account does not exist');
-                }else{
-                  console.log(now);
-                  response.writeHead(200, {'Content-Type':'text/html'});
-                  response.end('add image success');
-                }
-              }
-            });  
-            
-
             console.log(user.toString());
             parsedUser = '{'+user.toString().split('[')[1].split(']')[0].replace(new RegExp('\n','g'),'').replace(new RegExp(' ','g'),'')+'}';
             console.log(parsedUser);
             response.end(parsedUser);
           }
         }
-      });
+      });  
+      
+      // User.findOne({name:parsedQuery.name},null,null,function(error, user){
+      //   console.log('--- imagelist User ---');
+      //   if(error){
+      //     console.log(error);
+      //     response.writeHead(200, {'Content-Type':'text/html'});
+      //     response.end(error);
+      //   }else{
+      //     if(user==null){
+      //       response.writeHead(200, {'Content-Type':'text/html'});
+      //       response.end('account does not exist');
+      //     }else{
+      //       // get image list from registry and update the user's image 
+      //       var tag_dir = '/docker-registry/repositories/'+parsedQuery.name.replace('@','.')+'/_manifests/tags/';
+      //       const tags_ary = ['default'];
+      //       var images;
+      //       fs.access(tag_dir, function(error) {
+      //         if (error) {
+      //           console.log("User image list is empty.")
+      //         } else {
+      //           images = fs.readdirSync(tag_dir);
+      //         }
+      //       });
+      //       images.forEach(tag => tags_ary.push(tag));
+      //       console.log(tags_ary);            
+
+      //       User.findOneAndUpdate({name:parsedQuery.name},{"$push": {images: tags_ary}},null,function(error, user){
+      //         console.log('--- imagelist User ---');
+      //         if(error){
+      //           console.log(error);
+      //         }else{
+      //           if(user==null){
+      //             console.log('account does not exist');
+      //           }else{
+      //             console.log(User);
+      //           }
+      //         }
+      //       });  
+            
+      //       console.log(user.toString());
+      //       parsedUser = '{'+user.toString().split('[')[1].split(']')[0].replace(new RegExp('\n','g'),'').replace(new RegExp(' ','g'),'')+'}';
+      //       console.log(parsedUser);
+      //       response.end(parsedUser);
+      //     }
+      //   }
+      // });
     });
   }else if(resource == '/assignImage'){
     var postdata = '';
