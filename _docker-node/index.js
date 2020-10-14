@@ -373,14 +373,15 @@ var server = http.createServer(function(request,response){
           console.log("User image list is empty.")
         } else {
           images = fs.readdirSync(tag_dir);
-          console.log("images : ",images);
+          images.forEach(tag => console.log(tag));
+          images.forEach(tag => tags_ary.push(tag));
         }
       });
-      images.forEach(tag => console.log(tag));
-      images.forEach(tag => tags_ary.push(tag));
+      // images.forEach(tag => console.log(tag));
+      // images.forEach(tag => tags_ary.push(tag));
       console.log(tags_ary);            
 
-      User.findOneAndUpdate({name:parsedQuery.name},{"$push": {images: tags_ary}},null,function(error, user){
+      User.findOneAndUpdate({name:parsedQuery.name},{"$set": {images: tags_ary}},null,function(error, user){
         console.log('--- imagelist User ---');
         if(error){
           console.log(error);
