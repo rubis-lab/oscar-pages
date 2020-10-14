@@ -308,10 +308,7 @@ var server = http.createServer(function(request,response){
       if(error){
         console.log(error);
       }else{
-        // console.log(data);
-        // const user = JSON.parse(JSON.stringify(data).split("[").join("{").split("]").join("}"));
         let users = JSON.parse(JSON.stringify(data));
-        // console.log(JSON.stringify(users));
         var res = '';
         for(var i=0; i<users.length;i++){
           for(var j=0; j<users[i].reservations.length;j++){
@@ -338,10 +335,7 @@ var server = http.createServer(function(request,response){
         if(error){
           console.log(error);
         }else{
-          // console.log(data);
-          // const user = JSON.parse(JSON.stringify(data).split("[").join("{").split("]").join("}"));
           let users = JSON.parse(JSON.stringify(data));
-          // console.log(JSON.stringify(users));
           var res = '';
           for(var i=0; i<users.length;i++){
             for(var j=0; j<users[i].reservations.length;j++){
