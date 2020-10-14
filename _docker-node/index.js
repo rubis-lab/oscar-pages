@@ -47,6 +47,13 @@ var user = mongoose.Schema(
 var User = mongoose.model('user', user);
 
 
+function getTimeStringfromObject(object){
+  var pieces = object.split(':');
+  var last = pieces[3];
+  var first = pieces[0]+":"+pieces[1]+":"+pieces[2];
+  return first+"."+last;
+}
+
 ///////////////Server/////////////
 var server = http.createServer(function(request,response){
   console.log('url = ' + request.url);
@@ -399,54 +406,6 @@ var server = http.createServer(function(request,response){
           }
         }
       });
-      
-      console.log("@@ ",user.toString());
-      
-      // User.findOne({name:parsedQuery.name},null,null,function(error, user){
-      //   console.log('--- imagelist User ---');
-      //   if(error){
-      //     console.log(error);
-      //     response.writeHead(200, {'Content-Type':'text/html'});
-      //     response.end(error);
-      //   }else{
-      //     if(user==null){
-      //       response.writeHead(200, {'Content-Type':'text/html'});
-      //       response.end('account does not exist');
-      //     }else{
-      //       // get image list from registry and update the user's image 
-      //       var tag_dir = '/docker-registry/repositories/'+parsedQuery.name.replace('@','.')+'/_manifests/tags/';
-      //       const tags_ary = ['default'];
-      //       var images;
-      //       fs.access(tag_dir, function(error) {
-      //         if (error) {
-      //           console.log("User image list is empty.")
-      //         } else {
-      //           images = fs.readdirSync(tag_dir);
-      //         }
-      //       });
-      //       images.forEach(tag => tags_ary.push(tag));
-      //       console.log(tags_ary);            
-
-      //       User.findOneAndUpdate({name:parsedQuery.name},{"$push": {images: tags_ary}},null,function(error, user){
-      //         console.log('--- imagelist User ---');
-      //         if(error){
-      //           console.log(error);
-      //         }else{
-      //           if(user==null){
-      //             console.log('account does not exist');
-      //           }else{
-      //             console.log(User);
-      //           }
-      //         }
-      //       });  
-            
-      //       console.log(user.toString());
-      //       parsedUser = '{'+user.toString().split('[')[1].split(']')[0].replace(new RegExp('\n','g'),'').replace(new RegExp(' ','g'),'')+'}';
-      //       console.log(parsedUser);
-      //       response.end(parsedUser);
-      //     }
-      //   }
-      // });
     });
   }else if(resource == '/assignImage'){
     var postdata = '';
