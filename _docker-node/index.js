@@ -613,7 +613,7 @@ var server = http.createServer(function(request,response){
   }else if(resource == '/remove'){
     //Clear db
     request.on('end', function () {
-      User.deleteMany({}, callback);
+      User.deleteMany({"name": "diane@example.com"});
     });
   }else{
     response.writeHead(404, {'Content-Type':'text/html'});
