@@ -368,34 +368,17 @@ var server = http.createServer(function(request,response){
       var tag_dir = '/docker-registry/repositories/'+parsedQuery.name.replace('@','.')+'/_manifests/tags/';
       var tags_ary = ['default'];
       var images = [];
-      // fs.access(tag_dir, function(error) {
-      //   if (error) {
-      //     console.log("User image list is empty.")
-      //   } else {
-      //     images = fs.readdirSync(tag_dir);
-      //     images.forEach(tag => console.log(tag));
-      //     images.forEach(tag => tags_ary.push(tag));
-      //     console.log("tags_ary : ", tags_ary);
-      //     console.log("1 ",new Date());
-      //   }
-      // });
+      
       try{
         if(fs.existsSync(tag_dir)){
           images = fs.readdirSync(tag_dir);
-          images.forEach(tag => console.log(tag));
           images.forEach(tag => tags_ary.push(tag));
-          console.log("tags_ary : ", tags_ary);
-          console.log("1 ",new Date());
         }else{
           console.log("User image list is empty.");
         }
       }catch(e){
         console.log(e);
       }
-      // images.forEach(tag => console.log(tag));
-      // images.forEach(tag => tags_ary.push(tag));
-      console.log("2 ", new Date());
-      console.log(tags_ary);            
 
       User.findOneAndUpdate({name:parsedQuery.name},{"$set": {images: tags_ary}},null,function(error, user){
         console.log('--- imagelist User ---');
@@ -409,14 +392,15 @@ var server = http.createServer(function(request,response){
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('account does not exist');
           }else{
-            console.log("3", new Date());
             console.log(user.toString());
             parsedUser = '{'+user.toString().split('[')[1].split(']')[0].replace(new RegExp('\n','g'),'').replace(new RegExp(' ','g'),'')+'}';
             console.log("parsedUser: ",parsedUser);
             response.end(parsedUser);
           }
         }
-      });  
+      });
+      
+      console.log("@@ ",user.toString());
       
       // User.findOne({name:parsedQuery.name},null,null,function(error, user){
       //   console.log('--- imagelist User ---');
