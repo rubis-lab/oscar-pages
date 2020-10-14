@@ -590,7 +590,7 @@ var server = http.createServer(function(request,response){
       var parsedQuery = querystring.parse(postdata);
       User.findOneAndUpdate({$and: [{name:parsedQuery.name}, {"reservations.vnc_password": parsedQuery.vnc_password}]},
         //{$set:{reservations: { status: "Approved"}}},function(error,data){
-        {$set:{"reservations.$.Status": "Approved"}},function(error,data){
+        {$set:{"reservations.$.status": "Approved"}},function(error,data){
           //reservations is an array and it must be access through the elements of the area -- reservations[5] == status field
           if(error){
             console.log(error);
@@ -613,7 +613,7 @@ var server = http.createServer(function(request,response){
   }else if(resource == '/remove'){
     //Clear db
     request.on('end', function () {
-      User.remove({});
+      User.deleteMany({}, callback);
     });
   }else{
     response.writeHead(404, {'Content-Type':'text/html'});
