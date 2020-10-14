@@ -588,9 +588,9 @@ var server = http.createServer(function(request,response){
     });
     request.on('end', function () {
       var parsedQuery = querystring.parse(postdata);
-      User.findOneAndUpdate({$and: [{name:parsedQuery.name}, {"reservations.vnc_password": parsedQuery.vnc_password}]},
-        {$set:{reservations: { status: "Approved"}}},function(error,data){
-        //{$set:{"reservations.4.Pending": "Approved"}},function(error,data){
+      User.status.findOneAndUpdate({$and: [{name:parsedQuery.name}, {"reservations.vnc_password": parsedQuery.vnc_password}]},
+        //{$set:{reservations: { status: "Approved"}}},function(error,data){
+        {$set:{"reservations.4.Pending": "Approved"}},function(error,data){
           //reservations is an array and it must be access through the elements of the area -- reservations[5] == status field
           if(error){
             console.log(error);
