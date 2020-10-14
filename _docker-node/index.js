@@ -319,7 +319,7 @@ var server = http.createServer(function(request,response){
         var res = '';
         for(var i=0; i<users.length;i++){
           for(var j=0; j<users[i].reservations.length;j++){
-            if(user[i].reservations[j].status == "Pending"){
+            if(users[i].reservations[j].status == "Pending"){
               res = res.concat('{"name":"',users[i].reservations[j].name,
                 '","reserveStart":"',users[i].reservations[j].reserveStart,
                 '","reserveEnd":"',users[i].reservations[j].reserveEnd,
@@ -348,7 +348,7 @@ var server = http.createServer(function(request,response){
           var res = '';
           for(var i=0; i<users.length;i++){
             for(var j=0; j<users[i].reservations.length;j++){
-              if(user[i].reservations[j].status == "Approved"){
+              if(users[i].reservations[j].status == "Approved"){
                 res = res.concat('{"name":"',users[i].reservations[j].name,
                   '","reserveStart":"',users[i].reservations[j].reserveStart,
                   '","reserveEnd":"',users[i].reservations[j].reserveEnd,
