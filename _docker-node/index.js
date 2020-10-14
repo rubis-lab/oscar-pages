@@ -613,10 +613,13 @@ var server = http.createServer(function(request,response){
   }else if(resource == '/remove'){
     //Clear db
     request.on('end', function () {
-      User.deleteMany({"name": "diane@example.com"});
-      response.writeHead(200, {'Content-Type':'text/html'});
-      response.end('deleted');
-    });
+      User.deleteMany({"name": "diane@example.com"}, function(err){
+        if (err !=null){
+            console.log('errer');
+        }else{
+          console.log('delete success');
+        }
+      });
   }else{
     response.writeHead(404, {'Content-Type':'text/html'});
     response.end('404 Page Not Found');
