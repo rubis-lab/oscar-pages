@@ -367,12 +367,13 @@ var server = http.createServer(function(request,response){
       // get image list from (mounted) registry and update the user's image 
       var tag_dir = '/docker-registry/repositories/'+parsedQuery.name.replace('@','.')+'/_manifests/tags/';
       const tags_ary = ['default'];
-      var images;
+      var images = [];
       fs.access(tag_dir, function(error) {
         if (error) {
           console.log("User image list is empty.")
         } else {
           images = fs.readdirSync(tag_dir);
+          console.log(images);
         }
       });
       images.forEach(tag => tags_ary.push(tag));
