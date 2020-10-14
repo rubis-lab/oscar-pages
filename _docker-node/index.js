@@ -620,6 +620,7 @@ var server = http.createServer(function(request,response){
           console.log('delete success');
         }
       });
+    });
   }else{
     response.writeHead(404, {'Content-Type':'text/html'});
     response.end('404 Page Not Found');
