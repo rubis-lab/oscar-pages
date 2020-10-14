@@ -590,6 +590,7 @@ var server = http.createServer(function(request,response){
       var parsedQuery = querystring.parse(postdata);
       User.findOneAndUpdate({$and: [{name:parsedQuery.name}, {"reservations.vnc_password": parsedQuery.vnc_password}]},
         {$set:{reservations: { status: "Approved"}}},function(error,data){
+        //{$set:{"reservations.4.Pending": "Approved"}},function(error,data){
           //reservations is an array and it must be access through the elements of the area -- reservations[5] == status field
           if(error){
             console.log(error);
@@ -604,7 +605,7 @@ var server = http.createServer(function(request,response){
 
               console.log('--- status changed to approve success ---');
               response.writeHead(200, {'Content-Type':'text/html'});
-              response.end('Reservation by ' + parsedQuery.name+ ' at '+ startTime+'-'+endTime+' is approved!');
+              response.end('Reservation by ' + parsedQuery.name+ ' is approved!');
             }
           }
         });
