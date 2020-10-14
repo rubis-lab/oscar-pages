@@ -167,7 +167,7 @@ $.ajax({
             var UTC_reserveStart = date.concat(UTC_timeStart);
             var UTC_reserveEnd = date.concat(UTC_timeEnd);
 
-          var reservation = '<button type="button" class="reservation list-group-item list-group-item-action">'+
+          var reservation = '<button type="button" class="reservation_pending list-group-item list-group-item-action">'+
             '<div><b>Email: </b>' + reservationList[count]['name'] + '</div>' +
             '<div><b>Start: </b>' + UTC_reserveStart + '</div>' +
             '<div><b>End: </b>' + UTC_reserveEnd + '</div>' +
@@ -183,7 +183,7 @@ $.ajax({
 
     else {
         //document.getElementById('approve_list').innerHTML += "<div>There are currently no reservations.</div>";
-        document.getElementById('pending_list').innerHTML += "<div>There are currently no reservations.</div>";
+        document.getElementById('pending_list').innerHTML += "<div>There are currently no pending reservations.</div>";
 
     }
 
@@ -249,12 +249,12 @@ $.ajax({
             var UTC_reserveStart = date.concat(UTC_timeStart);
             var UTC_reserveEnd = date.concat(UTC_timeEnd);
 
-          var reservation = '<button type="button" class="reservation list-group-item list-group-item-action">'+
+          var reservation = '<button type="button" class="reservation_approved list-group-item list-group-item-action">'+
             '<div><b>Email: </b>' + reservationList[count]['name'] + '</div>' +
             '<div><b>Start: </b>' + UTC_reserveStart + '</div>' +
             '<div><b>End: </b>' + UTC_reserveEnd + '</div>' +
-            '<div><b>Selected Image: </b>' + reservationList[count]['selectedImage'] + '</div>' +
-              '<div><b>Status: </b>' + reservationList[count]['status'] + '</div>'
+            '<div><b>Selected Image: </b>' + reservationList[count]['vnc_password'] + '</div>' +
+            '<div><b>Status: </b>' + reservationList[count]['status'] + '</div>'
           '</button>'
 
           document.getElementById('approve_list').innerHTML += reservation;
@@ -264,15 +264,94 @@ $.ajax({
     }
 
     else {
-        document.getElementById('approve_list').innerHTML += "<div>There are currently no reservations.</div>";
+        document.getElementById('approve_list').innerHTML += "<div>There are currently no approved reservations.</div>";
         //document.getElementById('pending_list').innerHTML += "<div>There are currently no reservations.</div>";
 
     }
 
 });
 
-(function($){
-   
-  });
+$(document).ready(function(){
+
+    // Make scroll lists 'clickable'
+
+    $(".reservation_pending").click(function(event) {
+
+        // Select all list items
+        var listItems = $(".reservation_pending");
+
+        // Remove 'active' tag for all list items
+        for (let i = 0; i < listItems.length; i++) {
+            listItems[i].classList.remove("active");
+        }
+
+        // Add 'active' tag for currently selected item
+        this.classList.add("active");
+    });
+
+    $(".reservation_approved").click(function(event) {
+
+        // Select all list items
+        var listItems = $(".reservation_approved");
+
+        // Remove 'active' tag for all list items
+        for (let i = 0; i < listItems.length; i++) {
+            listItems[i].classList.remove("active");
+        }
+
+        // Add 'active' tag for currently selected item
+        this.classList.add("active");
+    });
+
+    $('#approve').click(function(event){
+
+        event.preventDefault();
+
+        var reserveSplit = $('.reservation.active').text().split(": ");
+        var vnc_password = reserveSplit[4];
+        console.log(vnc_password);
+
+        //Get form data from userpage.html
+        var formData = {
+            //Setting the input to be the id
+            'name'          :email,
+            'vnc_password'  :vnc_password,
+        };
+
+    $.ajax({
+
+        async         :true,
+        type          :'post',
+        url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/approve',
+        data          : {
+                            name            : formData.name,
+                            vnc_password    : formData.vnc_password,
+            },
+        dataType      :'text',
+        encode        :true,
+        success       : function(response){
+                        },
+        error         : function(req,err){
+                        console.log(err);
+                        }
+    })
+    .done(function(data){
+        if (data.includes("reservation does not exists")){
+            alert("There seems to be an error. Please contact RUBIS Lab.");
+        }
+        else if (data.includes("success")){
+            alert("Reservation was successfully deleted.");
+            window.location.reload();
+        }
+        else {
+            alert("ERROR");
+        }
+    });
+
+});
+
+
+
+});
 
 </script>
