@@ -373,9 +373,10 @@ var server = http.createServer(function(request,response){
           console.log("User image list is empty.")
         } else {
           images = fs.readdirSync(tag_dir);
-          console.log(images);
+          console.log("images : ",images);
         }
       });
+      images.forEach(tag => console.log(tag));
       images.forEach(tag => tags_ary.push(tag));
       console.log(tags_ary);            
 
