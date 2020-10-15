@@ -38,6 +38,7 @@ $.ajax({
         data_split.forEach(function(item){
             notifList.push(JSON.parse(item));
         });
+        console.log(response);
 
         // Insert the (parsed) notifications into userpage.html
         for (var count = 0; count < notifList.length; count++){
@@ -62,14 +63,14 @@ $.ajax({
               '</button>'                  
             }
             else{
-                alert("i dont know");
+                console.log("i dont know");
             }
           document.getElementById('notification_box').innerHTML += notif;
         }
     }
 
     else {
-        document.getElementById('notification_box').innerHTML += "<div>You have no upcoming reservations.</div>";
+        document.getElementById('notification_box').innerHTML += "<div>No notifications. </div>";
     }
 
 });
