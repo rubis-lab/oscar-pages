@@ -113,11 +113,11 @@ $.ajax({
             var UTC_reserveEnd = date.concat(UTC_timeEnd);
 
           var reservation = '<button type="button" class="reservation list-group-item list-group-item-action">'+
-            '<div><b>Start: </b>' + UTC_reserveStart + '</div>' +
-            '<div><b>End: </b>' + UTC_reserveEnd + '</div>' +
-            '<div><b>Selected Image: </b>' + reservationList[count]['selectedImage'] + '</div>' +
-            '<div><b>Reservation Password: </b>' + reservationList[count]['vnc_password'] + '</div>' +
-            '<div><b>Status: </b>' + reservationList[count]['status'] + '</div>'
+            '<div><b>Start: </b>' + UTC_reserveStart + '\n</div>' +
+            '<div><b>End: </b>' + UTC_reserveEnd + '\n</div>' +
+            '<div><b>Selected Image: </b>' + reservationList[count]['selectedImage'] + '\n</div>' +
+            '<div><b>Reservation Password: </b>' + reservationList[count]['vnc_password'] + '\n</div>' +
+            '<div><b>Status: </b>' + reservationList[count]['status'] + '\n</div>'
           '</button>'
 
           // "Select Docker Image" page
@@ -308,9 +308,13 @@ $(document).ready(function(){
     $('#cancelReservation').click(function(event){
 
         event.preventDefault();
+        var reserveSplit = [];
         
-        var reserveSplit = $('.reservation.active').text().split(": ");
-        var vnc_password = reserveSplit[4];
+        $('.reservation.active').text().split(": ").forEach(function(value){
+        reserveSplit.push(value.split("\n"));
+        });
+        
+        var vnc_password = reserveSplit[4][0];
         console.log(vnc_password);
 
         //Get form data from userpage.html
