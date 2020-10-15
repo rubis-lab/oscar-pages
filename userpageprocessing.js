@@ -10,6 +10,73 @@ document.getElementById('username').innerHTML += email + '.';
 // "async: false" option allows the images and reservations to load before the
 // page loads. Please do not edit.
 
+// Load user reservation
+$.ajax({
+  type          :'POST',
+  url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/notifs',
+  data          :{
+                    name: email,
+                 },
+  dataType      :'text',
+  async         :false,
+  encode        :true,
+  error         :function(req, err){
+                    console.log(err);
+                 }
+})
+
+.done(function(response){
+
+    if (response){
+        // Parse the input into an array of json elements
+        var data_split = response.split("},");
+        for (var i = 0; i < data_split.length-1; i++) {
+            data_split[i] = data_split[i] + "}";
+        }
+
+        var notifList = new Array();
+        data_split.forEach(function(item){
+            notifList.push(JSON.parse(item));
+        });
+
+        // Insert the (parsed) notifications into userpage.html
+        for (var count = 0; count < notifList.length; count++){
+            
+            var type = notifList[count]['type'].toString();
+            var body = notifList[count]['body'].toString();
+            
+            if (type == "accept"){
+              var notif = '<button type="button" class = "notification_box" id="notification-accept">'+
+                '<div><b>Success: </b>' + body + '\n</div>'
+              '</button>'                
+                
+            }else if (type == "deny"){
+              var notif = '<button type="button" class = "notification_box" id="notification-deny">'+
+                '<div><b>Denied: </b>' + body + '\n</div>'
+              '</button>'                  
+                
+            }
+            else if (type == "info"){
+              var notif = '<button type="button" class = "notification_box" id="notification-announce">'+
+                '<div><b>Notice: </b>' + body + '\n</div>'
+              '</button>'                  
+            }
+            else{
+                alert("i dont know");
+            }
+          document.getElementById('notification_box').innerHTML += notif;
+        }
+    }
+
+    else {
+        // "Select Docker Image" page
+        document.getElementById('reservationList_docker').innerHTML += "<div>You have no upcoming reservations.</div>";
+        // "Make/Cancel Reservations" Page
+        document.getElementById('reservationList_reserve').innerHTML += "<div>You have no upcoming reservations.</div>";
+    }
+
+});
+
 // loading user's docker images
 $.ajax({
   type          :'POST',
