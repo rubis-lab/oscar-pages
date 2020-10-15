@@ -530,10 +530,10 @@ var server = http.createServer(function(request,response){
       });
   }else if(resource == '/soon'){
     //Same as busy function but is true five minutes before
-    User.find({$and: [{"reservations.reserveStart":{ $gte : new Date(Date.now()).toISOString()}}, {"reservations.reserveStart": { $lte: new Date(Date.now() + 360000).toISOString()}}]}
+    User.find({$and: [{"reservations.reserveStart":{ $gte : new Date(Date.now()).toISOString()}}, {"reservations.reserveStart": { $lte: new Date(Date.now() + 120000).toISOString()}}]}
                  , function(error,data){
         console.log('--- Reservation list ---');
-        console.log(new Date(Date.now()+ 360000).toISOString());
+        console.log(new Date(Date.now()+ 120000).toISOString());
         //300000
         if(error){
           console.log(error);
@@ -543,7 +543,7 @@ var server = http.createServer(function(request,response){
             var flag = 0;
             var user = JSON.parse(JSON.stringify(data));
             console.log(user);
-            var now_plus_five = new Date(Date.now() + 360000);
+            var now_plus_five = new Date(Date.now() + 120000);
             var now = new Date(Date.now());
             var startTime, endTime, pwd, selImage;
             for (var j=0;j<user.length;j++){
@@ -564,11 +564,11 @@ var server = http.createServer(function(request,response){
             }}
             if (flag == 0){
             response.writeHead(200, {'Content-Type':'text/html'});
-            response.end('There are no reservations for the next 5 minutes.\n');
+            response.end('There are no reservations for the next 1 minutes.\n');
             }
           }else{
             response.writeHead(200, {'Content-Type':'text/html'});
-            response.end('There are no reservations for the next 5 minutes.\n');
+            response.end('There are no reservations for the next 1 minutes.\n');
           }
         }
 
@@ -637,7 +637,6 @@ var server = http.createServer(function(request,response){
     request.on('end', function () {
       var parsedQuery = querystring.parse(postdata);
       User.findOneAndUpdate({$and: [{name:parsedQuery.name}, {"reservations.vnc_password": parsedQuery.vnc_password}]},
-        //{$set:{reservations: { status: "Approved"}}},function(error,data){
         {$set:{"reservations.$.status": "Approved"}
          //, $push:{notifications:{type: "accept",body:"Your reservation at ___ is approved."}
         },function(error,data){
