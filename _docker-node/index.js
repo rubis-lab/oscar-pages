@@ -660,6 +660,36 @@ var server = http.createServer(function(request,response){
           }
         });
     });
+  }else if(resource == '/clearOneNotif'){
+    //Clears the selected notification
+    var postdata = '';
+    request.on('data', function (data) {
+      postdata = postdata + data;
+    });
+    request.on('end', function () {
+      var parsedQuery = querystring.parse(postdata);
+      var index = parsedQuery.index;
+      User.findOneAndUpdate({name:parsedQuery.name},
+        { $unset:{notifications.index: 1 },
+          $pull: {notifications : null}},function(error,data){
+          //reservations is an array and it must be access through the elements of the area -- reservations[5] == status field
+          if(error){
+            console.log(error);
+          }else{
+            var user = JSON.parse(JSON.stringify(data));
+            if(user == null){
+              console.log('user does not exists');
+              response.writeHead(200, {'Content-Type':'text/html'});
+              response.end('user does not exists');
+            }
+            else{
+              console.log('--- One Notification Cleared ---');
+              response.writeHead(200, {'Content-Type':'text/html'});
+              response.end('Notification removed.');
+            }
+          }
+        });
+    });
   }else if(resource == '/removeAll'){
     //Clear db
       User.deleteMany({});
