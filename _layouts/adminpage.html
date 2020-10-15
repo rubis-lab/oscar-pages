@@ -274,6 +274,25 @@ $.ajax({
 $(document).ready(function(){
 
     // Make scroll lists 'clickable'
+    
+    $(".notification_box").dblclick(function(event) {
+
+        // Select all list items
+        var notifItems = $(".notification_box");
+
+        // Remove 'active' tag for all list items
+        for (let i = 0; i < notifItems.length; i++) {
+            notifItems[i].classList.remove("active");
+        }
+
+        // Add 'active' tag for currently selected item
+        this.classList.add("active");
+        
+        if($('.reservation_pending.active').text().length != 0){
+            alert("bing.");
+        }
+        
+    });
 
     $(".reservation_pending").click(function(event) {
 
