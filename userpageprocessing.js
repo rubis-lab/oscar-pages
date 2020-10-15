@@ -206,7 +206,7 @@ $.ajax({
 $(document).ready(function(){
 
   // Make scroll lists 'clickable'
-    $(".notification_box").dblclick(function(event) {
+    $(".notification_box").click(function(event) {
 
         // Select all list items
         var notifItems = $(".notification_box");
@@ -220,7 +220,7 @@ $(document).ready(function(){
         this.classList.add("active");
         
         for(let i = 0; i < notifItems.length; i++) {
-            if(notifItems[i].classList.contains("active")== True){
+            if(notifItems[i].classList.contains("active")== true){
                 var notif_index  = i;
             }
         }
