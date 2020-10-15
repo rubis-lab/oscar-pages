@@ -617,7 +617,7 @@ var server = http.createServer(function(request,response){
                     notifs = notifs.concat('{"notif_type":"',user.notifications[i].notif_type,
                                      '","body":"',user.notifications[i].body,'"},');
                 }
-                if(res != ''){
+                if(notifs != ''){
                 notifs = notifs.slice(0,-1);
                 }
                 console.log(notifs);
