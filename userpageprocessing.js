@@ -42,7 +42,7 @@ $.ajax({
         // Insert the (parsed) notifications into userpage.html
         for (var count = 0; count < notifList.length; count++){
             
-            var type = notifList[count]['type'];
+            var type = notifList[count]['notif_type'];
             var body = notifList[count]['body'];
             
             if (type == "accept"){
