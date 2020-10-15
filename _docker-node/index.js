@@ -494,19 +494,20 @@ var server = http.createServer(function(request,response){
         }else{
           console.log(data);
           if(data != null){
+            var flag = 0;
             var user = JSON.parse(JSON.stringify(data));
             var now = new Date(Date.now());
             var startTime, endTime, pwd, selImage;
             for (var j=0;j<user.length;j++){
-                console.log("******");
-                console.log(user[0]);
-                console.log(user[1]);
-                console.log(user[0].reservations[1].reserveStart);
-                console.log("******");
+//                console.log("******");
+//                console.log(user[0]);
+//                console.log(user[1]);
+//                console.log(user[0].reservations[1].reserveStart);
+                console.log("***ooooOO***");
                 for(var i=0;i<user[j].reservations.length;i++){
                   start = Date.parse(getTimeStringfromObject(user[j].reservations[i].reserveStart));
                   end = Date.parse(getTimeStringfromObject(user[j].reservations[i].reserveEnd));
-                  if(start < now && now < end && user[j].reservations[i].status == "Approved"){
+                  if(start < now && now < end && (user[j].reservations[i].status == "Approved"){
                     // convert to KST
                     startTime = new Date(Date.parse(getTimeStringfromObject(user[j].reservations[i].reserveStart))+(60*60*1000*9)).toISOString().slice(11, 16); 
                     endTime = new Date(Date.parse(getTimeStringfromObject(user[j].reservations[i].reserveEnd))+(60*60*1000*9)).toISOString().slice(11, 16);
@@ -515,10 +516,13 @@ var server = http.createServer(function(request,response){
                     console.log(startTime, endTime, pwd);
                     response.writeHead(200, {'Content-Type':'text/html'});
                     response.end('System is reserved by '+user[j].name+'_'+startTime+'_'+endTime+'_'+pwd+'_'+selImage+'\n');
+                    flag = 1;
                 }
             }}
-            response.writeHead(200, {'Content-Type':'text/html'});
-            response.end('System is not busy.\n');
+            if(flag == 0){
+                response.writeHead(200, {'Content-Type':'text/html'});
+                response.end('System is not busy.\n');
+            }
           }else{
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('System is not busy.\n');
