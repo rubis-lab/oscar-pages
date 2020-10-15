@@ -234,6 +234,7 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
     rows.shift(); // remove header
     //var inputDateFormat = "M/D/YYYY H:mm A Z"; // formatting removed, dates are in default format
     var result = [];
+    //console.log(rows);
 
     _.forEach(rows, function(columns, index) {
       if (columns.length < 3)  // require at least: title, start, end
@@ -250,15 +251,15 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
       formattedEvent['end']   = moment(end).valueOf();
 
       if (!_.isEmpty(columns[3]))
-        formattedEvent['class'] = 'event-' + columns[3].toLowerCase(); // predefined CSS classname
+        formattedEvent['class'] = 'event-' + columns[4].toLowerCase(); // predefined CSS classname
 
-      if (!_.isEmpty(columns[4]))
-        formattedEvent['url'] = columns[4];
+      // if (!_.isEmpty(columns[4]))
+      //   formattedEvent['url'] = columns[4];
 
       result.push(formattedEvent);
     });
 
-    // console.log(JSON.stringify(result));
+    console.log(JSON.stringify(result));
     return result;
   }
 
