@@ -669,7 +669,8 @@ var server = http.createServer(function(request,response){
     request.on('end', function () {
       var parsedQuery = querystring.parse(postdata);
       var index = parsedQuery.index;
-      var query = "{ $set:{notifications." + index + ".body : 'bleghh' }"
+      var query = "{ $set:{notifications." + index + ".body : 'bleghh' }";
+      console.log(query);
       //, $pull: {notifications : null}}";
       User.findOneAndUpdate({name:parsedQuery.name}, query ,function(error,data){
           //reservations is an array and it must be access through the elements of the area -- reservations[5] == status field
