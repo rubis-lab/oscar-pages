@@ -37,6 +37,10 @@ var user = mongoose.Schema(
     selectedImage: {type: String},
     status: {type: String},
     vnc_password: {type: String}
+  }],
+  notifications: [{
+      notif_type: {type: String},
+      body: {type: String}  
   }]
 },
 {
@@ -234,7 +238,7 @@ var server = http.createServer(function(request,response){
         if(error){
           console.log(error);
         }else{
-          var res = ''
+          var res = '';
           var user = JSON.parse(JSON.stringify(data).replace(/ /g, ''));
           for(var i=0;i<user.reservations.length;i++){
             res = res.concat('{"reserveStart":"',user.reservations[i].reserveStart,
@@ -529,7 +533,8 @@ var server = http.createServer(function(request,response){
     User.find({$and: [{"reservations.reserveStart":{ $gte : new Date(Date.now()).toISOString()}}, {"reservations.reserveStart": { $lte: new Date(Date.now() + 300000).toISOString()}}]}
                  , function(error,data){
         console.log('--- Reservation list ---');
-        console.log(new Date(Date.now()+ 300000).toISOString());
+        console.log(new Date(Date.now()+ 60000).toISOString());
+        //300000
         if(error){
           console.log(error);
         }else{
@@ -594,6 +599,26 @@ var server = http.createServer(function(request,response){
           }
         });
     });
+  }else if (resource == '/notifs'){
+    var postdata = '';
+    request.on('data', function (data) {
+      postdata = postdata + data;
+    });
+    request.on('end', function (){
+        var parsedQuery = querystring.parse(postdata);
+        User.findOne({"name":parsedQuery.name}, function(error, data){
+            console.log('--- User Notifications ---');
+            if(error){
+                console.log(error);
+            }else{
+                var notifs = '';
+                var user = JSON.parse(JSON.stringify(data).replace(/ /g, ''));
+                for(var i=0;i<user.notifications.length;i++){
+                    console.log("hi");
+                }
+            
+        });
+      });
   }else if(resource == '/approve'){
     //Changes status from pending to approved
     var postdata = '';
