@@ -69,10 +69,7 @@ $.ajax({
     }
 
     else {
-        // "Select Docker Image" page
-        document.getElementById('reservationList_docker').innerHTML += "<div>You have no upcoming reservations.</div>";
-        // "Make/Cancel Reservations" Page
-        document.getElementById('reservationList_reserve').innerHTML += "<div>You have no upcoming reservations.</div>";
+        document.getElementById('notification_box').innerHTML += "<div>You have no upcoming reservations.</div>";
     }
 
 });
