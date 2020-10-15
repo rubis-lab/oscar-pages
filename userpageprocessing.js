@@ -206,6 +206,54 @@ $.ajax({
 $(document).ready(function(){
 
   // Make scroll lists 'clickable'
+    $(".notification_box").dblclick(function(event) {
+
+        // Select all list items
+        var notifItems = $(".notification_box");
+
+        // Remove 'active' tag for all list items
+        for(let i = 0; i < notifItems.length; i++) {
+            notifItems[i].classList.remove("active");
+        }
+
+        // Add 'active' tag for currently selected item
+        this.classList.add("active");
+        
+        for(let i = 0; i < notifItems.length; i++) {
+            if(notifItems[i].classList.contains("active")== True){
+                var notif_index  = i;
+            }
+        }
+        
+        if($('.notification_box.active').text().length != 0){
+            $.ajax({
+
+                async         :true,
+                type          :'post',
+                url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/clearOneNotif',
+                data          : {
+                                    name            : email,
+                                    index           : notif_index
+                    },
+                dataType      :'text',
+                encode        :true,
+                success       : function(response){
+                                },
+                error         : function(req,err){
+                                console.log(err);
+                                }
+            })
+            .done(function(data){
+                if (data.includes("removed")){
+                    alert("Notification removed.");
+                    window.location.reload();
+                }else {
+                    alert("ERROR");
+                }
+            });            
+        }
+        
+    });
 
   $(".dockerimage").click(function(event) {
 
