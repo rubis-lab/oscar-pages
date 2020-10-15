@@ -338,7 +338,8 @@ $(document).ready(function(){
             $('.reservation_pending.active').text().split(": ").forEach(function(value){
             reserveSplit.push(value.split("\n"));
             });
-
+            
+            console.log(reserveSplit);
             console.log(reserveSplit[1][0]); //name
             console.log(reserveSplit[4][0]); //vnc password
 
@@ -347,6 +348,8 @@ $(document).ready(function(){
             var formData = {
                 //Setting the input to be the id
                 'name'          :reserveSplit[1][0],
+                'reserveStart'  :reserveSplit[2][0],
+                'reserveEnd'    :reserveSplit[3][0],
                 'vnc_password'  :reserveSplit[4][0],
             };
         }else{
