@@ -116,7 +116,8 @@ $.ajax({
             '<div><b>Start: </b>' + UTC_reserveStart + '</div>' +
             '<div><b>End: </b>' + UTC_reserveEnd + '</div>' +
             '<div><b>Selected Image: </b>' + reservationList[count]['selectedImage'] + '</div>' +
-              '<div><b>Reservation Password: </b>' + reservationList[count]['vnc_password'] + '</div>'
+            '<div><b>Reservation Password: </b>' + reservationList[count]['vnc_password'] + '</div>' +
+            '<div><b>Status: </b>' + reservationList[count]['status'] + '</div>'
           '</button>'
 
           // "Select Docker Image" page
