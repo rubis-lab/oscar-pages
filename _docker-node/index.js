@@ -612,7 +612,7 @@ var server = http.createServer(function(request,response){
                 console.log(error);
             }else{
                 var notifs = '';
-                var user = JSON.parse(JSON.stringify(data).replace(/ /g, ''));
+                var user = JSON.parse(JSON.stringify(data));
                 for(var i=0;i<user.notifications.length;i++){
                     notifs = notifs.concat('{"notif_type":"',user.notifications[i].notif_type,
                                      '","body":"',user.notifications[i].body,'"},');
