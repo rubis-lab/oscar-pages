@@ -530,10 +530,10 @@ var server = http.createServer(function(request,response){
       });
   }else if(resource == '/soon'){
     //Same as busy function but is true five minutes before
-    User.find({$and: [{"reservations.reserveStart":{ $gte : new Date(Date.now()).toISOString()}}, {"reservations.reserveStart": { $lte: new Date(Date.now() + 300000).toISOString()}}]}
+    User.find({$and: [{"reservations.reserveStart":{ $gte : new Date(Date.now()).toISOString()}}, {"reservations.reserveStart": { $lte: new Date(Date.now() + 360000).toISOString()}}]}
                  , function(error,data){
         console.log('--- Reservation list ---');
-        console.log(new Date(Date.now()+ 300000).toISOString());
+        console.log(new Date(Date.now()+ 360000).toISOString());
         //300000
         if(error){
           console.log(error);
@@ -543,7 +543,7 @@ var server = http.createServer(function(request,response){
             var flag = 0;
             var user = JSON.parse(JSON.stringify(data));
             console.log(user);
-            var now_plus_five = new Date(Date.now() + 300000);
+            var now_plus_five = new Date(Date.now() + 360000);
             var now = new Date(Date.now());
             var startTime, endTime, pwd, selImage;
             for (var j=0;j<user.length;j++){
@@ -639,7 +639,7 @@ var server = http.createServer(function(request,response){
       User.findOneAndUpdate({$and: [{name:parsedQuery.name}, {"reservations.vnc_password": parsedQuery.vnc_password}]},
         //{$set:{reservations: { status: "Approved"}}},function(error,data){
         {$set:{"reservations.$.status": "Approved"}
-         //, $push:{notifications:{}}
+         //, $push:{notifications:{type: "accept",body:"Your reservation at ___ is approved."}
         },function(error,data){
           //reservations is an array and it must be access through the elements of the area -- reservations[5] == status field
           if(error){
