@@ -250,7 +250,7 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
       formattedEvent['start'] = moment(start).valueOf(); // Unix milliseconds
       formattedEvent['end']   = moment(end).valueOf();
 
-      if (!_.isEmpty(columns[3]))
+      if (!_.isEmpty(columns[4]))
         formattedEvent['class'] = 'event-' + columns[4].toLowerCase(); // predefined CSS classname
 
       // if (!_.isEmpty(columns[4]))
