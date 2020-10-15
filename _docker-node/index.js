@@ -485,7 +485,7 @@ var server = http.createServer(function(request,response){
       });
     });
   }else if(resource == '/busy'){
-    User.findOne({$and: [{"reservations.reserveStart": {$lte :  new Date(Date.now()).toISOString()}},
+    User.findOne({$and: [{},{"reservations.reserveStart": {$lte :  new Date(Date.now()).toISOString()}},
       {"reservations.reserveEnd" : {$gte:  new Date(Date.now()).toISOString()}}]}, function(error,data){
         console.log('--- Reservation list ---');
         console.log(new Date(Date.now()).toISOString());
@@ -500,7 +500,7 @@ var server = http.createServer(function(request,response){
             for(var i=0;i<user.reservations.length;i++){
               start = Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart));
               end = Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd));
-              if(start < now && now < end){
+              if(start < now && now < end && user.reservations[i].status == "Approved"){
                 // convert to KST
                 startTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart))+(60*60*1000*9)).toISOString().slice(11, 16); 
                 endTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd))+(60*60*1000*9)).toISOString().slice(11, 16);
@@ -537,7 +537,7 @@ var server = http.createServer(function(request,response){
             for(var i=0;i<user.reservations.length;i++){
               start = Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart));
               end = Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd));
-              if(start >= now && (start <= now_plus_five)){
+              if(start >= now && (start <= now_plus_five) && user.reservations[i].status == "Approved"){
                 // convert to KST
                 startTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart))+(60*60*1000*9)).toISOString(); 
                 endTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd))+(60*60*1000*9)).toISOString().slice(11, 16);
