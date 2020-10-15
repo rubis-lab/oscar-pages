@@ -485,7 +485,7 @@ var server = http.createServer(function(request,response){
       });
     });
   }else if(resource == '/busy'){
-    User.findOne({$and: [{},{"reservations.reserveStart": {$lte :  new Date(Date.now()).toISOString()}},
+    User.findOne({$and: [{"reservations.reserveStart": {$lte :  new Date(Date.now()).toISOString()}},
       {"reservations.reserveEnd" : {$gte:  new Date(Date.now()).toISOString()}}]}, function(error,data){
         console.log('--- Reservation list ---');
         console.log(new Date(Date.now()).toISOString());
@@ -521,7 +521,7 @@ var server = http.createServer(function(request,response){
       });
   }else if(resource == '/soon'){
     //Same as busy function but is true five minutes before
-    User.find({$and: [{"reservations.reserveStart":{ $gte : new Date(Date.now()).toISOString()}}, {"reservations.reserveStart": { $lte: new Date(Date.now() + 300000).toISOString()}}]}
+    User.findOne({$and: [{"reservations.reserveStart":{ $gte : new Date(Date.now()).toISOString()}}, {"reservations.reserveStart": { $lte: new Date(Date.now() + 300000).toISOString()}}]}
                  , function(error,data){
         console.log('--- Reservation list ---');
         console.log(new Date(Date.now()+ 300000).toISOString());
