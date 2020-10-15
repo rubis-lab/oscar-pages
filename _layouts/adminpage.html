@@ -289,7 +289,7 @@ $(document).ready(function(){
         this.classList.add("active");
     });
     
-    $(".reservation_pending").dbclick(function(event) {
+    $(".reservation_pending").dblclick(function(event) {
 
         // Select all list items
         var listItems = $(".reservation_pending");
@@ -315,81 +315,112 @@ $(document).ready(function(){
         // Add 'active' tag for currently selected item
         this.classList.add("active");
     });
+    $(".reservation_approved").dblclick(function(event) {
+
+        // Select all list items
+        var listItems = $(".reservation_pending");
+
+        // Remove 'active' tag for all list items
+        for (let i = 0; i < listItems.length; i++) {
+            listItems[i].classList.remove("active");
+        }
+
+    });
 
     $('#approve').click(function(event){
 
         event.preventDefault();
         var reserveSplit= [];
 
-       $('.reservation_pending.active').text().split(": ").forEach(function(value){
+        if($('.reservation_pending.active').text().length == 0){
+            alert("You must select a pending reservation.");
+        }else if($('.reservation_pending.active').text().length > 0){
+            $('.reservation_pending.active').text().split(": ").forEach(function(value){
             reserveSplit.push(value.split("\n"));
+            });
+
+            console.log(reserveSplit[1][0]); //name
+            console.log(reserveSplit[4][0]); //vnc password
+
+
+            //Get form data from userpage.html
+            var formData = {
+                //Setting the input to be the id
+                'name'          :reserveSplit[1][0],
+                'vnc_password'  :reserveSplit[4][0],
+            };
+        }else{
+            alert("Error?");
+        }
+
+        $.ajax({
+
+            async         :true,
+            type          :'post',
+            url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/approve',
+            data          : {
+                                name            : formData.name,
+                                vnc_password    : formData.vnc_password,
+                },
+            dataType      :'text',
+            encode        :true,
+            success       : function(response){
+                            },
+            error         : function(req,err){
+                            console.log(err);
+                            }
+        })
+        .done(function(data){
+            if (data.includes("does not exists")){
+                alert("User does not exist.");
+            }
+            else if (data.includes("approved!")){
+                alert("Reservation was successfully approved.");
+                window.location.reload();
+            }
+            else {
+                alert("ERROR");
+            }
         });
-        
-        console.log(reserveSplit[1][0]); //name
-        console.log(reserveSplit[4][0]); //vnc password
-
-
-        //Get form data from userpage.html
-        var formData = {
-            //Setting the input to be the id
-            'name'          :reserveSplit[1][0],
-            'vnc_password'  :reserveSplit[4][0],
-        };
-
-    $.ajax({
-
-        async         :true,
-        type          :'post',
-        url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/approve',
-        data          : {
-                            name            : formData.name,
-                            vnc_password    : formData.vnc_password,
-            },
-        dataType      :'text',
-        encode        :true,
-        success       : function(response){
-                        },
-        error         : function(req,err){
-                        console.log(err);
-                        }
-    })
-    .done(function(data){
-        if (data.includes("does not exists")){
-            alert("User does not exist.");
-        }
-        else if (data.includes("approved!")){
-            alert("Reservation was successfully approved.");
-            window.location.reload();
-        }
-        else {
-            alert("ERROR");
-        }
-    });
-
     });
 
     $('#deny').click(function(event){
 
         event.preventDefault();
-        var reserveSplit= [];
+        var reserveSplit = [];
+        console.log($('.reservation_approved.active').text());
+        console.log($('.reservation_pending.active').text());
 
-        $('.reservation_pending.active').text().split(": ").forEach(function(value){
+
+        if(($('.reservation_approved.active').text().length == 0) && ($('.reservation_pending.active').text().length == 0)){
+            alert("Please select a reservation to deny.");
+        }else if(($('.reservation_approved.active').text().length > 0) && ($('.reservation_pending.active').text().length > 0 )){
+            alert("Only one reservation can be selected. Double click to unselect one.");
+        }else if(($('.reservation_approved.active').text().length > 0) && ($('.reservation_pending.active').text().length == 0)){
+            $('.reservation_approved.active').text().split(": ").forEach(function(value){
             reserveSplit.push(value.split("\n"));
-        });
-        // $('.reservation_approved.active').text().split(": ").forEach(function(value){
-        //     reserveSplit.push(value.split("\n"));
-        // });
+            });
+        }else if(($('.reservation_approved.active').text().length == 0) && ($('.reservation_pending.active').text().length > 0)){
+            $('.reservation_pending.active').text().split(": ").forEach(function(value){
+            reserveSplit.push(value.split("\n"));
+            });
+        }else{
+            alert("Error!!!!");
+        }
 
-        console.log(reserveSplit[1][0]); //name
-        console.log(reserveSplit[4][0]); //vnc password
+        if(reserveSplit.length != 0){
+            console.log(reserveSplit[1][0]); //name
+            console.log(reserveSplit[4][0]); //vnc password
 
 
-        //Get form data from userpage.html
-        var formData = {
-            //Setting the input to be the id
-            'name'          :reserveSplit[1][0],
-            'vnc_password'  :reserveSplit[4][0],
-        };
+            //Get form data from userpage.html
+            var formData = {
+                //Setting the input to be the id
+                'name'          :reserveSplit[1][0],
+                'vnc_password'  :reserveSplit[4][0],
+            };
+        }
+
 
         $.ajax({
 
