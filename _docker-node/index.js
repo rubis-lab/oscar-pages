@@ -499,11 +499,6 @@ var server = http.createServer(function(request,response){
             var now = new Date(Date.now());
             var startTime, endTime, pwd, selImage;
             for (var j=0;j<user.length;j++){
-//                console.log("******");
-//                console.log(user[0]);
-//                console.log(user[1]);
-//                console.log(user[0].reservations[1].reserveStart);
-                console.log("***ooooOO***");
                 for(var i=0;i<user[j].reservations.length;i++){
                   start = Date.parse(getTimeStringfromObject(user[j].reservations[i].reserveStart));
                   end = Date.parse(getTimeStringfromObject(user[j].reservations[i].reserveEnd));
@@ -540,28 +535,32 @@ var server = http.createServer(function(request,response){
         }else{
           console.log(data);
           if(data != null){
+            var flag = 0;
             var user = JSON.parse(JSON.stringify(data));
             console.log(user);
             var now_plus_five = new Date(Date.now() + 300000);
             var now = new Date(Date.now());
             var startTime, endTime, pwd, selImage;
-            for(var i=0;i<user.reservations.length;i++){
-              start = Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart));
-              end = Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd));
-              if(start >= now && (start <= now_plus_five) && user.reservations[i].status == "Approved"){
-                // convert to KST
-                startTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveStart))+(60*60*1000*9)).toISOString(); 
-                endTime = new Date(Date.parse(getTimeStringfromObject(user.reservations[i].reserveEnd))+(60*60*1000*9)).toISOString().slice(11, 16);
-                selImage = user.reservations[i].selectedImage;
-                pwd = user.reservations[i].vnc_password; 
-                console.log(startTime, endTime, pwd);
-                response.writeHead(200, {'Content-Type':'text/html'});
-                response.end('System will be reserved by '+user.name+'_'+startTime+'_'+endTime+'_'+pwd+'_'+selImage+' soon.\n');
-              }
-            }
+            for (var j=0;j<user.length;j++){
+                for(var i=0;i<user[j].reservations.length;i++){
+                      start = Date.parse(getTimeStringfromObject(user[j].reservations[i].reserveStart));
+                      end = Date.parse(getTimeStringfromObject(user[j].reservations[i].reserveEnd));
+                      if(start >= now && (start <= now_plus_five) && user[j].reservations[i].status == "Approved"){
+                        // convert to KST
+                        startTime = new Date(Date.parse(getTimeStringfromObject(user[j].reservations[i].reserveStart))+(60*60*1000*9)).toISOString(); 
+                        endTime = new Date(Date.parse(getTimeStringfromObject(user[j].reservations[i].reserveEnd))+(60*60*1000*9)).toISOString().slice(11, 16);
+                        selImage = user[j].reservations[i].selectedImage;
+                        pwd = user[j].reservations[i].vnc_password; 
+                        console.log(startTime, endTime, pwd);
+                        response.writeHead(200, {'Content-Type':'text/html'});
+                        response.end('System will be reserved by '+user[j].name+'_'+startTime+'_'+endTime+'_'+pwd+'_'+selImage+' soon.\n');
+                        flag = 1;
+                  }
+            }}
+            if (flag == 0){
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('There are no reservations for the next 5 minutes.\n');
-
+            }
           }else{
             response.writeHead(200, {'Content-Type':'text/html'});
             response.end('There are no reservations for the next 5 minutes.\n');
