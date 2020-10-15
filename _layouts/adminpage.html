@@ -363,6 +363,8 @@ $(document).ready(function(){
             url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/approve',
             data          : {
                                 name            : formData.name,
+                                reserveStart    : formData.reserveStart,
+                                reserveEnd      : formData.reserveEnd,
                                 vnc_password    : formData.vnc_password,
                 },
             dataType      :'text',
