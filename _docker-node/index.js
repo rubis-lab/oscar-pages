@@ -615,7 +615,7 @@ var server = http.createServer(function(request,response){
                 var user = JSON.parse(JSON.stringify(data).replace(/ /g, ''));
                 for(var i=0;i<user.notifications.length;i++){
                     console.log("hi");
-                }
+                }}
             
         });
       });
