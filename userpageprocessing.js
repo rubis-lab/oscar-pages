@@ -42,8 +42,8 @@ $.ajax({
         // Insert the (parsed) notifications into userpage.html
         for (var count = 0; count < notifList.length; count++){
             
-            var type = notifList[count]['type'].toString();
-            var body = notifList[count]['body'].toString();
+            var type = notifList[count]['type'];
+            var body = notifList[count]['body'];
             
             if (type == "accept"){
               var notif = '<button type="button" class = "notification_box" id="notification-accept">'+
