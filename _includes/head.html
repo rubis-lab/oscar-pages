@@ -25,5 +25,21 @@
   <!--Instructions said to add this but it didn't work. Added the above line instead....
 
         {{ page.calendar_css | replace: "!PATH_TO_COMPONENTS!", "/components" | prepend: site.baseurl }}-->
-  
+  <style>
+    #approve:hover{
+      background-color: rgb(1, 82, 1) !important;
+    }
+    #deny:hover{
+      background-color: rgb(71, 0, 0) !important;
+    }
+
+    #approve:focus{
+      background-color: rgb(1, 82, 1) !important;
+    }
+    #deny:focus{
+      background-color: rgb(71, 0, 0) !important;
+    }
+
+
+  </style>
 </head>
