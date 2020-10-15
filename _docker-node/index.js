@@ -659,21 +659,9 @@ var server = http.createServer(function(request,response){
           }
         });
     });
-  }else if(resource == '/remove'){
+  }else if(resource == '/removeAll'){
     //Clear db
-    request.on('end', function () {
-      User.deleteMany({"name": "diane@example.com"}, function(err){
-        if (err !=null){
-            console.log('errer');
-            response.writeHead(404, {'Content-Type':'text/html'});
-            response.end('errrrrr');
-        }else{
-          console.log('delete success');
-          response.writeHead(404, {'Content-Type':'text/html'});
-          response.end('good?');
-        }
-      });
-    });
+      db.users.deleteMany({});
   }else{
     response.writeHead(404, {'Content-Type':'text/html'});
     response.end('404 Page Not Found');
