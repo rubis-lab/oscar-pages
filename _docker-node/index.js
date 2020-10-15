@@ -530,7 +530,7 @@ var server = http.createServer(function(request,response){
       });
   }else if(resource == '/soon'){
     //Same as busy function but is true five minutes before
-    User.find({$and: [{"reservations.reserveStart":{ $gte : new Date(Date.now()).toISOString()}}, {"reservations.reserveStart": { $lte: new Date(Date.now() + 300000).toISOString()}}]}
+    User.find({$and: [{"reservations.reserveStart":{ $gte : new Date(Date.now()).toISOString()}}, {"reservations.reserveStart": { $lte: new Date(Date.now() + 60000).toISOString()}}]}
                  , function(error,data){
         console.log('--- Reservation list ---');
         console.log(new Date(Date.now()+ 60000).toISOString());
@@ -543,7 +543,7 @@ var server = http.createServer(function(request,response){
             var flag = 0;
             var user = JSON.parse(JSON.stringify(data));
             console.log(user);
-            var now_plus_five = new Date(Date.now() + 300000);
+            var now_plus_five = new Date(Date.now() + 60000);
             var now = new Date(Date.now());
             var startTime, endTime, pwd, selImage;
             for (var j=0;j<user.length;j++){
