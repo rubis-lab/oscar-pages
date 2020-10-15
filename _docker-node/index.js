@@ -614,15 +614,15 @@ var server = http.createServer(function(request,response){
                 var notifs = '';
                 var user = JSON.parse(JSON.stringify(data).replace(/ /g, ''));
                 for(var i=0;i<user.notifications.length;i++){
-                    res = res.concat('{"notif_type":"',user.notifications[i].notif_type,
+                    notifs = notifs.concat('{"notif_type":"',user.notifications[i].notif_type,
                                      '","body":"',user.notifications[i].body,'"},');
                 }
                 if(res != ''){
-                res = res.slice(0,-1);
+                notifs = notifs.slice(0,-1);
                 }
-                console.log(res);
+                console.log(notifs);
                 response.writeHead(200, {'Content-Type':'text/html'});
-                response.end(res);
+                response.end(notifs);
             }
             
             
