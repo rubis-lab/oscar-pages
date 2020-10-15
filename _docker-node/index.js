@@ -636,7 +636,7 @@ var server = http.createServer(function(request,response){
     });
     request.on('end', function () {
       var parsedQuery = querystring.parse(postdata);
-      var bodyMessage = "Your reservation at" + parsedQuery.reserveStart + " ~ " + parsedQuery.reserveEnd + "is approved.";
+      var bodyMessage = "Your reservation at " + parsedQuery.reserveStart + " ~ " + parsedQuery.reserveEnd + " is approved.";
       User.findOneAndUpdate({$and: [{name:parsedQuery.name}, {"reservations.vnc_password": parsedQuery.vnc_password}]},
         {$set:{"reservations.$.status": "Approved"}
          , $push:{notifications:{notif_type: "accept", body: bodyMessage}
