@@ -47,7 +47,7 @@ $.ajax({
             var body = notifList[count]['body'];
             
             if (type == "accept"){
-              var notif = '<button type="button" class = "notification_box" id="notification-accept">'+
+              var notif = '<button type="button" class = "notification_box notification-accept">'+
                 '<div><b>Success: </b>' + body + '\n</div>'
               '</button>'                
                 
