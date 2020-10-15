@@ -636,9 +636,10 @@ var server = http.createServer(function(request,response){
     });
     request.on('end', function () {
       var parsedQuery = querystring.parse(postdata);
+      var bodyMessage = "Your reservation at" + parsedQuery.reserveStart + " ~ " + parsedQuery.reserveEnd + "is approved.";
       User.findOneAndUpdate({$and: [{name:parsedQuery.name}, {"reservations.vnc_password": parsedQuery.vnc_password}]},
         {$set:{"reservations.$.status": "Approved"}
-         , $push:{notifications:{notif_type: "accept", body:"Your reservation at ___ is approved."}
+         , $push:{notifications:{notif_type: "accept", body: bodyMessage}
         }},function(error,data){
           //reservations is an array and it must be access through the elements of the area -- reservations[5] == status field
           if(error){
