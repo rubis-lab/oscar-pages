@@ -552,7 +552,7 @@ var server = http.createServer(function(request,response){
                       end = Date.parse(getTimeStringfromObject(user[j].reservations[i].reserveEnd));
                       if(start >= now && (start <= now_plus_five) && user[j].reservations[i].status == "Approved"){
                         // convert to KST
-                        startTime = new Date(Date.parse(getTimeStringfromObject(user[j].reservations[i].reserveStart))+(60*60*1000*9)).toISOString(); 
+                        startTime = new Date(Date.parse(getTimeStringfromObject(user[j].reservations[i].reserveStart))+(60*60*1000*9)).toISOString().slice(11, 16); 
                         endTime = new Date(Date.parse(getTimeStringfromObject(user[j].reservations[i].reserveEnd))+(60*60*1000*9)).toISOString().slice(11, 16);
                         selImage = user[j].reservations[i].selectedImage;
                         pwd = user[j].reservations[i].vnc_password; 
@@ -564,11 +564,11 @@ var server = http.createServer(function(request,response){
             }}
             if (flag == 0){
             response.writeHead(200, {'Content-Type':'text/html'});
-            response.end('There are no reservations for the next 5 minutes.\n');
+            response.end('There are no reservations for the next 1 minutes.\n');
             }
           }else{
             response.writeHead(200, {'Content-Type':'text/html'});
-            response.end('There are no reservations for the next 5 minutes.\n');
+            response.end('There are no reservations for the next 1 minutes.\n');
           }
         }
 
@@ -614,7 +614,8 @@ var server = http.createServer(function(request,response){
                 var notifs = '';
                 var user = JSON.parse(JSON.stringify(data).replace(/ /g, ''));
                 for(var i=0;i<user.notifications.length;i++){
-                    console.log("hi");
+                    res = res.concat('{"notif_type":"',user.notifications[i].notif_type,
+                                     '","body":"',user.notifications[i].body,'"},');
                 }}
             
         });
