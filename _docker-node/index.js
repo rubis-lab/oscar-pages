@@ -498,6 +498,11 @@ var server = http.createServer(function(request,response){
             var now = new Date(Date.now());
             var startTime, endTime, pwd, selImage;
             for (var j=0;j<user.length;j++){
+                console.log("******");
+                console.log(user[0]);
+                console.log(user[1]);
+                console.log(user[0].reservations[1].reserveStart);
+                console.log("******");
                 for(var i=0;i<user[j].reservations.length;i++){
                   start = Date.parse(getTimeStringfromObject(user[j].reservations[i].reserveStart));
                   end = Date.parse(getTimeStringfromObject(user[j].reservations[i].reserveEnd));
