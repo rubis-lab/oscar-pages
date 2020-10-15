@@ -303,8 +303,12 @@
 #cal-day-box .day-highlight.dh-event-inverse {
   border: 1px solid #1b1b1b;
 }
-#cal-day-box .day-highlight.dh-event-success {
+#cal-day-box .day-highlight.dh-event-approved {
   border: 1px solid #006400;
+  background-color: #E8FDE7;
+}
+#cal-day-box .day-highlight.dh-event-pending {
+  border: 1px solid #c3c3c3;
 }
 #cal-day-box .day-highlight.dh-event-special {
   background-color: #ffe6ff;
@@ -343,8 +347,11 @@
 .event-inverse {
   background-color: #1b1b1b;
 }
-.event-success {
+.event-approved {
   background-color: #006400;
+}
+.event-pending {
+  background-color: #c3c3c3;
 }
 .event-special {
   background-color: #800080;
