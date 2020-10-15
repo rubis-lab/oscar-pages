@@ -639,7 +639,7 @@ var server = http.createServer(function(request,response){
       User.findOneAndUpdate({$and: [{name:parsedQuery.name}, {"reservations.vnc_password": parsedQuery.vnc_password}]},
         {$set:{"reservations.$.status": "Approved"}
          , $push:{notifications:{type: "accept", body:"Your reservation at ___ is approved."}
-        },function(error,data){
+        }},function(error,data){
           //reservations is an array and it must be access through the elements of the area -- reservations[5] == status field
           if(error){
             console.log(error);
