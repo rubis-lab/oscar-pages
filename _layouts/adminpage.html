@@ -104,8 +104,9 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 
 <script type="text/javascript">
     var name = localStorage.getItem("name");
+    
     document.getElementById('username').innerHTML += name + '!';
-
+    if (name == "rubis"){
 // Load user reservation
 $.ajax({
   type          :'POST',
@@ -464,5 +465,9 @@ $(document).ready(function(){
 
 
 });
-
+}else{
+    alert("Page restricted.");
+    window.location = 'https://rubis-lab.github.io/oscar-pages/admin';
+}
+    
 </script>
