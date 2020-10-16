@@ -52,13 +52,13 @@ $.ajax({
               '</button>'                
                 
             }else if (type == "deny"){
-              var notif = '<button type="button" class = "notification_box" id="notification-deny">'+
+              var notif = '<button type="button" class = "notification_box notification-deny">'+
                 '<div><b>Denied: </b>' + body + '\n</div>'
               '</button>'                  
                 
             }
             else if (type == "info"){
-              var notif = '<button type="button" class = "notification_box" id="notification-announce">'+
+              var notif = '<button type="button" class = "notification_box notification-announce">'+
                 '<div><b>Notice: </b>' + body + '\n</div>'
               '</button>'                  
             }
@@ -66,6 +66,7 @@ $.ajax({
                 console.log("i dont know");
             }
           document.getElementById('notification_box').innerHTML += notif;
+          document.getElementById('notification_box').innerHTML += '<button type="button" class="notification_box clear_button" id= "clear_button"><div><u>Clear<u></div></button>';
         }
     }
 
@@ -206,53 +207,31 @@ $.ajax({
 $(document).ready(function(){
 
   // Make scroll lists 'clickable'
-    $(".notification_box").click(function(event) {
+    $(".clear_button").click(function(event) { 
+        $.ajax({
 
-        // Select all list items
-        var notifItems = $(".notification_box");
-
-        // Remove 'active' tag for all list items
-        for(let i = 0; i < notifItems.length; i++) {
-            notifItems[i].classList.remove("active");
-        }
-
-        // Add 'active' tag for currently selected item
-        this.classList.add("active");
-        
-        for(let i = 0; i < notifItems.length; i++) {
-            if(notifItems[i].classList.contains("active")== true){
-                var notif_index  = i;
+            async         :true,
+            type          :'post',
+            url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/clearNotif',
+            data          : {
+                                name            : email,
+                },
+            dataType      :'text',
+            encode        :true,
+            success       : function(response){
+                            },
+            error         : function(req,err){
+                            console.log(err);
+                            }
+        })
+        .done(function(data){
+            if (data.includes("removed")){
+                alert("Notifications removed.");
+                window.location.reload();
+            }else {
+                alert("ERROR");
             }
-        }
-        
-        if($('.notification_box.active').text().length != 0){
-            $.ajax({
-
-                async         :true,
-                type          :'post',
-                url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/clearOneNotif',
-                data          : {
-                                    name            : email,
-                                    index           : notif_index
-                    },
-                dataType      :'text',
-                encode        :true,
-                success       : function(response){
-                                },
-                error         : function(req,err){
-                                console.log(err);
-                                }
-            })
-            .done(function(data){
-                if (data.includes("removed")){
-                    alert("Notification removed.");
-                    window.location.reload();
-                }else {
-                    alert("ERROR");
-                }
-            });            
-        }
-        
+        });             
     });
 
   $(".dockerimage").click(function(event) {
