@@ -66,8 +66,8 @@ $.ajax({
                 console.log("i dont know");
             }
           document.getElementById('notification_box').innerHTML += notif;
-          document.getElementById('notification_box').innerHTML += '<button type="button" class="notification_box clear_button" id= "clear_button"><div><u>Clear<u></div></button>';
         }
+        document.getElementById('notification_box').innerHTML += '<button type="button" class="notification_box clear_button" id= "clear_button"><div><u>Clear<u></div></button>';
     }
 
     else {
