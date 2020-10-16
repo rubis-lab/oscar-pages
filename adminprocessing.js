@@ -20,14 +20,14 @@ $(document).ready(function(){
 
         //Get form data from calendar.html
         var formData = {
-            'name'          :$('input[id=inputEmail]').val(),
+            'name'          :$('input[id=inputUsername]').val(),
             'password'      :$('input[id=inputPassword]').val(),
         };
         localStorage.setItem("name", formData['name']);
 
         // if one of the fields are not filled in
         if (formData['name'] == '' || formData['password']==''){
-            alert("Both fields are required for login/sign up.");
+            alert("Both fields are required to login.");
             window.location.reload();
         }
 
