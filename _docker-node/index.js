@@ -660,7 +660,7 @@ var server = http.createServer(function(request,response){
           }
         });
     });
-  }else if(resource == '/clearOneNotif'){
+  }else if(resource == '/clearNotif'){
     //Clears the selected notification
     var postdata = '';
     request.on('data', function (data) {
