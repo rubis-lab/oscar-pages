@@ -292,7 +292,7 @@ var server = http.createServer(function(request,response){
       var bodyMessage = "Your reservation at " + parsedQuery.reserveStart + " ~ " + parsedQuery.reserveEnd + " was denied.";
       User.findOneAndUpdate({name:parsedQuery.name},
         {$pull:{reservations: {vnc_password: parsedQuery.vnc_password}}, 
-         $push:{notifications:{notif_type: "deny", body: bodyMessage}},function(error,data){
+         $push:{notifications:{notif_type: "deny", body: bodyMessage}}},function(error,data){
           if(error){
             console.log(error);
           }else{
