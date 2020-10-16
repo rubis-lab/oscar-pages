@@ -282,6 +282,34 @@ var server = http.createServer(function(request,response){
           }
         });
     });
+  }else if(resource == '/denyReservation'){
+    var postdata = '';
+    request.on('data', function (data) {
+      postdata = postdata + data;
+    });
+    request.on('end', function () {
+      var parsedQuery = querystring.parse(postdata);
+      var bodyMessage = "Your reservation at " + parsedQuery.reserveStart + " ~ " + parsedQuery.reserveEnd + " was denied.";
+      User.findOneAndUpdate({name:parsedQuery.name},
+        {$pull:{reservations: {vnc_password: parsedQuery.vnc_password}}, 
+         $push:{notifications:{notif_type: "deny", body: bodyMessage}},function(error,data){
+          if(error){
+            console.log(error);
+          }else{
+            var user = JSON.parse(JSON.stringify(data));
+            if(user == null){
+              console.log('user does not exists');
+              response.writeHead(200, {'Content-Type':'text/html'});
+              response.end('user does not exists');
+            }
+            else{
+              console.log('--- delete reservation success ---');
+              response.writeHead(200, {'Content-Type':'text/html'});
+              response.end('delete success');
+            }
+          }
+        });
+    });
   }else if(resource == '/list'){
     User.find(null,null,{sort :{'reservations.reserveStart.orderIndex' : 1}}, function(error, data){
       console.log('--- Reservation list ---');
