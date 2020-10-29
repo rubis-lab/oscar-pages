@@ -12,6 +12,8 @@ var mongoose = require('mongoose');
 var fs = require('fs');
 const { DH_UNABLE_TO_CHECK_GENERATOR } = require('constants');
 
+var nodemailer = require('nodemailer');
+
 
 ///////////////Database Connection/////////////
 //local mongodb connection
@@ -212,7 +214,29 @@ var server = http.createServer(function(request,response){
                             response.end(parsedQuery.name + ' reservation is started at ' + parsedQuery.reserveStart);
                           }
                         });
-                  } else {
+                        var transporter = nodemailer.createTransport({
+                          service: 'gmail',
+                          auth: {
+                            user: 'openlab.notification@gmail.com',
+                            pass: 'rubis301'
+                          }
+                        });
+                        
+                        var mailOptions = {
+                          from: 'openlab.notifications@gmail.com',
+                          to: 'dianecuebas@gmail.com',
+                          subject: 'test',
+                          text: 'That was easy!'
+                        };
+                        
+                        transporter.sendMail(mailOptions, function(error, info){
+                          if (error) {
+                            console.log(error);
+                          } else {
+                            console.log('Email sent: ' + info.response);
+                          }
+                        });
+                    } else {
                     console.log('--- Duplicate Reservation ---');
                     response.writeHead(200, {'Content-Type':'text/html'});
                     response.end( parsedQuery.reserveStart + ' ~ ' +
@@ -223,7 +247,7 @@ var server = http.createServer(function(request,response){
               });
           }
         }
-      });
+      });    
     });
   }else if(resource == '/readReservation'){
     var postdata = '';
