@@ -218,15 +218,15 @@ var server = http.createServer(function(request,response){
                           service: 'gmail',
                           auth: {
                             user: 'openlab.notification@gmail.com',
-                            pass: 'rubis301'
+                            pass: 'welcometoopenlab'
                           }
                         });
                         
                         var mailOptions = {
                           from: 'openlab.notifications@gmail.com',
                           to: 'dianecuebas@gmail.com',
-                          subject: 'test',
-                          text: 'That was easy!'
+                          subject: 'New Open Lab Reservation  -- Accept or Deny',
+                          text: 'An open lab reservation has been made. \n Accept or deny here: https://rubis-lab.github.io/oscar-pages/admin'
                         };
                         
                         transporter.sendMail(mailOptions, function(error, info){
