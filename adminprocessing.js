@@ -51,5 +51,50 @@ $(document).ready(function(){
         }
 
     });
+
+    $('#addAnnouncement').submit(function(event){
+
+        event.preventDefault();
+
+        var message = $('input[id=announcement_text]').toString();
+
+        //Get form data from userpage.html
+        var formData = {
+            //Setting the input to be the id
+            'text'          :message,
+        };
+
+        $.ajax({
+
+            async         :true,
+            type          :'post',
+            url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/addanouncement',
+            data          : {
+                                text        : formData.message,
+                },
+            dataType      :'text',
+            encode        :true,
+            success       : function(response){
+                               },
+            error         : function(req,err){
+                            console.log(err);
+                               }
+        })
+        .done(function(data){
+            if (data.includes("Announcement successfully posted")){
+                alert("Announcement has been successfully posted.");
+            }
+            else {
+                alert("ERROR");
+            }
+        });
+
+    });
+
+
+
+
+
+
 });
 
