@@ -37,7 +37,7 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 
 <ul id="profileTabs" class="nav nav-tabs">
     <li class="nav-item active"><a class="nav-link active" href="#manageReservations" data-toggle="tab">Approve / Disapprove Reservations</a></li>
-    <li class="nav-item"><a class="nav-link" href="#cs1" data-toggle="tab">Coming Soon</a></li>
+    <li class="nav-item"><a class="nav-link" href="#announcement" data-toggle="tab">Announcements</a></li>
     <li class="nav-item"><a class ="nav-link" href="#cs2" data-toggle="tab"> Coming Soon</a></li>
 </ul>
 
@@ -78,7 +78,15 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
       </div>
     </div></div>
 
-<div role="tabpanel" class="tab-pane" id="cs1">
+<div role="tabpanel" class="tab-pane" id="announcement">
+    <form action = adminpageprocessing.js method="POST">
+        <div class="row text-center">
+          <div class="col-sm-12">
+            <input type="text" id="accouncement_text" style="width: 80%; height: 100%; margin-top: 0px;">
+            <button type="submit" class="btn btn-primary" id="launchReserve" style="padding: 5px; position: absolute; right:5%;"> Post </button>
+          </div>
+      </div>
+    </form>
 
 
 </div>
@@ -86,6 +94,9 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 <div role="tabpanel" class="tab-pane" id="cs2">
 
 </div>
+
+
+
 </div>
 
     </div>
