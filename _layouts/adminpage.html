@@ -79,11 +79,11 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
     </div></div>
 
 <div role="tabpanel" class="tab-pane" id="announcement">
-    <form id ="addAnnounment"action = adminpageprocessing.js method="POST">
+    <form id="infoForm" action="" method="POST">
         <div class="row text-center">
           <div class="col-sm-12">
-            <input type="text" id="announcement_text" style="width: 80%; height: 100%; margin-top: 0px;">
-            <button type="submit" class="btn btn-primary" id="post_announcement" style="padding: 5px; position: absolute; right:5%;"> Post </button>
+            <input type="text" class="form-control" id="announcement_text" style="width: 80%; height: 100%; margin-top: 0px;" placeholder="Announcement text here">
+            <input type="submit" class="btn btn-primary" style="padding: 5px; position: absolute; right:5%;" value="Post">
           </div>
       </div>
     </form>
@@ -111,7 +111,7 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 <script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/papaparse/papaparse.min.js"></script>
 
 <!-- <script type="text/javascript" src="reserveprocessing.js"></script> -->
-<!--<script type="text/javascript" src="userpageprocessing.js"></script> -->
+<!-- <script type="text/javascript" src="adminprocessing.js"></script> -->
 
 <script type="text/javascript">
     var name = localStorage.getItem("name");
@@ -473,6 +473,46 @@ $(document).ready(function(){
         });
 
 });
+
+    $('#infoForm').submit(function(event){
+
+    event.preventDefault();
+
+    //Get form data from userpage.html
+    var formData = {
+        //Setting the input to be the id
+        'text'          :$('input[id=announcement_text]').val(),
+    };
+
+    console.log(formData.text);
+    alert("here");
+
+    $.ajax({
+
+        async         :true,
+        type          :'post',
+        url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/addannouncement',
+        data          : {
+                            text        : formData.text,
+            },
+        dataType      :'text',
+        encode        :true,
+        success       : function(response){
+                        },
+        error         : function(req,err){
+                        console.log(err);
+                        }
+    })
+    .done(function(data){
+        if (data.includes("Announcement successfully posted")){
+            alert("Announcement has been successfully posted.");
+        }
+        else {
+            alert("ERROR");
+        }
+    });
+
+    });
 
 
 });
