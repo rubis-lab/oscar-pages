@@ -586,7 +586,7 @@ var server = http.createServer(function(request,response){
                  , function(error,data){
         console.log('--- Reservation list ---');
         console.log(new Date(Date.now()+ 120000).toISOString());
-        //300000
+        //300000 is 5 minutes
         if(error){
           console.log(error);
         }else{
@@ -595,7 +595,7 @@ var server = http.createServer(function(request,response){
             var flag = 0;
             var user = JSON.parse(JSON.stringify(data));
             console.log(user);
-            var now_plus_five = new Date(Date.now() + 120000);
+            var now_plus_five = new Date(Date.now() + 120000);  //300000
             var now = new Date(Date.now());
             var startTime, endTime, pwd, selImage;
             for (var j=0;j<user.length;j++){
