@@ -132,6 +132,7 @@ $.ajax({
 .done(function(response){
 
     if (response){
+        
         // Parse the input into an array of json elements
         var data_split = response.split("},");
         for (var i = 0; i < data_split.length-1; i++) {
@@ -145,38 +146,10 @@ $.ajax({
 
         // Insert the (parsed) reservations into userpage.html
         for (var count = 0; count < reservationList.length; count++){
-
-            var timeStart = reservationList[count]['reserveStart'].replace('T', " ").replace(/:00:002Z/g, "");
-            var timeEnd = reservationList[count]['reserveEnd'].replace('T', " ").replace(/:00:002Z/g, "");
-      
-            var date = timeStart.substring(0,11);
             
-            timeStart = timeStart.substring(11);
-            timeEnd = timeEnd.substring(11);
-
-            var hourStart = parseInt(timeStart.substring(0,2));
-            var hourEnd = parseInt(timeEnd.substring(0,2));
-      
-            hourStart = hourStart + 9;
-            hourEnd = hourEnd + 9 ;
-      
-            if (hourStart < 10){
-                //Append 0 to hour if it is less than 10
-                var hourStart_str = '0'.concat(hourStart);
-            }
-            if (hourEnd < 10){
-                var hourEnd_str = '0'.concat(hourEnd);
-            }
-            else{
-                var hourStart_str = hourStart.toString();
-                var hourEnd_str = hourEnd.toString();
-            }
-
-            var UTC_timeStart = hourStart_str.concat(timeStart.substring(2));
-            var UTC_timeEnd = hourEnd_str.concat(timeEnd.substring(2));
-            //Add back the date
-            var UTC_reserveStart = date.concat(UTC_timeStart);
-            var UTC_reserveEnd = date.concat(UTC_timeEnd);
+            //Time conversion
+            var UTC_reserveStart = timeUTCtoKST(reservationList[count]['reserveStart'].replace(/:00:002Z/g, ""));
+            var UTC_reserveEnd = timeUTCtoKST(reservationList[count]['reserveEnd'].replace(/:00:002Z/g, ""));
 
           var reservation = '<button type="button" class="reservation list-group-item list-group-item-action">'+
             '<div><b>Start: </b>' + UTC_reserveStart + '\n</div>' +
@@ -267,41 +240,20 @@ $(document).ready(function(){
 
       event.preventDefault();
 
-      var timeStart = $('input[id=inputTimeStart]').val();
-      var timeEnd = $('input[id=inputTimeEnd]').val();
+      //Time conversion
+      var reserveStart = $('input[id=inputDate]').val() + "T" + $('input[id=inputTimeStart]').val() + ":00"
+      var reserveEnd = $('input[id=inputDate]').val() + "T" + $('input[id=inputTimeEnd]').val() + ":00"
 
-      var hourStart = parseInt(timeStart.substring(0,2));
-      var hourEnd = parseInt(timeEnd.substring(0,2));
-
-      hourStart = hourStart - 9;
-      hourEnd = hourEnd - 9 ;
-
-      if (hourStart < 10){
-          //Append 0 to hour if it is less than 10
-          var hourStart_str = '0'.concat(hourStart);
-      }
-      if (hourEnd < 10){
-          var hourEnd_str = '0'.concat(hourEnd);
-      }
-      else{
-        var hourStart_str = hourStart.toString();   //ex: 09
-        var hourEnd_str = hourEnd.toString();
-
-      }
-
-
-      var UTC_timeStart = hourStart_str.concat(timeStart.substring(2));
-      var UTC_timeEnd = hourEnd_str.concat(timeEnd.substring(2));
+      var UTC_reserveStart = timeKSTtoUTC(reserveStart);
+      var UTC_reserveEnd = timeKSTtoUTC(reserveEnd);
 
 
       //Get form data from userpage.html
       var formData = {
           //Setting the input to be the id
           'name'          :email,
-          'reserveStart'  :$('input[id=inputDate]').val() + "T" +
-          UTC_timeStart + ":00:002Z",
-          'reserveEnd'    :$('input[id=inputDate]').val() + "T" +
-          UTC_timeEnd + ":00:002Z",
+          'reserveStart'  : UTC_reserveStart + ":00:002Z",
+          'reserveEnd'    : UTC_reserveEnd + ":00:002Z",
       };
 
       console.log(formData['reserveStart']);
@@ -495,3 +447,30 @@ $(document).ready(function(){
     });
 
 });
+
+
+function timeUTCtoKST(object){
+    //Takes server time
+    //Input is 00-00-00T00:00:00
+
+    var time = new Date(object);
+    //console.log("Not converted yet:"+ time);
+    time.setHours(time.getHours()+9); //sets time to +9 hours
+    var time_str = new Date(Date.parse(time)+(60*60*1000*9)).toISOString().slice(0, 16);
+    time_str = time_str.replace("T"," ");
+    //console.log("Converted:"+ time_str);
+
+    return time_str;    //2020-12-24T10:00
+
+}
+
+function timeKSTtoUTC(object){
+    //Takes time from html form
+    //Input is 00-00-00T00:00:00
+
+    var time = new Date(object);
+    var time_str = new Date(Date.parse(time)).toISOString().slice(0, 16); //when the date is parsed it automatically changes to UTC?
+
+    return time_str;    //2020-12-24T10:00
+
+}
