@@ -125,11 +125,11 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
         <div class="row">
             <div class="col-sm-6">
                 <label for="inputTimeStart"><small>Start Time</small></label>
-                <input type="time" class="form-control" id="inputTimeStart" min = "10:00" max = "24:00" placeholder="Reservation Time Start" step=60>
+                <input type="time" class="form-control" id="inputTimeStart" min = "10:00" max = "22:00" placeholder="Reservation Time Start" step=60>
             </div>
             <div class="col-sm-6">
                 <label for="inputTimeEnd"><small>End Time</small></label>
-                <input type="time" class="form-control" id="inputTimeEnd" min = "10:00" max = "24:00" placeholder="Reservation Time End" step=60>
+                <input type="time" class="form-control" id="inputTimeEnd" min = "10:00" max = "22:00" placeholder="Reservation Time End" step=60>
             </div>
         </div>
 
@@ -204,7 +204,7 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 
 (function($) {
    "use strict";
-
+    //Populates the calendar on the userpage
     //Receives information from the server
     var current_sdata = $.ajax({
             url         : 'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/list',
@@ -238,34 +238,9 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
     
     // Update the timezone
     for(i=0; i<data_parsed_arr.length; i++){
-        var date = data_parsed_arr[i].reserveStart.substring(0,11);   //ex: 2020-01-01T
-        
-        var timeStart = data_parsed_arr[i].reserveStart.substring(11);    //ex: 00:00:00
-        var timeEnd = data_parsed_arr[i].reserveEnd.substring(11);
 
-        var hourStart = parseInt(timeStart.substring(0,2));   //Changes hour time to integer
-        var hourEnd = parseInt(timeEnd.substring(0,2));
-
-        hourStart = hourStart + 9;    //Add KST offset
-        hourEnd = hourEnd + 9 ;
-
-        if (hourStart < 10){
-            //Append 0 to hour if it is less than 10
-            var hourStart_str = '0'.concat(hourStart);
-        }
-        if (hourEnd < 10){
-            var hourEnd_str = '0'.concat(hourEnd);
-        }
-        else{
-            var hourStart_str = hourStart.toString();   //ex: 09
-            var hourEnd_str = hourEnd.toString();
-        }
-
-        var UTC_timeStart = hourStart_str.concat(timeStart.substring(2)); //ex: 09:00:00
-        var UTC_timeEnd = hourEnd_str.concat(timeEnd.substring(2));
-        //Add back the date
-        var UTC_reserveStart = date.concat(UTC_timeStart);  //2020-01-01T09:00:00
-        var UTC_reserveEnd = date.concat(UTC_timeEnd);
+        var UTC_reserveStart = timeUTCtoKST(data_parsed_arr[i].reserveStart).concat(":00");
+        var UTC_reserveEnd = timeUTCtoKST(data_parsed_arr[i].reserveEnd).concat(":00");   //2020-01-01T09:00:00
 
         data_parsed_arr[i].reserveStart = UTC_reserveStart
         data_parsed_arr[i].reserveEnd = UTC_reserveEnd
