@@ -82,8 +82,8 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
     <form id="infoForm" action="" method="POST">
         <div class="row text-center">
           <div class="col-sm-12">
-            <input type="text" class="form-control" id="announcement_text" style="width: 80%; height: 100%; margin-top: 0px;" placeholder="Announcement text here">
-            <input type="submit" class="btn btn-primary" style="padding: 5px; position: absolute; right:5%;" value="Post">
+            <input type="text" class="form-control" id="announcement_text" style="width: 100%;" placeholder="Announcement text here"><br>
+            <input type="submit" class="form-control btn btn-primary" style="padding: 5px; width: 20%;" value="Post">
           </div>
       </div>
     </form>
@@ -485,32 +485,39 @@ $(document).ready(function(){
     };
 
     console.log(formData.text);
-    alert("here");
+    if(confirm("The announcement: [ " + formData.text + " ] will be posted. Are you sure?")){
+        $.ajax({
 
-    $.ajax({
+            async         :true,
+            type          :'post',
+            url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/addannouncement',
+            data          : {
+                                text        : formData.text,
+                },
+            dataType      :'text',
+            encode        :true,
+            success       : function(response){
+                            },
+            error         : function(req,err){
+                            console.log(err);
+                            }
+            })
+            .done(function(data){
+            if (data.includes("Announcement successfully posted")){
+                alert("Announcement has been successfully posted.");
+                window.location.reload();
+            }
+            else {
+                alert("ERROR");
+                window.location.reload();
+            }
+            });
 
-        async         :true,
-        type          :'post',
-        url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/addannouncement',
-        data          : {
-                            text        : formData.text,
-            },
-        dataType      :'text',
-        encode        :true,
-        success       : function(response){
-                        },
-        error         : function(req,err){
-                        console.log(err);
-                        }
-    })
-    .done(function(data){
-        if (data.includes("Announcement successfully posted")){
-            alert("Announcement has been successfully posted.");
-        }
-        else {
-            alert("ERROR");
-        }
-    });
+    }else{
+        alert("Announement cancelled.")
+    }
+
+
 
     });
 
