@@ -172,35 +172,10 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
     }
     // Update the timezone
     for(i=0; i<data_parsed_arr.length; i++){
-        var date = data_parsed_arr[i].reserveStart.substring(0,11);   //ex: 2020-01-01T
-        
-        var timeStart = data_parsed_arr[i].reserveStart.substring(11);    //ex: 00:00:00
-        var timeEnd = data_parsed_arr[i].reserveEnd.substring(11);
 
-        var hourStart = parseInt(timeStart.substring(0,2));   //Changes hour time to integer
-        var hourEnd = parseInt(timeEnd.substring(0,2));
-
-        hourStart = hourStart + 9;    //Add KST offset
-        hourEnd = hourEnd + 9 ;
-
-        if (hourStart < 10){
-            //Append 0 to hour if it is less than 10
-            var hourStart_str = '0'.concat(hourStart);
-        }
-        if (hourEnd < 10){
-            var hourEnd_str = '0'.concat(hourEnd);
-        }
-        else{
-            var hourStart_str = hourStart.toString();   //ex: 09
-            var hourEnd_str = hourEnd.toString();
-        }
-
-        var UTC_timeStart = hourStart_str.concat(timeStart.substring(2)); //ex: 09:00:00
-        var UTC_timeEnd = hourEnd_str.concat(timeEnd.substring(2));
-        //Add back the date
-        var UTC_reserveStart = date.concat(UTC_timeStart);  //2020-01-01T09:00:00
-        var UTC_reserveEnd = date.concat(UTC_timeEnd);
-
+        var UTC_reserveStart = timeUTCtoKST(data_parsed_arr[i].reserveStart).concat(":00");
+        var UTC_reserveEnd = timeUTCtoKST(data_parsed_arr[i].reserveEnd).concat(":00");   //2020-01-01T09:00:00
+  
         data_parsed_arr[i].reserveStart = UTC_reserveStart
         data_parsed_arr[i].reserveEnd = UTC_reserveEnd
 
@@ -353,6 +328,20 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
     });
 });
 
+function timeUTCtoKST(object){
+    //Takes server time
+    //Input is 00-00-00T00:00:00
+
+    var time = new Date(object);
+    //console.log("Not converted yet:"+ time);
+    time.setHours(time.getHours()+9); //sets time to +9 hours
+    var time_str = new Date(Date.parse(time)+(60*60*1000*9)).toISOString().slice(0, 16);
+    time_str = time_str.replace("T"," ");
+    //console.log("Converted:"+ time_str);
+
+    return time_str;    //2020-12-24T10:00
+
+}
 
 </script>
 
