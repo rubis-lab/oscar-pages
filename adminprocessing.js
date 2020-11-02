@@ -1,6 +1,8 @@
 // adminprocessing.js
 // Log into the admin page.
 
+var myServer = new XMLHttpRequest();
+
 String.prototype.hashCode = function (){
     var hash = 0;
     if (this.length == 0) return hash;
@@ -64,11 +66,14 @@ $(document).ready(function(){
             'text'          :message,
         };
 
+        console.log(formData['text']);
+        alert("I am here?");
+
         $.ajax({
 
             async         :true,
             type          :'post',
-            url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/addanouncement',
+            url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/addannouncement',
             data          : {
                                 text        : formData.message,
                 },
