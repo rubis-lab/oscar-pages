@@ -224,7 +224,7 @@ var server = http.createServer(function(request,response){
                         
                         var mailOptions = {
                           from: 'openlab.notifications@gmail.com',
-                          to: 'dianecuebas@gmail.com',
+                          to: 'openlab.notifications@gmail.com',
                           subject: 'New Open Lab Reservation  -- Accept or Deny',
                           text: 'An open lab reservation has been made. \n Accept or deny here: https://rubis-lab.github.io/oscar-pages/admin'
                         };
