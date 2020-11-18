@@ -763,6 +763,44 @@ var server = http.createServer(function(request,response){
           }
         });
     });
+  }else if(resource == '/generateCode'){
+    // Generates code from blockly output, save a Dockerfile, and run a script.
+    var code_str = '';
+    var code_str_to = 'op_common_params.launch'
+    var code_dir = '/home/autoware/catkin_ws/minicar_autorunner/scripts/lane_keeping_autorunner/step4/'
+
+    var base_image = 'uranium.snu.ac.kr:5000/openlab:default';
+    var image_name = '';
+    var shared_dir = '/home/node/';
+    var run_script = '.'+shared_dir+'run.sh';
+    // TODO : fill 'code_str', and 'image_name' variable
+    request.on('data', function(data){
+      
+    });
+
+    // save a Dockerfile
+    var Dockerfile_str = 'FROM '+base_image+' \\' + 
+                         'RUN echo' +code_file + '>>' + code_dir + code_str_to;
+    const fs = require('fs');
+    fs.writeFile(shared_dir+'Dockerfile', Dockerfile_str, function(err){
+      if(err){
+        return console.log(err);
+      }
+      console.log("Dockerfile is saved to "+shared+dir);
+    });
+
+    // run the script
+    const exec = require('child_process').exec, child;
+    const bashScript = exec(run_script+' '+image_name);
+    bashScript.stdout.on('data', (data) => {
+      console.log(data);
+    });
+    bashScript.stderr.on('data', (data) => {
+      console.error(data);
+    });
+
+    
+  
   }else if(resource == '/removeAll'){
     //Clear db
       User.deleteMany({});
