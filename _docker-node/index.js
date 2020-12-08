@@ -182,66 +182,66 @@ var server = http.createServer(function(request,response){
                     for(var j=0; j<users[i].reservations.length;j++){
                         if ((users[i].reservations[j].reserveEnd > parsedQuery.reserveEnd) &&
                         (users[i].reservations[j].reserveStart < parsedQuery.reserveEnd)){
-                          reserve_accepted = 1;
+                          //reserve_accepted = 1;
                         }else if((users[i].reservations[j].reserveEnd > parsedQuery.reserveStart) && 
                         (users[i].reservations[j].reserveStart < parsedQuery.reserveStart)){
-                          reserve_accepted = 1;
+                          //reserve_accepted = 1;
                         }else if ((users[i].reservations[j].reserveStart > parsedQuery.reserveStart) && 
                         (users[i].reservations[j].reserveEnd < parsedQuery.reserveEnd)){
-                          reserve_accepted = 1;
+                          //reserve_accepted = 1;
                         }
                         else{
                           console.log('No conflict.');
                         }
                     }
                   }
-                if(reserve_accepted == 0){
-                    User.findOneAndUpdate({name: user.name},
-                      {'$push':{reservations: {name:parsedQuery.name,
-                        reserveStart: parsedQuery.reserveStart,
-                        reserveEnd: parsedQuery.reserveEnd,
-                        selectedImage: 'default',
-                        status: 'Pending',
-                        vnc_password: Math.random().toString(36).substring(7)},
-                      }},
-                        {new: true}
-                        , function(error, data){
-                          if(error){
-                            console.log(error);
-                          }else{
-                            console.log('--- New Reservation Saved ---')
-                            response.writeHead(200, {'Content-Type':'text/html'});
-                            response.end(parsedQuery.name + ' reservation is started at ' + parsedQuery.reserveStart);
-                          }
-                        });
-                        var transporter = nodemailer.createTransport({
-                          service: 'gmail',
-                          auth: {
-                            user: 'openlab.notification@gmail.com',
-                            pass: 'welcometoopenlab'
-                          }
-                        });
-                        
-                        var mailOptions = {
-                          from: 'openlab.notifications@gmail.com',
-                          to: 'openlab.notifications@gmail.com',
-                          subject: 'New Open Lab Reservation  -- Accept or Deny',
-                          text: 'An open lab reservation has been made. \n Accept or deny here: https://rubis-lab.github.io/oscar-pages/admin'
-                        };
-                        
-                        transporter.sendMail(mailOptions, function(error, info){
-                          if (error) {
-                            console.log(error);
-                          } else {
-                            console.log('Email sent: ' + info.response);
-                          }
-                        });
-                    } else {
-                    console.log('--- Duplicate Reservation ---');
-                    response.writeHead(200, {'Content-Type':'text/html'});
-                    response.end( parsedQuery.reserveStart + ' ~ ' +
-                      parsedQuery.reserveEnd +
-                      ' is already reserved. Change the time!!');
+                    if(reserve_accepted == 0){
+                        User.findOneAndUpdate({name: user.name},
+                          {'$push':{reservations: {name:parsedQuery.name,
+                            reserveStart: parsedQuery.reserveStart,
+                            reserveEnd: parsedQuery.reserveEnd,
+                            selectedImage: 'default',
+                            status: 'Pending',
+                            vnc_password: Math.random().toString(36).substring(7)},
+                          }},
+                            {new: true}
+                            , function(error, data){
+                              if(error){
+                                console.log(error);
+                              }else{
+                                console.log('--- New Reservation Saved ---')
+                                response.writeHead(200, {'Content-Type':'text/html'});
+                                response.end(parsedQuery.name + ' reservation is started at ' + parsedQuery.reserveStart);
+                              }
+                            });
+                            var transporter = nodemailer.createTransport({
+                              service: 'gmail',
+                              auth: {
+                                user: 'openlab.notification@gmail.com',
+                                pass: 'welcometoopenlab'
+                              }
+                            });
+                            
+                            var mailOptions = {
+                              from: 'openlab.notifications@gmail.com',
+                              to: 'openlab.notifications@gmail.com',
+                              subject: 'New Open Lab Reservation  -- Accept or Deny',
+                              text: 'An open lab reservation has been made. \n Accept or deny here: https://rubis-lab.github.io/oscar-pages/admin'
+                            };
+                            
+                            transporter.sendMail(mailOptions, function(error, info){
+                              if (error) {
+                                console.log(error);
+                              } else {
+                                console.log('Email sent: ' + info.response);
+                              }
+                            });
+                        } else {
+                          console.log('--- Duplicate Reservation ---');
+                          response.writeHead(200, {'Content-Type':'text/html'});
+                          response.end( parsedQuery.reserveStart + ' ~ ' +
+                            parsedQuery.reserveEnd +
+                            ' is already reserved. Change the time!!');
                   }
                 }
               });
