@@ -182,13 +182,13 @@ var server = http.createServer(function(request,response){
                     for(var j=0; j<users[i].reservations.length;j++){
                         if ((users[i].reservations[j].reserveEnd > parsedQuery.reserveEnd) &&
                         (users[i].reservations[j].reserveStart < parsedQuery.reserveEnd)){
-                          //reserve_accepted = 1;
+                          reserve_accepted = 1;
                         }else if((users[i].reservations[j].reserveEnd > parsedQuery.reserveStart) && 
                         (users[i].reservations[j].reserveStart < parsedQuery.reserveStart)){
-                          //reserve_accepted = 1;
+                          reserve_accepted = 1;
                         }else if ((users[i].reservations[j].reserveStart > parsedQuery.reserveStart) && 
                         (users[i].reservations[j].reserveEnd < parsedQuery.reserveEnd)){
-                          //reserve_accepted = 1;
+                          reserve_accepted = 1;
                         }
                         else{
                           console.log('No conflict.');
