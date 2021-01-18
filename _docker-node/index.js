@@ -763,6 +763,46 @@ var server = http.createServer(function(request,response){
           }
         });
     });
+  }else if(resource == '/generateCode'){
+    var postdata = '';
+    request.on('data', function (data) {
+      postdata = postdata + data;
+    });
+    request.on('end', function () {
+      var parsedQuery = querystring.parse(postdata);
+      var image_name = 'uranium.snu.ac.kr:5000/' + parsedQuery.name.replace('@','.') + ':'+ parsedQuery.image_name;
+      var code_str = parsedQuery.code;
+
+      var code_str_to = 'op_common_params.launch' //filename
+      var code_dir = '/home/autoware/catkin_ws/minicar_autorunner/scripts/lane_keeping_autorunner/step4/'
+      var base_image = 'uranium.snu.ac.kr:5000/openlab:default';
+
+      var shared_dir = '/home/node/';
+      var run_script = '.' + shared_dir + 'run.sh';
+
+      // Save a Dockerfile in shared_dir
+      var Dockerfile_str = 'FROM ' + base_image + ' \\' + 
+                           'RUN echo' + code_str + '>>' + code_dir + code_str_to;
+      const fs = require('fs');
+      fs.writeFile(shared_dir + 'Dockerfile', Dockerfile_str, function(err){
+        if(err){
+          return console.log(err);
+        }
+        console.log("Dockerfile is saved to "+shared_dir);
+      });
+
+      // Run the script
+      const exec = require('child_process').exec, child;
+      const bashScript = exec(run_script + ' ' + image_name);
+      bashScript.stdout.on('data', (data) => {
+        console.log(data);
+      });
+      bashScript.stderr.on('data', (data) => {
+        console.error(data);
+      });      
+
+    });
+    
   }else if(resource == '/removeAll'){
     //Clear db
       User.deleteMany({});
