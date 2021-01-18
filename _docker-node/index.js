@@ -792,14 +792,14 @@ var server = http.createServer(function(request,response){
       });
 
       // Run the script
-      const exec = require('child_process').exec, child;
-      const bashScript = exec(run_script + ' ' + image_name);
-      bashScript.stdout.on('data', (data) => {
-        console.log(data);
-      });
-      bashScript.stderr.on('data', (data) => {
-        console.error(data);
-      });      
+      // const exec = require('child_process').exec, child;
+      // const bashScript = exec(run_script + ' ' + image_name);
+      // bashScript.stdout.on('data', (data) => {
+      //   console.log(data);
+      // });
+      // bashScript.stderr.on('data', (data) => {
+      //   console.error(data);
+      // });      
 
     });
     
