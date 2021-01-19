@@ -782,7 +782,7 @@ var server = http.createServer(function(request,response){
       var run_script = '.' + shared_dir + 'run.sh';
 
       // Save a Dockerfile in shared_dir
-      var Dockerfile_str = 'FROM ' + base_image + ' \\' + 
+      var Dockerfile_str = 'FROM ' + base_image + ' \n' + 
                            'RUN echo' + code_str + '>>' + code_dir + code_str_to;
       const fs = require('fs');
       fs.writeFile(shared_dir + 'Dockerfile', Dockerfile_str, function(err){
