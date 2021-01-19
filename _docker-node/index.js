@@ -777,7 +777,8 @@ var server = http.createServer(function(request,response){
       var code_dir = '/home/autoware/catkin_ws/minicar_autorunner/scripts/lane_keeping_autorunner/step4/'
       var base_image = 'uranium.snu.ac.kr:5000/openlab:default';
 
-      var shared_dir = '/home/rubis/oscar-buildCode/';
+      //var shared_dir = '/home/rubis/oscar-buildCode/';
+      var shared_dir = '/home/node/'
       var run_script = '.' + shared_dir + 'run.sh';
 
       // Save a Dockerfile in shared_dir
@@ -786,7 +787,7 @@ var server = http.createServer(function(request,response){
       const fs = require('fs');
       fs.writeFile(shared_dir + 'Dockerfile', Dockerfile_str, function(err){
         if(err){
-          return console.log(err + 'in /generateCode..'+ __dirname);
+          return console.log(err + 'in /generateCode..');
         }
         console.log("Dockerfile is saved to " + shared_dir);
         //console.log(__dirname);
