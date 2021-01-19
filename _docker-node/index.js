@@ -778,7 +778,7 @@ var server = http.createServer(function(request,response){
       var base_image = 'uranium.snu.ac.kr:5000/openlab:default';
 
       //var shared_dir = '/home/rubis/oscar-buildCode/';
-      var shared_dir = '/home/node/'
+      var shared_dir = '/home/node/'    
       var run_script = '.' + shared_dir + 'run.sh';
 
       // Save a Dockerfile in shared_dir
@@ -790,20 +790,19 @@ var server = http.createServer(function(request,response){
           return console.log(err + 'in /generateCode..');
         }
         console.log("Dockerfile is saved to " + shared_dir);
-        //console.log(__dirname);
         response.writeHead(200, {'Content-Type':'text/html'});
         response.end('Dockerfile was saved.');
       });
 
       // Run the script
-      // const exec = require('child_process').exec, child;
-      // const bashScript = exec(run_script + ' ' + image_name);
-      // bashScript.stdout.on('data', (data) => {
-      //   console.log(data);
-      // });
-      // bashScript.stderr.on('data', (data) => {
-      //   console.error(data);
-      // });      
+      const exec = require('child_process').exec; //, child;
+      const bashScript = exec(run_script + ' ' + image_name);
+      bashScript.stdout.on('data', (data) => {
+        console.log(data);
+      });
+      bashScript.stderr.on('data', (data) => {
+        console.error(data);
+      });      
 
     });
     
