@@ -789,6 +789,7 @@ var server = http.createServer(function(request,response){
           return console.log(err + 'in /generateCode..');
         }
         console.log("Dockerfile is saved to " + shared_dir);
+        console.log(__dirname);
         response.writeHead(200, {'Content-Type':'text/html'});
         response.end('Dockerfile was saved.');
       });
