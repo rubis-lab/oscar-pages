@@ -786,10 +786,10 @@ var server = http.createServer(function(request,response){
       const fs = require('fs');
       fs.writeFile(shared_dir + 'Dockerfile', Dockerfile_str, function(err){
         if(err){
-          return console.log(err + 'in /generateCode..');
+          return console.log(err + 'in /generateCode..'+ __dirname);
         }
         console.log("Dockerfile is saved to " + shared_dir);
-        console.log(__dirname);
+        //console.log(__dirname);
         response.writeHead(200, {'Content-Type':'text/html'});
         response.end('Dockerfile was saved.');
       });
