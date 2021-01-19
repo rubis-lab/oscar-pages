@@ -794,15 +794,15 @@ var server = http.createServer(function(request,response){
         response.end('Dockerfile was saved.');
       });
 
-      // Run the script
-      const exec = require('child_process').exec; //, child;
-      const bashScript = exec(run_script + ' ' + image_name);
-      bashScript.stdout.on('data', (data) => {
-        console.log(data);
-      });
-      bashScript.stderr.on('data', (data) => {
-        console.error(data);
-      });      
+      // // Run the script
+      // const exec = require('child_process').exec; //, child;
+      // const bashScript = exec(run_script + ' ' + image_name);
+      // bashScript.stdout.on('data', (data) => {
+      //   console.log(data);
+      // });
+      // bashScript.stderr.on('data', (data) => {
+      //   console.error(data);
+      // });      
 
     });
     
