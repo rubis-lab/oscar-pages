@@ -855,7 +855,7 @@ var server = http.createServer(function(request,response){
                                    save_path : save_path,
                                    code : code_str,
                                    status: 0 });
-        User.findOne({save_path:parsedQuery.save_path}, function(error,newCode_entry){
+        code_db.findOne({save_path:parsedQuery.save_path}, function(error,newCode_entry){
         if(error){
           console.log(error);
         }else{
