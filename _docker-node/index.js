@@ -52,6 +52,21 @@ var user = mongoose.Schema(
 );
 var User = mongoose.model('user', user);
 
+//Schema used to store all code edits into a db.
+var code_schema = mongoose.Schema(
+  {
+    username : {type: String, required: true},
+    image_name: {type: String, required: true},
+    save_path: {type: String, required: true, unique: true},
+    code: {type: String, required: true},
+    status: {type: Boolean} //0 if image has not been pushed, 1 if image has been pushed
+  },
+  {
+    autoIndex: true,
+    timestamps: true
+  }
+  );
+var code_db = mongoose.model('code_db', code_schema);
 
 function getTimeStringfromObject(object){
   var pieces = object.split(':');
@@ -783,7 +798,7 @@ var server = http.createServer(function(request,response){
 
       // Save a Dockerfile in shared_dir
       var Dockerfile_str = 'FROM ' + base_image + ' \n' + 
-                           'RUN echo' + code_str + '>>' + code_dir + code_str_to;
+                           'RUN echo "' + code_str + '" >>' + code_dir + code_str_to;
       const fs = require('fs');
       fs.writeFile(shared_dir + 'Dockerfile', Dockerfile_str, function(err){
         if(err){
@@ -795,7 +810,7 @@ var server = http.createServer(function(request,response){
       });
 
       // Run the script
-      const exec = require('child_process').exec; //, child;
+      const exec = require('child_process').exec;//, child;
       const bashScript = exec(run_script + ' ' + image_name);
       bashScript.stdout.on('data', (data) => {
         console.log(data);
@@ -805,8 +820,65 @@ var server = http.createServer(function(request,response){
       });      
 
     });
-    
+  }else if(resource == '/newCode'){
+    //Adds the user's code to the code_db
+    code_db.findOne(null,null,{sort :{'_id' : 1}}, function(error, data){
+      console.log('--- Code Edit list ---');
+      if(error){
+        console.log(error);
+      }else{
+        let edited_code = JSON.parse(JSON.stringify(data));
+
+        if(edited_code!=''){
+          console.log(edited_code);
+          response.writeHead(200, {'Content-Type':'text/html'});
+          response.end(edited_code);
+        }else{
+          console.log("There is currently no edited code.");
+          response.writeHead(200, {'Content-Type':'text/html'});
+          response.end("There is currently no edited code.");
+        }
+      }
+    });
+  }else if(resource == '/addCode'){
+      var postdata = '';
+      request.on('data', function (data) {
+        postdata = postdata + data;
+      });
+      request.on('end', function () {
+        var parsedQuery = querystring.parse(postdata);
+        var save_path = 'uranium.snu.ac.kr:5000/' + parsedQuery.name.replace('@','.') + ':'+ parsedQuery.image_name;
+        var code_str = parsedQuery.code;
+
+        var newCode = new code_db({username : parsedQuery.name.replace('@','.'),
+                                   image_name : parsedQuery.image_name,
+                                   save_path : save_path,
+                                   code : code_str,
+                                   status: 0 });
+        User.findOne({save_path:parsedQuery.save_path}, function(error,newCode_entry){
+        if(error){
+          console.log(error);
+        }else{
+          console.log('--- New Code Entry ---');
+          console.log(newCode_entry);
+          if(newCode_entry != null){
+            console.log('--- Duplicate Save Path ---');
+            response.end('existing savepath');
+          }else{
+            newCode.save(function(error, data){
+              if(error){
+                console.log(error);
+              }else{
+                console.log('--- New User Created ---')
+                response.end('New code queued. Will be pushed to user registry shortly.');
+              }
+            });
+          }
+        }
+      });
+    });
   }else if(resource == '/removeAll'){
+    //Does not work.
     //Clear db
       User.deleteMany({});
   }else{
