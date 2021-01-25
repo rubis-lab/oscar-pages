@@ -828,11 +828,12 @@ var server = http.createServer(function(request,response){
         console.log(error);
       }else{
         let edited_code = JSON.parse(JSON.stringify(data));
+        
 
         if(edited_code!=''){
           console.log(edited_code);
           response.writeHead(200, {'Content-Type':'text/html'});
-          response.end(edited_code);
+          response.end(JSON.stringify(edited_code));
         }else{
           console.log("There is currently no edited code.");
           response.writeHead(200, {'Content-Type':'text/html'});
