@@ -828,12 +828,17 @@ var server = http.createServer(function(request,response){
         console.log(error);
       }else{
         let edited_code = JSON.parse(JSON.stringify(data));
+        var res = '';
+        res = res.concat('_**_', edited_code.username,  //[0]
+                        '_**_', edited_code.image_name, //[1]
+                        '_**_', edited_code.save_path,  //[2]
+                        '_**_', edited_code.code,       //[3]
+                        '_**_', edited_code.status);    //[4]
         
-
         if(edited_code!=''){
           console.log(edited_code);
           response.writeHead(200, {'Content-Type':'text/html'});
-          response.end(JSON.stringify(edited_code));
+          response.end(res);
         }else{
           console.log("There is currently no edited code.");
           response.writeHead(200, {'Content-Type':'text/html'});
