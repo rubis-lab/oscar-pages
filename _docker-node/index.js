@@ -778,6 +778,17 @@ var server = http.createServer(function(request,response){
           }
         });
     });
+  }else if(resource == '/deleteOldest'){
+    Model.findOneAndDelete({},{"sort": { "_id": -1 }})
+    code_db.findOneAndDelete(null,{sort :{'_id' : 1}}, function(error, data){
+      if(error){
+        console.log(error);
+      }else{
+        response.writeHead(200, {'Content-Type':'text/html'});
+        response.end("The oldest entry in the code queue was deleted.");
+      }
+
+    });   
   }else if(resource == '/generateCode'){
     var postdata = '';
     request.on('data', function (data) {
@@ -829,11 +840,11 @@ var server = http.createServer(function(request,response){
       }else{
         let edited_code = JSON.parse(JSON.stringify(data));
         var res = '';
-        res = res.concat('_**_', edited_code.username,  //[0]
-                        '_**_', edited_code.image_name, //[1]
-                        '_**_', edited_code.save_path,  //[2]
-                        '_**_', edited_code.code,       //[3]
-                        '_**_', edited_code.status);    //[4]
+        res = res.concat('%', edited_code.username,  //[0]
+                        '%', edited_code.image_name, //[1]
+                        '%', edited_code.save_path,  //[2]
+                        '%', edited_code.code,       //[3]
+                        '%', edited_code.status);    //[4]
         
         if(edited_code!=''){
           console.log(edited_code);
