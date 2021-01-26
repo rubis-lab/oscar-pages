@@ -779,7 +779,6 @@ var server = http.createServer(function(request,response){
         });
     });
   }else if(resource == '/deleteOldest'){
-    Model.findOneAndDelete({},{"sort": { "_id": -1 }})
     code_db.findOneAndDelete(null,{sort :{'_id' : 1}}, function(error, data){
       if(error){
         console.log(error);
