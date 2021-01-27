@@ -840,11 +840,11 @@ var server = http.createServer(function(request,response){
         if (data !=null){
           let edited_code = JSON.parse(JSON.stringify(data));
           var res = '';
-          res = res.concat('%', edited_code.username,  //[0]
-                          '%', edited_code.image_name, //[1]
-                          '%', edited_code.save_path,  //[2]
-                          '%', edited_code.code,       //[3]
-                          '%', edited_code.status);    //[4]
+          res = res.concat('%', edited_code.username, '\n',  //[0]
+                          '%', edited_code.image_name, '\n', //[1]
+                          '%', edited_code.save_path, '\n',  //[2]
+                          '%', edited_code.code, '\n',       //[3]
+                          '%', edited_code.status, '\n');    //[4]
         
           console.log(edited_code);
           response.writeHead(200, {'Content-Type':'text/html'});
