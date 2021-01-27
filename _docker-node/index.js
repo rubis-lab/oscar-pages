@@ -850,9 +850,9 @@ var server = http.createServer(function(request,response){
           response.writeHead(200, {'Content-Type':'text/html'});
           response.end(res);
         }else{
-          console.log("There is currently no edited code.");
+          console.log("There is currently no edited code.\n");
           response.writeHead(200, {'Content-Type':'text/html'});
-          response.end("There is currently no edited code.");
+          response.end("There is currently no edited code.\n");
         }
       }
     });
