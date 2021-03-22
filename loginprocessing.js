@@ -24,10 +24,10 @@ $(document).ready(function(){
 
         // check whether the login or the signup button is pressed
         if ($(this).val() == 'login') {
-            url = 'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/login';
+            url = 'http://uranium.snu.ac.kr:7780/login';
         }
         else if ($(this).val() == 'signup') {
-            url = 'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/signup'
+            url = 'http://uranium.snu.ac.kr:7780/signup'
         }
         else {
             alert('URL: ' + url);

@@ -188,11 +188,11 @@ var server = http.createServer(function(request,response){
           console.log(error);
         }else{
           if(user == null){
-            response.writeHead(200, {'Content-Type':'text/html'});
+            response.writeHead(200, headers);
             response.end('account does not exist');
           }else if(parsedQuery.reserveStart <= new Date(Date.now()).toISOString()){
             console.log("Reservations cannot be made for the past.");
-            response.writeHead(200, {'Content-Type':'text/html'});
+            response.writeHead(200, headers);
             response.end(parsedQuery.reserveStart + ' is in the past. Cannot reserve. Try again.');
 
           }else{
@@ -234,7 +234,7 @@ var server = http.createServer(function(request,response){
                                 console.log(error);
                               }else{
                                 console.log('--- New Reservation Saved ---')
-                                response.writeHead(200, {'Content-Type':'text/html'});
+                                response.writeHead(200, headers);
                                 response.end(parsedQuery.name + ' reservation is started at ' + parsedQuery.reserveStart);
                               }
                             });
@@ -262,7 +262,7 @@ var server = http.createServer(function(request,response){
                             });
                         } else {
                           console.log('--- Duplicate Reservation ---');
-                          response.writeHead(200, {'Content-Type':'text/html'});
+                          response.writeHead(200, headers);
                           response.end( parsedQuery.reserveStart + ' ~ ' +
                             parsedQuery.reserveEnd +
                             ' is already reserved. Change the time!!');
@@ -299,7 +299,7 @@ var server = http.createServer(function(request,response){
             res = res.slice(0,-1);
           }
           console.log(res);
-          response.writeHead(200, {'Content-Type':'text/html'});
+          response.writeHead(200, headers);
           response.end(res);
         }
       });
@@ -319,12 +319,12 @@ var server = http.createServer(function(request,response){
             var user = JSON.parse(JSON.stringify(data));
             if(user == null){
               console.log('user does not exists');
-              response.writeHead(200, {'Content-Type':'text/html'});
+              response.writeHead(200, headers);
               response.end('user does not exists');
             }
             else{
               console.log('--- delete reservation success ---');
-              response.writeHead(200, {'Content-Type':'text/html'});
+              response.writeHead(200, headers);
               response.end('delete success');
             }
           }
@@ -347,12 +347,12 @@ var server = http.createServer(function(request,response){
             var user = JSON.parse(JSON.stringify(data));
             if(user == null){
               console.log('user does not exists');
-              response.writeHead(200, {'Content-Type':'text/html'});
+              response.writeHead(200, headers);
               response.end('user does not exists');
             }
             else{
               console.log('--- delete reservation success ---');
-              response.writeHead(200, {'Content-Type':'text/html'});
+              response.writeHead(200, headers);
               response.end('delete success');
             }
           }
@@ -384,7 +384,7 @@ var server = http.createServer(function(request,response){
           res = res.slice(0,-1);
         }
         console.log(res);
-        response.writeHead(200, {'Content-Type':'text/html'});
+        response.writeHead(200, headers);
         response.end(res);
       }
     });
@@ -413,7 +413,7 @@ var server = http.createServer(function(request,response){
           res = res.slice(0,-1);
         }
         console.log(res);
-        response.writeHead(200, {'Content-Type':'text/html'});
+        response.writeHead(200, headers);
         response.end(res);
       }
     });
@@ -442,7 +442,7 @@ var server = http.createServer(function(request,response){
             res = res.slice(0,-1);
           }
           console.log(res);
-          response.writeHead(200, {'Content-Type':'text/html'});
+          response.writeHead(200, headers);
           response.end(res);
         }
       });
@@ -475,12 +475,12 @@ var server = http.createServer(function(request,response){
         console.log('--- imagelist User ---');
         if(error){
           console.log(error);
-          response.writeHead(200, {'Content-Type':'text/html'});
+          response.writeHead(200, headers);
           response.end(error);
         }else{
           if(user==null){
             console.log('account does not exist');
-            response.writeHead(200, {'Content-Type':'text/html'});
+            response.writeHead(200, headers);
             response.end('account does not exist');
           }else{
             console.log(user.toString());
@@ -505,7 +505,7 @@ var server = http.createServer(function(request,response){
         }else{
           if(user == null){
             console.log('reservation does not exist');
-            response.writeHead(200, {'Content-Type':'text/html'});
+            response.writeHead(200, headers);
             response.end('reservation does not exist');
           }else{
               // console.log(user);
@@ -524,12 +524,12 @@ var server = http.createServer(function(request,response){
               user.save(function (err,res){
                 if(err){
                   console.log(err);
-                  response.writeHead(200, {'Content-Type':'text/html'});
+                  response.writeHead(200, headers);
                   response.end(err);
                 }else{
                   console.log(res);
                   console.log('--- Update selectedImage on reservation ---', res);
-                  response.writeHead(200, {'Content-Type':'text/html'});
+                  response.writeHead(200, headers);
                   response.end('assign success');
                 }
               });
@@ -554,11 +554,11 @@ var server = http.createServer(function(request,response){
         }else{
           if(user==null){
             console.log('account does not exist');
-            response.writeHead(200, {'Content-Type':'text/html'});
+            response.writeHead(200, headers);
             response.end('account does not exist');
           }else{
             console.log(now);
-            response.writeHead(200, {'Content-Type':'text/html'});
+            response.writeHead(200, headers);
             response.end('add image success');
           }
         }
@@ -589,17 +589,17 @@ var server = http.createServer(function(request,response){
                     selImage = user[j].reservations[i].selectedImage;
                     pwd = user[j].reservations[i].vnc_password; 
                     console.log(startTime, endTime, pwd);
-                    response.writeHead(200, {'Content-Type':'text/html'});
+                    response.writeHead(200, headers);
                     response.end('System is reserved by '+user[j].name+'_'+startTime+'_'+endTime+'_'+pwd+'_'+selImage+'\n');
                     flag = 1;
                 }
             }}
             if(flag == 0){
-                response.writeHead(200, {'Content-Type':'text/html'});
+                response.writeHead(200, headers);
                 response.end('System is not busy.\n');
             }
           }else{
-            response.writeHead(200, {'Content-Type':'text/html'});
+            response.writeHead(200, headers);
             response.end('System is not busy.\n');
           }
         }
@@ -639,11 +639,11 @@ var server = http.createServer(function(request,response){
                   }
             }}
             if (flag == 0){
-            response.writeHead(200, {'Content-Type':'text/html'});
+            response.writeHead(200, headers);
             response.end('There are no reservations for the next 1 minutes.\n');
             }
           }else{
-            response.writeHead(200, {'Content-Type':'text/html'});
+            response.writeHead(200, headers);
             response.end('There are no reservations for the next 1 minutes.\n');
           }
         }
@@ -664,12 +664,12 @@ var server = http.createServer(function(request,response){
             var user = JSON.parse(JSON.stringify(data));
             if(user == null){
               console.log('user does not exists');
-              response.writeHead(200, {'Content-Type':'text/html'});
+              response.writeHead(200, headers);
               response.end('user does not exists');
             }
             else{
               console.log('--- delete reservation success ---');
-              response.writeHead(200, {'Content-Type':'text/html'});
+              response.writeHead(200, headers);
               response.end('remove success');
             }
           }
@@ -697,7 +697,7 @@ var server = http.createServer(function(request,response){
                 notifs = notifs.slice(0,-1);
                 }
                 console.log(notifs);
-                response.writeHead(200, {'Content-Type':'text/html'});
+                response.writeHead(200, headers);
                 response.end(notifs);
             }
             
@@ -724,13 +724,13 @@ var server = http.createServer(function(request,response){
             var user = JSON.parse(JSON.stringify(data));
             if(user == null){
               console.log('user does not exists');
-              response.writeHead(200, {'Content-Type':'text/html'});
+              response.writeHead(200, headers);
               response.end('user does not exists');
             }
             else{
 
               console.log('--- status changed to approve success ---');
-              response.writeHead(200, {'Content-Type':'text/html'});
+              response.writeHead(200, headers);
               response.end('Reservation by ' + parsedQuery.name+ ' is approved!');
             }
           }
@@ -754,13 +754,13 @@ var server = http.createServer(function(request,response){
             var user = JSON.parse(JSON.stringify(data));
             if(user == null){
               console.log('user does not exists');
-              response.writeHead(200, {'Content-Type':'text/html'});
+              response.writeHead(200, headers);
               response.end('user does not exists');
             }
             else{
               console.log('--- One Notification Cleared ---');
               console.log(user.notifications);
-              response.writeHead(200, {'Content-Type':'text/html'});
+              response.writeHead(200, headers);
               response.end('Notification removed...');
             }
           }
@@ -782,7 +782,7 @@ var server = http.createServer(function(request,response){
           }else{
               console.log('--- New Announcement Posted ---');
               console.log(bodyMessage);
-              response.writeHead(200, {'Content-Type':'text/html'});
+              response.writeHead(200, headers);
               response.end('Announcement successfully posted.');
           }
         });
@@ -792,7 +792,7 @@ var server = http.createServer(function(request,response){
       if(error){
         console.log(error);
       }else{
-        response.writeHead(200, {'Content-Type':'text/html'});
+        response.writeHead(200, headers);
         response.end("The oldest entry in the code queue was deleted.");
       }
 
@@ -824,7 +824,7 @@ var server = http.createServer(function(request,response){
           return console.log(err + 'in /generateCode..');
         }
         console.log("Dockerfile is saved to " + shared_dir);
-        response.writeHead(200, {'Content-Type':'text/html'});
+        response.writeHead(200, headers);
         response.end('Dockerfile was saved.');
       });
 
@@ -855,11 +855,11 @@ var server = http.createServer(function(request,response){
                           '%', edited_code.code, '\n');   //[3: array.size()]
         
           console.log(edited_code);
-          response.writeHead(200, {'Content-Type':'text/html'});
+          response.writeHead(200, headers);
           response.end(res);
         }else{
           console.log("There is currently no edited code.\n");
-          response.writeHead(200, {'Content-Type':'text/html'});
+          response.writeHead(200, headers);
           response.end("There is currently no edited code.\n");
         }
       }
@@ -906,7 +906,7 @@ var server = http.createServer(function(request,response){
     //Clear db
       User.deleteMany({});
   }else{
-    response.writeHead(404, {'Content-Type':'text/html'});
+    response.writeHead(404, headers);
     response.end('404 Page Not Found');
     
   }
