@@ -77,6 +77,15 @@ function getTimeStringfromObject(object){
 
 ///////////////Server/////////////
 var server = http.createServer(function(request,response){
+  const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "OPTIONS, POST, GET",
+    "Access-Control-Max-Age": 2592000, // 30 days
+    /** add other headers as per requirement */
+    "Content-Type": "text/html"
+  };
+
+
   console.log('url = ' + request.url);
   var parsedUrl = url.parse(request.url);
   var resource = parsedUrl.pathname;
@@ -98,7 +107,7 @@ var server = http.createServer(function(request,response){
     request.on('end', function () {
       var parsedQuery = querystring.parse(postdata);
       console.log(parsedQuery);
-      response.writeHead(200, {'Content-Type':'text/html'});
+      response.writeHead(200, headers);
       result = parsedQuery.var1;
       response.end('var1 is ' + result);
     });
@@ -110,7 +119,7 @@ var server = http.createServer(function(request,response){
     request.on('end', function () {
       var parsedQuery = querystring.parse(postdata);
       console.log('parsedQuery =',parsedQuery);
-      response.writeHead(200, {'Content-Type':'text/html'});
+      response.writeHead(200, headers);
       var newUser = new User({name:parsedQuery.name,
         password: parsedQuery.password, images: ['default']});
       User.findOne({name:parsedQuery.name}, function(error,user){
@@ -143,7 +152,7 @@ var server = http.createServer(function(request,response){
     request.on('end', function () {
       var parsedQuery = querystring.parse(postdata);
       console.log('parsedQuery =',parsedQuery);
-      response.writeHead(200, {'Content-Type':'text/html'});
+      response.writeHead(200, headers);
       var newUser = new User({name:parsedQuery.name,
         password: parsedQuery.password});
       User.findOne({name:parsedQuery.name}, function(error,user){
