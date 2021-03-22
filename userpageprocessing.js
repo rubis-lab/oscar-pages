@@ -446,6 +446,10 @@ $(document).ready(function(){
 
     });
 
+    // $( "#edit" ).on( 'click', function() {
+    //   $(window).triggerHandler("resize");
+    // } );
+    
 });
 
 
@@ -474,3 +478,4 @@ function timeKSTtoUTC(object){
     return time_str;    //2020-12-24T10:00
 
 }
+
