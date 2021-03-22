@@ -39,10 +39,11 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 
 <ul id="profileTabs" class="nav nav-tabs">
     <li class="nav-item active"><a class="nav-link active" href="#selectImage" data-toggle="tab">Select Docker Image</a></li>
-    <li class="nav-item"><a class="nav-link" href="#reserve" data-toggle="tab">Make/Cancel Reservations</a></li>
-    <li class="nav-item"><a class ="nav-link" href="#launch" data-toggle="tab"> Launch Remote Connection</a></li>
+    <li class="nav-item"><a class="nav-link" href="#reserve" data-toggle="tab">Reservations</a></li>
+    <li class="nav-item"><a class ="nav-link" href="#edit" data-toggle="tab">Edit Code</a></li>
+    <li class="nav-item"><a class ="nav-link" href="#launch" data-toggle="tab">Remote Connection</a></li>
 </ul>
-  <div class="tab-content" style="margin:5%;">
+  <div class="tab-content" id="tab-content-id"style="margin:5%;">
 <div role="tabpanel" class="tab-pane active active active" id="selectImage">
     
     
@@ -172,7 +173,34 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 </div>
 
   </div>
-      
+
+  
+<div role="tabpanel" class="tab-pane" id="edit">
+  <div>
+  <h4 style="display: inline;">Blockly Code Editor</h4>
+  <img src="https://static.thenounproject.com/png/57788-200.png" alt="Go to help" style="width: 20px; height: 20px;float: right;margin-right: 10px;">
+  </div>
+  <div id="blocklyArea" style="height: 600px; width: 100%;">
+    <div id="blocklyDiv" style="height: 500px; width: 98%; float: left;margin: 5px;">
+    </div>
+    
+    <div id="source_code_textbox" style="height: 500px; 
+                                        width: 98%; 
+                                        float: left; 
+                                        border-color: black; 
+                                        border-style: solid; 
+                                        border-width: 1px; 
+                                        margin: 5px;
+                                        font-size: 16px;
+                                        overflow-y: auto;
+                                        overflow-x: auto;">
+      <!--
+      <iframe src="/textfile_test.txt" frameborder="0" height="500" width="95%"></iframe> 
+      <iframe id=txt_in_iframe frameborder="0" height="500" width="95%"></iframe> --></div> 
+      <p><button onclick="getSourceCode()" style="float:left; margin-left: 20%;">Generate Code </button>
+        <button onclick="pushCode()" style="float:right; margin-right: 20%;">Push to Registry </button></p>
+  </div>
+</div>
 <div role="tabpanel" class="tab-pane" id="launch">
     <form action = userpageprocessing.js method="POST">
       <div class="row text-center">
@@ -189,6 +217,113 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 </div>
 </div>
 
+
+
+<!-- Blockly scripts. Confirm the path. -->
+<script type="text/javascript" src="/blockly/google-blockly-85874cd/blockly_compressed.js"></script>
+<script type="text/javascript" src="/blockly/google-blockly-85874cd/blocks_compressed.js"></script>
+<script type="text/javascript" src="/blockly/google-blockly-85874cd/javascript_compressed.js"></script>
+<script type="text/javascript" src="/blockly/google-blockly-85874cd/msg/js/en.js"></script>
+
+<script type="text/javascript" src="/edit_code.js"></script>  <!-- Custom blocks are here. -->
+
+
+<xml id="toolbox" style="display: none">
+  <category name= "Change Parameters">
+    <block type="launch_tag" ></block>
+    <block type="sethorizondistance" ></block>
+    <block type="setmaxlocalplandistance" ></block>
+    <block type="setpathdensity" ></block>
+    <block type="setrolloutdensity" ></block>
+    <block type="setrolloutsnumber" ></block>
+    <!-- Added 01-12 -->
+    <block type="setMaxVelocity" ></block>
+    <block type="setMaxAcceleration" ></block>
+    <block type="setMaxDeceleration" ></block>
+    <block type="setEnableFollowing" ></block>
+    <block type="setEnableSwerving" ></block>
+    <block type="setMinFollowingDistance" ></block>
+    <block type="setMinDistanceToAvoid" ></block>
+    <block type="setMaxDistanceToAvoid" ></block>
+    <block type="setEnableStopSignBehavior" ></block>
+    <block type="setEnableTrafficLightBehavior" ></block>
+    <block type="setEnableLaneChange" ></block>
+    <block type="setHorizontalSafetyDistance" ></block>
+    <block type="setVerticalSafetyDistance" ></block>
+    <block type="setVelocitySource" ></block>
+    
+  </category>
+  <category name= "Advanced">
+  </category>
+</xml>
+
+
+
+
+<script type="text/javascript">
+  
+
+  var blocklyArea = document.getElementById('edit');   //blocklyArea
+  var blocklyDiv = document.getElementById('blocklyDiv');
+  var workspace = Blockly.inject(blocklyDiv,
+      {toolbox: document.getElementById('toolbox')});
+
+  function showCode() {
+      // Generate JavaScript code and display it.
+      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+      var code = Blockly.JavaScript.workspaceToCode(workspace);
+      return code;
+    }
+
+  function runCode() {
+      // Generate JavaScript code and run it.
+      window.LoopTrap = 1000;
+      Blockly.JavaScript.INFINITE_LOOP_TRAP =
+          'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+      var code = Blockly.JavaScript.workspaceToCode(workspace);
+      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+      try {
+        eval(code);
+        localStorage.setItem("generated_code", full_code);
+      } catch (e) {
+        alert(e);
+      }
+    }
+
+  function getBlocksByType(type) {
+      var blocks = [];
+      for (var blockID in workspace.blockDB_) {
+        if (workspace.blockDB_[blockID].type == type && (workspace.blockDB_[blockID].isEnabled() == true)) {
+          blocks.push(workspace.blockDB_[blockID]);
+        }
+      }
+      return(blocks);
+  }
+  
+  // Event listener for block creation. Disables any block created after the first of any specific type. Disables any orphaned blocks
+  function on_block_create_delete(event) {
+    if(event.type == Blockly.Events.BLOCK_CREATE){
+      console.log("on create",Blockly.selected.type,"****",getBlocksByType(Blockly.selected.type).length);
+      //Upon creation the block is disabled.
+      if ((getBlocksByType(Blockly.selected.type).length > 2)){   
+            Blockly.selected.setEnabled(false);
+        }
+    }else if(event.type == Blockly.Events.BLOCK_MOVE) {
+      if (Blockly.selected.getSurroundParent() == null && Blockly.selected.type != 'launch_tag'){   //If the block has no parent it is disabled.
+          Blockly.selected.setEnabled(false);
+        } else if (Blockly.selected.getSurroundParent() != null && Blockly.selected.type != 'launch_tag' && (getBlocksByType(Blockly.selected.type).length != 1) ){    
+          //Block enabled if its moved to a parent and only one instance of the block type is active.
+          Blockly.selected.setEnabled(true);
+        }
+    }else if (event.type == Blockly.Events.BLOCK_DELETE){
+      //
+    }
+  }
+  workspace.addChangeListener(on_block_create_delete);
+  Blockly.svgResize(workspace);
+</script>
+
+
 <script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/lodash/lodash.min.js"></script>
 <script type="text/javascript" src="{{PATH_TO_COMPONENTS}}/bootstrap/js/bootstrap.min.js"></script>
@@ -198,6 +333,7 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 
 <!-- <script type="text/javascript" src="reserveprocessing.js"></script> -->
 <script type="text/javascript" src="userpageprocessing.js"></script>
+
 
 <script type="text/javascript">
 
