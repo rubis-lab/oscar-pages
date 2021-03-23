@@ -120,7 +120,7 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 // Load user reservation
 $.ajax({
   type          :'POST',
-  url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/pendinglist',
+  url           :'http://uranium.snu.ac.kr:7780/pendinglist',
   dataType      :'text',
   async         :false,
   encode        :true,
@@ -174,7 +174,7 @@ $.ajax({
 
 $.ajax({
   type          :'POST',
-  url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/approvelist',
+  url           :'http://uranium.snu.ac.kr:7780/approvelist',
   dataType      :'text',
   async         :false,
   encode        :true,
@@ -314,7 +314,7 @@ $(document).ready(function(){
 
             async         :true,
             type          :'post',
-            url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/approve',
+            url           :'http://uranium.snu.ac.kr:7780/approve',
             data          : {
                                 name            : formData.name,
                                 reserveStart    : formData.reserveStart,
@@ -387,7 +387,7 @@ $(document).ready(function(){
 
         async         :true,
         type          :'post',
-        url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/denyReservation',
+        url           :'http://uranium.snu.ac.kr:7780/denyReservation',
         data          : {
                             name            : formData.name,
                             reserveStart    : formData.reserveStart,
@@ -433,7 +433,7 @@ $(document).ready(function(){
 
             async         :true,
             type          :'post',
-            url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/addannouncement',
+            url           :'http://uranium.snu.ac.kr:7780/addannouncement',
             data          : {
                                 text        : formData.text,
                 },

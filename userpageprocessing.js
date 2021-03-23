@@ -304,7 +304,7 @@ $(document).ready(function(){
         event.preventDefault();
 
         var reserveSplit = $('.reservation.active').text().split(": ");
-        var reserveStart = reserveSplit[1].replace("End","").replace(" ", "T") + ":00:002Z";
+        var reserveStart = reserveSplit[1].replace(/(\r\n|\n|\r)/gm, "").replace("End","").replace(" ", "T") + ":00:002Z";
 
         var selectedImage = $('.dockerimage.active').text();
 
