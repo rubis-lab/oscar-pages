@@ -486,6 +486,7 @@ var server = http.createServer(function(request,response){
             console.log(user.toString());
             parsedUser = '{'+user.toString().split('[')[1].split(']')[0].replace(new RegExp('\n','g'),'').replace(new RegExp(' ','g'),'')+'}';
             console.log("parsedUser: ",parsedUser);
+            response.writeHead(200, headers);
             response.end(parsedUser);
           }
         }
