@@ -63,57 +63,6 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 
   <div class="clearfix"></div>
 
-<!--Added a form with reservation data-->
-<form action="formprocessing.js" class="mx-auto">
-
-  <!-- <div class="form-group row">
-    <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-    <div class="col-sm-10">
-      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-    </div>
-  </div> -->
-
-<!-- Will add password functionality later   -->
-  <!-- <div class="form-group row">
-    <label for="inputPin" class="col-sm-2 col-form-label">Password</label>
-    <div class="col-sm-10">
-      <input type="password" class="form-control" id="inputPin" placeholder="Password" aria-describedby="pinBlock">
-        <small id="pinBlock" class="form-text text-muted">
-
-        </small>
-    </div>
-    </div>
-
-  <div class="form-group row">
-    <label class="col-sm-2 col-form-label">Time</label>
-    <div class="col-sm-10">
-    <div class="row">
-    <div class="col-6">
-    <label for="inputTimeStart"><small>Start</small></label>
-    <input type="datetime-local" class="form-control" id="inputTimeStart" min = "2019-01-01T00:00:00" placeholder="Reservation Start Time" step=60>
-
-    </div>
-
-    <div class="col-6">
-    <label for="inputTimeEnd"><small>Finish</small></label>
-
-    <input type="datetime-local" class="form-control" id="inputTimeEnd" min = "2019-01-01T00:00:00" placeholder="Reservation End Time" step=60>
-    </div>
-    </div>
-    <small id="timeSlotBlock" class="form-text text-muted">
-                Input your desired start and end time. Appointments are offered in 30 minute intervals. Only include times between 10:00-22:00.
-    </small>
-
-    </div>
- </div>-->
-
-<!--Uploading is not necessary now
-  <div class="form-group row">
-    <label for="dockerFile" class="col-sm-2 col-form-label">Docker File</label>
-    <div class="col-sm-10">
-        <input type="file" accept=".dockerfile" class="form-control-file" id="dockerFile">
-    </div>
-  </div> -->
 
   <div class="form-group row mx-auto">
     <div class="col-sm-12 text-center">
@@ -150,9 +99,8 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
                           }
         }).responseText;
 
-    //console.log(current_sdata);
-
-    //array of entries in the format {"name":"mail@exsample.com", "reserveStart": "YYYY-MM-DDT00:00:00:002Z", "reserveEnd": "YYYY-MM-DDT00:00:00:002Z"}
+    //array of entries in the format 
+    //{“name”:“<email>”,“reserveStart”:“yyyy-mm-ddThh:mm:ss:002Z”,“reserveEnd”:“yyyy-mm-ddThh:mm:ss:002Z”, “selectedImage”:”<image>”, “status”:”<status>”,“vnc_password”:”<pwd>”}
     var data_split = current_sdata.split("},");
     var i = 0;
     for(i=0;i<data_split.length-1;i++){
@@ -182,24 +130,19 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
     }
     
 
-// Can be used to check the current reservation entries
-//    data_parsed_arr.forEach(function(item){
-//                console.log(item);
-//                console.log(item.name);
-//                console.log(item.reserveStart);
-//                console.log(item.reserveEnd);
-//    });
+  //Convert JSON array into a CSV
+  var data_csv = Papa.unparse(data_parsed_arr);
 
-    //Convert JSON array into a CSV
-    var data_csv = Papa.unparse(data_parsed_arr);
+  //CSV format
+  //name,reserveStart,reserveEnd,selectedImage,status,vnc_password
+  //rubis@example.com,2021-06-23 10:00:00,2021-06-23 12:00:00,default,Pending,gyrck4
+  
 
   //Parse CSV to JSON
-  //Papa.parse("{{ site.baseurl }}/{{ page.calendar_csv }}", {
   Papa.parse(data_csv, {
     //download: true,
     header: false,
     complete: function(results) {
-      // console.log(JSON.stringify(results.data));
       loadCalendar(parseEvents(results.data));
     }
   });
@@ -209,7 +152,6 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
     rows.shift(); // remove header
     //var inputDateFormat = "M/D/YYYY H:mm A Z"; // formatting removed, dates are in default format
     var result = [];
-    //console.log(rows);
 
     _.forEach(rows, function(columns, index) {
       if (columns.length < 3)  // require at least: title, start, end
@@ -228,13 +170,9 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
       if (!_.isEmpty(columns[4]))
         formattedEvent['class'] = 'event-' + columns[4].toLowerCase(); // predefined CSS classname
 
-      // if (!_.isEmpty(columns[4]))
-      //   formattedEvent['url'] = columns[4];
-
       result.push(formattedEvent);
     });
 
-    console.log(JSON.stringify(result));
     return result;
   }
 
@@ -333,11 +271,9 @@ function timeUTCtoKST(object){
     //Input is 00-00-00T00:00:00
 
     var time = new Date(object);
-    //console.log("Not converted yet:"+ time);
     time.setHours(time.getHours()+9); //sets time to +9 hours
     var time_str = new Date(Date.parse(time)+(60*60*1000*9)).toISOString().slice(0, 16);
     time_str = time_str.replace("T"," ");
-    //console.log("Converted:"+ time_str);
 
     return time_str;    //2020-12-24T10:00
 
