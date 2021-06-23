@@ -572,7 +572,7 @@ function pushCode(){
       //Check for duplicate
       $.ajax({
         type          :'POST',
-        url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/readImage',
+        url           :'http://uranium.snu.ac.kr:7780/readImage',
         data          :{
                           name: email,
                       },
@@ -607,7 +607,7 @@ function pushCode(){
             //ajax generateCode
             $.ajax({
               type          :'POST',
-              url           :'https://cors-anywhere.herokuapp.com/uranium.snu.ac.kr:7780/addCode',
+              url           :'http://uranium.snu.ac.kr:7780/addCode',
               data          :{
                                 name       : email,
                                 image_name : sani_image_name,
