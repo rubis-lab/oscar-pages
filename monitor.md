@@ -33,7 +33,7 @@ background: '/img/bg-oscar.png'
 
 <div class="container2">
 <center>
-<iframe src="https://147.46.215.251:6081/" height="900" width="2000" title="vnc_session"></iframe>
+<iframe src="https://147.46.114.95:6081/" height="900" width="2000" title="vnc_session"></iframe>
 <div class="pie">
     <img src="http://147.46.215.251:8887/ISAPI/Streaming/channels/102/httpPreview/" style="width:495px">   
     <img src="http://147.46.215.251:8885/ISAPI/Streaming/channels/102/httpPreview/" style="width:495px">
