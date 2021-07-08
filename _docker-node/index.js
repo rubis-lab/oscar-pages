@@ -872,6 +872,7 @@ var server = http.createServer(function(request,response){
       });
       request.on('end', function () {
         var parsedQuery = querystring.parse(postdata);
+        response.writeHead(200, headers);
         var save_path = 'uranium.snu.ac.kr:5000/' + parsedQuery.name.replace('@','.') + ':'+ parsedQuery.image_name;
         var code_str = parsedQuery.code;
 
@@ -889,7 +890,6 @@ var server = http.createServer(function(request,response){
           if(newCode_entry != null){
             console.log('--- Duplicate Save Path ---');
             response.end('existing savepath');
-            response.writeHead(200, headers);
           }else{
             newCode.save(function(error, data){
               if(error){
@@ -897,7 +897,6 @@ var server = http.createServer(function(request,response){
               }else{
                 console.log('--- New User Created ---')
                 response.end('New code queued. Will be pushed to user registry shortly.');
-                response.writeHead(200, headers);
               }
             });
           }
