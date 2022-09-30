@@ -101,7 +101,7 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 
     //array of entries in the format 
     //{“name”:“<email>”,“reserveStart”:“yyyy-mm-ddThh:mm:ss:002Z”,“reserveEnd”:“yyyy-mm-ddThh:mm:ss:002Z”, “selectedImage”:”<image>”, “status”:”<status>”,“vnc_password”:”<pwd>”}
-    var data_split = (current_sdata||'').split("},");
+    var data_split = current_sdata.split("},");
     var i = 0;
     for(i=0;i<data_split.length-1;i++){
         data_split[i] = data_split[i] + "}";
