@@ -96,7 +96,12 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
             dataType    : 'json',
             async       : false,
             success     : function(response) {
-                          }
+                          },
+            error: function (request, status, error) {
+                          console.log("code: " + request.status)
+                          console.log("message: " + request.responseText)
+                          console.log("error: " + error);
+            }
         }).responseText;
 
     //array of entries in the format 
