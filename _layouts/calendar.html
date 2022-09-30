@@ -100,7 +100,8 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
             error: function (request, status, error) {
                           console.log("code: " + request.status)
                           console.log("message: " + request.responseText)
-                          console.log("error: " + error);
+                          console.log("error: " + error)
+                          alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
             }
         }).responseText;
 
