@@ -91,8 +91,9 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 
     //Receives information from the server
     var r, s, e;
+    var current_sdata = "";
     var current_sdata = $.ajax({
-            url         : 'http://uranium.snu.ac.kr:7780/list',
+            url         : 'http://uranium.snu.ac.kr:27017/list',
             type        : 'GET',
             dataType    : 'json',
             async       : true,
