@@ -90,6 +90,7 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
    "use strict";
 
     //Receives information from the server
+    var r, s, e;
     var current_sdata = $.ajax({
             url         : 'http://uranium.snu.ac.kr:7780/list',
             type        : 'GET',
@@ -97,16 +98,18 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
             async       : true,
             success     : function(response) {
                           },
-            error: function (request, status, error, jqXHR, textStatus, errorThrown) {
+            error: function (request, status, error) {
                           console.log("code: " + request.status)
                           console.log("message: " + request.responseText)
                           console.log("error: " + error)
-                          console.log(jqXHR);  //응답 메시지
-                    	    console.log(textStatus); //"error"로 고정인듯함
-                    	    console.log(errorThrown);
+                          r=request
+                          s=status
+                          e=error
                           alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
             }
         }).responseText;
+        alert("code:"+r.status+"\n"+"message:"+r.responseText+"\n"+"error:"+e);
+
 
     //array of entries in the format 
     //{“name”:“<email>”,“reserveStart”:“yyyy-mm-ddThh:mm:ss:002Z”,“reserveEnd”:“yyyy-mm-ddThh:mm:ss:002Z”, “selectedImage”:”<image>”, “status”:”<status>”,“vnc_password”:”<pwd>”}
