@@ -101,6 +101,9 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
                           console.log("code: " + request.status)
                           console.log("message: " + request.responseText)
                           console.log("error: " + error)
+                          console.log(jqXHR);  //응답 메시지
+                    	    console.log(textStatus); //"error"로 고정인듯함
+                    	    console.log(errorThrown);
                           alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
             }
         }).responseText;
