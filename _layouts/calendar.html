@@ -99,15 +99,16 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
             success     : function(response) {
                           },
             error: function (request, status, error) {
-                          console.log("code: " + request.status)
-                          console.log("message: " + request.responseText)
-                          console.log("error: " + error)
                           r=request.status
                           s=request.responseText
                           e=error
+                          console.log("code: " + request.status)
+                          console.log("message: " + request.responseText)
+                          console.log("error: " + error)
+                          
             }
         }).responseText;
-        alert("code:"+r+"\n"+"message:"+s+"\n"+"error:"+e);
+    alert("code:"+r+"\n"+"message:"+s+"\n"+"error:"+e);
 
 
     //array of entries in the format 
