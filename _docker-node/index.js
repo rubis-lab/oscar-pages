@@ -330,6 +330,9 @@ var server = http.createServer(function(request,response){
           }
         });
     });
+  }else if(resource == '/testtest'){
+    response.writeHead(200, headers);
+    response.end('TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
   }else if(resource == '/denyReservation'){
     var postdata = '';
     request.on('data', function (data) {
