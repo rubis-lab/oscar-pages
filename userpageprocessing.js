@@ -13,7 +13,7 @@ document.getElementById('username').innerHTML += email + '.';
 // Load user reservation
 $.ajax({
   type          :'POST',
-  url           :'http://uranium.snu.ac.kr:7780/notifs',
+  url           :'http://147.46.219.156:8090/notifs',
   data          :{
                     name: email,
                  },
@@ -79,7 +79,7 @@ $.ajax({
 // loading user's docker images
 $.ajax({
   type          :'POST',
-  url           :'http://uranium.snu.ac.kr:7780/readImage',
+  url           :'http://147.46.219.156:8090/readImage',
   data          :{
                     name: email,
                  },
@@ -117,7 +117,7 @@ $.ajax({
 // Load user reservation
 $.ajax({
   type          :'POST',
-  url           :'http://uranium.snu.ac.kr:7780/readReservation',
+  url           :'http://147.46.219.156:8090/readReservation',
   data          :{
                     name: email,
                  },
@@ -185,7 +185,7 @@ $(document).ready(function(){
 
             async         :true,
             type          :'post',
-            url           :'http://uranium.snu.ac.kr:7780/clearNotif',
+            url           :'http://147.46.219.156:8090/clearNotif',
             data          : {
                                 name            : email,
                 },
@@ -262,7 +262,7 @@ $(document).ready(function(){
       $.ajax({
           async         :true,
           type          :'post',
-          url           :'http://uranium.snu.ac.kr:7780/reserve',
+          url           :'http://147.46.219.156:8090/reserve',
           data          : {
                               name        : formData.name,
                               reserveStart: formData.reserveStart,
@@ -320,7 +320,7 @@ $(document).ready(function(){
 
             async         :true,
             type          :'post',
-            url           :'http://uranium.snu.ac.kr:7780/assignImage',
+            url           :'http://147.46.219.156:8090/assignImage',
             data          : {
                                 name        : formData.name,
                                 reserveStart    : formData.reserveStart,
@@ -372,7 +372,7 @@ $(document).ready(function(){
 
             async         :true,
             type          :'post',
-            url           :'http://uranium.snu.ac.kr:7780/cancelReservation',
+            url           :'http://147.46.219.156:8090/cancelReservation',
             data          : {
                                 name            : formData.name,
                                 vnc_password    : formData.vnc_password,
@@ -414,7 +414,7 @@ $(document).ready(function(){
 
             async         :true,
             type          :'GET',
-            url           :'http://uranium.snu.ac.kr:7780/busy',
+            url           :'http://147.46.219.156:8090/busy',
             dataType      :'text',
             encode        :true,
             success       : function(response){

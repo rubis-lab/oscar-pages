@@ -24,10 +24,10 @@ $(document).ready(function(){
 
         // check whether the login or the signup button is pressed
         if ($(this).val() == 'login') {
-            url = 'http://uranium.snu.ac.kr:7780/login';
+            url = 'http://147.46.219.156:8090/login';
         }
         else if ($(this).val() == 'signup') {
-            url = 'http://uranium.snu.ac.kr:7780/signup'
+            url = 'http://147.46.219.156:8090/signup'
         }
         else {
             alert('URL: ' + url);
