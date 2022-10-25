@@ -25,7 +25,7 @@ db.on('error', function(){
   console.log('Connection Failed!');
 });
 db.once('open', function() {
-  console.log('Connected!');
+  console.log('Connected!!!!!');
 });
 var user = mongoose.Schema(
 {
@@ -90,12 +90,12 @@ var server = http.createServer(function(request,response){
   var parsedUrl = url.parse(request.url);
   var resource = parsedUrl.pathname;
 
-  //console.log('--- log start ---');
+  console.log('--- log start ---');
   var parsedUrl = url.parse(request.url);
-  //console.log(parsedUrl);
+  console.log(parsedUrl);
   var parsedQuery = querystring.parse(parsedUrl.query,'&','=');
   console.log('query = ', parsedQuery);
-  //console.log('--- log end ---');
+  console.log('--- log end ---');
 
   console.log('resource path=%s',resource);
 
