@@ -808,12 +808,12 @@ var server = http.createServer(function(request,response){
     });
     request.on('end', function () {
       var parsedQuery = querystring.parse(postdata);
-      var image_name = '147.46.219.156:5000/' + parsedQuery.name.replace('@','.') + ':'+ parsedQuery.image_name;
+      var image_name = '192.168.0.6:5000/' + parsedQuery.name.replace('@','.') + ':'+ parsedQuery.image_name;
       var code_str = parsedQuery.code;
 
       var code_str_to = 'op_common_params.launch' //filename
       var code_dir = '/home/autoware/catkin_ws/minicar_autorunner/scripts/lane_keeping_autorunner/step4/'
-      var base_image = '147.46.219.156:5000/openlab:default';
+      var base_image = '192.168.0.6:5000/openlab:default';
 
       //var shared_dir = '/home/rubis/oscar-buildCode/';
       var shared_dir = '/home/node/'    
@@ -876,7 +876,7 @@ var server = http.createServer(function(request,response){
       request.on('end', function () {
         var parsedQuery = querystring.parse(postdata);
         response.writeHead(200, headers);
-        var save_path = '147.46.219.156:5000/' + parsedQuery.name.replace('@','.') + ':'+ parsedQuery.image_name;
+        var save_path = '192.168.0.6:5000/' + parsedQuery.name.replace('@','.') + ':'+ parsedQuery.image_name;
         var code_str = parsedQuery.code;
 
         var newCode = new code_db({username : parsedQuery.name.replace('@','.'),

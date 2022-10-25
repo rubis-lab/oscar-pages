@@ -572,7 +572,7 @@ function pushCode(){
       //Check for duplicate
       $.ajax({
         type          :'POST',
-        url           :'http://147.46.219.156:7780/readImage',
+        url           :'http://192.168.0.6:7780/readImage',
         data          :{
                           name: email,
                       },
@@ -607,7 +607,7 @@ function pushCode(){
             //ajax generateCode
             $.ajax({
               type          :'POST',
-              url           :'http://147.46.219.156:7780/addCode',
+              url           :'http://192.168.0.6:7780/addCode',
               data          :{
                                 name       : email,
                                 image_name : sani_image_name,
