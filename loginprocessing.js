@@ -24,10 +24,10 @@ $(document).ready(function(){
 
         // check whether the login or the signup button is pressed
         if ($(this).val() == 'login') {
-            url = 'http://192.168.0.6:7780/login';
+            url = 'https://192.168.0.6:7781/login';
         }
         else if ($(this).val() == 'signup') {
-            url = 'http://192.168.0.6:7780/signup'
+            url = 'https://192.168.0.6:7781/signup'
         }
         else {
             alert('URL: ' + url);
