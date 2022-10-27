@@ -13,7 +13,7 @@ document.getElementById('username').innerHTML += email + '.';
 // Load user reservation
 $.ajax({
   type          :'POST',
-  url           :'https://192.168.0.6:7781/notifs',
+  url           :'https://147.46.219.156:7780/notifs',
   data          :{
                     name: email,
                  },
@@ -79,7 +79,7 @@ $.ajax({
 // loading user's docker images
 $.ajax({
   type          :'POST',
-  url           :'https://192.168.0.6:7781/readImage',
+  url           :'https://147.46.219.156:7780/readImage',
   data          :{
                     name: email,
                  },
@@ -117,7 +117,7 @@ $.ajax({
 // Load user reservation
 $.ajax({
   type          :'POST',
-  url           :'https://192.168.0.6:7781/readReservation',
+  url           :'https://147.46.219.156:7780/readReservation',
   data          :{
                     name: email,
                  },
@@ -185,7 +185,7 @@ $(document).ready(function(){
 
             async         :true,
             type          :'post',
-            url           :'https://192.168.0.6:7781/clearNotif',
+            url           :'https://147.46.219.156:7780/clearNotif',
             data          : {
                                 name            : email,
                 },
@@ -262,7 +262,7 @@ $(document).ready(function(){
       $.ajax({
           async         :true,
           type          :'post',
-          url           :'https://192.168.0.6:7781/reserve',
+          url           :'https://147.46.219.156:7780/reserve',
           data          : {
                               name        : formData.name,
                               reserveStart: formData.reserveStart,
@@ -320,7 +320,7 @@ $(document).ready(function(){
 
             async         :true,
             type          :'post',
-            url           :'https://192.168.0.6:7781/assignImage',
+            url           :'https://147.46.219.156:7780/assignImage',
             data          : {
                                 name        : formData.name,
                                 reserveStart    : formData.reserveStart,
@@ -372,7 +372,7 @@ $(document).ready(function(){
 
             async         :true,
             type          :'post',
-            url           :'https://192.168.0.6:7781/cancelReservation',
+            url           :'https://147.46.219.156:7780/cancelReservation',
             data          : {
                                 name            : formData.name,
                                 vnc_password    : formData.vnc_password,
@@ -414,7 +414,7 @@ $(document).ready(function(){
 
             async         :true,
             type          :'GET',
-            url           :'https://192.168.0.6:7781/busy',
+            url           :'https://147.46.219.156:7780/busy',
             dataType      :'text',
             encode        :true,
             success       : function(response){
