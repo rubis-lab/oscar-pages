@@ -24,10 +24,10 @@ $(document).ready(function(){
 
         // check whether the login or the signup button is pressed
         if ($(this).val() == 'login') {
-            url = 'https://147.46.219.156:7781/login';
+            url = 'https://build.3rinnovation.com/login';
         }
         else if ($(this).val() == 'signup') {
-            url = 'https://147.46.219.156:7781/signup'
+            url = 'https://build.3rinnovation.com/signup'
         }
         else {
             alert('URL: ' + url);

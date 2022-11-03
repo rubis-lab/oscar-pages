@@ -572,7 +572,7 @@ function pushCode(){
       //Check for duplicate
       $.ajax({
         type          :'POST',
-        url           :'https://147.46.219.156:7781/readImage',
+        url           :'https://build.3rinnovation.com/readImage',
         data          :{
                           name: email,
                       },
@@ -607,7 +607,7 @@ function pushCode(){
             //ajax generateCode
             $.ajax({
               type          :'POST',
-              url           :'https://147.46.219.156:7781/addCode',
+              url           :'https://build.3rinnovation.com/addCode',
               data          :{
                                 name       : email,
                                 image_name : sani_image_name,
