@@ -120,7 +120,7 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 // Load user reservation
 $.ajax({
   type          :'POST',
-  url           :'https://build.3rinnovation.com:7780/pendinglist',
+  url           :'https://build.3rinnovation.com/pendinglist',
   dataType      :'text',
   async         :false,
   encode        :true,
@@ -174,7 +174,7 @@ $.ajax({
 
 $.ajax({
   type          :'POST',
-  url           :'https://build.3rinnovation.com:7780/approvelist',
+  url           :'https://build.3rinnovation.co/approvelist',
   dataType      :'text',
   async         :false,
   encode        :true,
@@ -387,7 +387,7 @@ $(document).ready(function(){
 
         async         :true,
         type          :'post',
-        url           :'https://build.3rinnovation.com:7780/denyReservation',
+        url           :'https://build.3rinnovation.com/denyReservation',
         data          : {
                             name            : formData.name,
                             reserveStart    : formData.reserveStart,
@@ -433,7 +433,7 @@ $(document).ready(function(){
 
             async         :true,
             type          :'post',
-            url           :'https://build.3rinnovation.com:7780/addannouncement',
+            url           :'https://build.3rinnovation.com/addannouncement',
             data          : {
                                 text        : formData.text,
                 },
