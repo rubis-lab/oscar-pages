@@ -85,6 +85,11 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 
 <script type="text/javascript">
 
+fetch("http://remotelab.snu.ac.kr:17780/list")
+  .then((response) =>  console.log(response))
+  .catch((error) => console.log("error:", error));
+
+
 (function($) {
    "use strict";
 
