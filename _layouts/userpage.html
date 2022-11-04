@@ -464,7 +464,7 @@ calendar_bootstrap_css: <link rel="stylesheet" href="!PATH_TO_COMPONENTS!/bootst
 
         $.each(events, function(key, val) {
           $(document.createElement('li'))
-            .html('<a href="' + val.url + '">' + val.title + '</a>')
+            .html('<a href=\"' + val.url + '\">' + val.title + '</a>')
             .appendTo(list);
         });
       },
