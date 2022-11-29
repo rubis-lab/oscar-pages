@@ -7,7 +7,7 @@ RUN apt-get update
 RUN apt-get install -y xfce4 xfce4-terminal
 RUN apt-get install -y novnc
 RUN apt-get install -y tightvncserver websockify
-RUN apt-get install -y wget net-tools curl chromium-browser firefox openssh-client git
+RUN apt-get install -y wget net-tools curl chromium-browser firefox openssh-client git gedit vim
 ENV USER root
 
 COPY start.sh /start.sh
@@ -19,12 +19,6 @@ RUN chown user:user /.novnc
 
 COPY config /home/user
 RUN chown -R user:user /home/user
-
-#WORKDIR /tmp
-#RUN wget https://github.com/atom/atom/releases/download/v1.48.0/atom-amd64.deb
-#RUN apt-get -y install gvfs-bin
-#RUN dpkg -i atom-amd64.deb
-RUN apt-get -y install gedit vim
 
 WORKDIR /.novnc
 RUN wget -qO- https://github.com/novnc/noVNC/archive/v1.0.0.tar.gz | tar xz --strip 1 -C $PWD
@@ -69,14 +63,14 @@ RUN make install
 RUN rm /usr/lib/cmake/eigen3/*
 RUN cp /usr/local/share/eigen3/cmake/* /usr/lib/cmake/eigen3
 
-WORKDIR /home/user/git/Autoware_On_Embedded/autoware.ai
-USER user
-RUN rosdep update
-WORKDIR /home/user/git/Autoware_On_Embedded/autoware.ai/src
-RUN rosdep install -y --from-paths . --ignore-src --rosdistro melodic -r
-USER root
-RUN apt-get install libopencv3.2 -y
-RUN colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
+# WORKDIR /home/user/git/Autoware_On_Embedded/autoware.ai
+# USER user
+# RUN rosdep update
+# WORKDIR /home/user/git/Autoware_On_Embedded/autoware.ai/src
+# RUN rosdep install -y --from-paths . --ignore-src --rosdistro melodic -r
+# USER root
+# RUN apt-get install libopencv3.2 -y
+# RUN colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 # RUN apt-get install ros-melodic-ackermann-msgs ros-melodic-serial ros-melodic-can-msgs software-properties-common -y
 # RUN apt-add-repository ppa:astuff/kvaser-linux
@@ -87,8 +81,6 @@ RUN colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
 # RUN apt update
 # RUN apt install -y ros-melodic-kvaser-interface
 
-
-
 # WORKDIR /home/user/git/Autoware_On_Embedded/rubis_ws/src
 
 # WORKDIR /home/user/git/Autoware_On_Embedded/setup
@@ -97,4 +89,3 @@ RUN colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
 # RUN apt install -y python-catkin-tools
 
 USER user
-#CMD ["sh","/start.sh"]
