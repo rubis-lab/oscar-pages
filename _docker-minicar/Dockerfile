@@ -87,5 +87,3 @@ RUN cp /usr/local/share/eigen3/cmake/* /usr/lib/cmake/eigen3
 # RUN /home/user/git/Autoware_On_Embedded/setup/setup.sh rubis ~/git/Autoware_On_Embedded
 # WORKDIR /home/user/git/Autoware_On_Embedded/rubis_ws/
 # RUN apt install -y python-catkin-tools
-
-USER user
