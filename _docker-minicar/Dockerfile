@@ -10,9 +10,6 @@ RUN apt-get install -y tightvncserver websockify
 RUN apt-get install -y wget net-tools curl chromium-browser firefox openssh-client git gedit vim
 ENV USER root
 
-COPY start.sh /start.sh
-RUN chmod a+x /start.sh
-
 RUN useradd -ms /bin/bash user
 RUN mkdir /.novnc
 RUN chown user:user /.novnc
@@ -27,10 +24,9 @@ RUN wget -qO- https://github.com/novnc/websockify/archive/v0.6.1.tar.gz | tar xz
 RUN ln -s vnc.html index.html
 
 WORKDIR /home/user
-
 RUN apt-get install -y git
 RUN mkdir git
-RUN cd git
+WORKDIR /home/user/git
 RUN git clone https://github.com/rubis-lab/Autoware_On_Embedded.git
 
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
@@ -51,6 +47,7 @@ RUN apt install -y python-catkin-pkg python-rosdep ros-melodic-catkin
 RUN apt install -y python3-pip python3-colcon-common-extensions python3-setuptools python3-vcstool
 RUN pip3 install -U setuptools
 
+WORKDIR /home/user/
 RUN mkdir eigen
 WORKDIR /home/user/eigen
 RUN wget https://gitlab.com/libeigen/eigen/-/archive/3.3.7/eigen-3.3.7.tar.gz
@@ -63,11 +60,11 @@ RUN make install
 RUN rm /usr/lib/cmake/eigen3/*
 RUN cp /usr/local/share/eigen3/cmake/* /usr/lib/cmake/eigen3
 
-# WORKDIR /home/user/git/Autoware_On_Embedded/autoware.ai
-# USER user
-# RUN rosdep update
-# WORKDIR /home/user/git/Autoware_On_Embedded/autoware.ai/src
-# RUN rosdep install -y --from-paths . --ignore-src --rosdistro melodic -r
+WORKDIR /home/user/git/Autoware_On_Embedded/autoware.ai
+USER user
+RUN rosdep update
+WORKDIR /home/user/git/Autoware_On_Embedded/autoware.ai/src
+# RUN rosdep install -y --from-paths . --ignore-src --rosdistro=melodic -r
 # USER root
 # RUN apt-get install libopencv3.2 -y
 # RUN colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
