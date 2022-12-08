@@ -9,7 +9,7 @@ fi
 sudo git pull origin master
 sudo docker stop remotelab && docker rm remotelab
 sudo docker build -t remotelab:$tag ./_docker-node
-sudo docker run -d --name remotelab -p 7780:80 -p 7781:443 --link oscar-db \
+sudo docker run -d --name remotelab -p 7780:80 -p 7781:443 --link remotelab-db \
 	-v /home/rubis/remotelab:/home/node \
 	-v /var/run/docker.sock:/var/run/docker.sock \
 	-v /usr/bin/docker:/usr/bin/docker \

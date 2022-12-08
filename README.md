@@ -25,7 +25,7 @@ docker build -t minicar-image .
 
 ```shell
 docker run -d -p 7782:7780 -p 11312:11311 -e vncpassword=vnchost1 --name vnchost1 minicar-image
-docker run -d -p 7783:7780 -p 11313:11311 -e vncpassword=vnchost2 --name vnchost2 minicar-image --link oscar-db
+docker run -d -p 7783:7780 -p 11313:11311 -e vncpassword=vnchost2 --name vnchost2 minicar-image --link remotelab-db
 docker run -d -p 7784:7780 -p 11314:11311 -e vncpassword=vnchost3 --name vnchost3 minicar-image
 docker run -d -p 7785:7780 -p 11315:11311 -e vncpassword=vnchost4 --name vnchost4 minicar-image
 ```
