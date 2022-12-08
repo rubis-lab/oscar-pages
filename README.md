@@ -1,10 +1,21 @@
 # About Remotelab
 
+## Docker for Server
+
+### Start db & server
+```shell
+cd ~/git/oscar-pages/
+./mongo.sh
+docker exec -it oscar-db mongosh
+use remotelab
+./run.sh
+```
+
 ## Docker for Minicar
 
 ### How to build image
 
-```bash
+```shell
 cd ~/git/oscar-pages/_docker-minicar
 docker build -t minicar-image .
 # docker build --no-cache -t minicar-image .
@@ -12,7 +23,7 @@ docker build -t minicar-image .
 
 ### How to start docker
 
-```bash
+```shell
 docker run -d -p 7782:7780 -p 11312:11311 -e vncpassword=vnchost1 --name vnchost1 minicar-image
 docker run -d -p 7783:7780 -p 11313:11311 -e vncpassword=vnchost2 --name vnchost2 minicar-image --link oscar-db
 docker run -d -p 7784:7780 -p 11314:11311 -e vncpassword=vnchost3 --name vnchost3 minicar-image
@@ -21,13 +32,13 @@ docker run -d -p 7785:7780 -p 11315:11311 -e vncpassword=vnchost4 --name vnchost
 
 ### How to go into docker
 
-```bash
+```shell
 docker exec -u 0 -it vnchost1 bash
 ```
 
 ### How to delete docker
 
-```bash
+```shell
 docker stop vnchost2 && docker rm vnchost2
 ```
 
