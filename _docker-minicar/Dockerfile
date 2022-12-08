@@ -89,5 +89,6 @@ RUN source /home/user/.bashrc && source /opt/ros/melodic/setup.bash && source /h
 WORKDIR /home/user/
 
 COPY start.sh /start.sh
+COPY crontab.sh /crontab.sh
 RUN chmod a+x /start.sh
 CMD ["sh","/start.sh"]
