@@ -6,8 +6,9 @@
 ```shell
 cd ~/git/oscar-pages/
 ./mongo.sh
-docker exec -it oscar-db mongosh
+docker exec -it remotelab_db mongosh
 use remotelab
+(ctrl+pq)
 ./run.sh
 ```
 
