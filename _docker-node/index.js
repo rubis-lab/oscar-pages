@@ -18,7 +18,7 @@ var nodemailer = require('nodemailer');
 //local mongodb connection
 // mongoose.connect('mongodb://localhost:27017/oscar-db');
 //docker mongodb connection
-mongoose.connect('mongodb://oscar-db/oscar');
+mongoose.connect('mongodb://remotelab_db/remotelab');
 var db = mongoose.connection;
 db.on('error', function(){
   console.log('Connection Failed!');
