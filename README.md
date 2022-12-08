@@ -34,23 +34,40 @@ docker stop vnchost2 && docker rm vnchost2
 ## Port fowarding info
 
 build.3rinnovation.com
+
 remotelab.snu.ac.kr:17780
+
 192.168.0.6:7780
+
 remotelab:80
 
+
+
 build.3rinnovation.com/vnc1-4
+
 remotelab.snu.ac.kr:17782-5
+
 192.168.0.6:7782-5
+
 vnchost1-4:7780
+
 vncserver:5901
 
+
+
 build.3rinnovation.com/video
+
 remotelab.snu.ac.kr:17786
+
 192.168.0.3:80
 
+
 minicar 1-4
+
 192.168.0.6:11312-5
+
 vnchost1-4:11311
+
 
 ## for DEBUG VNC
 
