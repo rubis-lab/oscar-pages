@@ -84,11 +84,21 @@ USER root
 RUN /home/user/git/Autoware_On_Embedded/setup/setup_bashrc.sh user
 WORKDIR /home/user/git/Autoware_On_Embedded/rubis_ws/
 SHELL ["/bin/bash", "-c"]
-RUN cat /home/user/.bashrc && cat /opt/ros/melodic/setup.bash
 RUN source /home/user/.bashrc && source /opt/ros/melodic/setup.bash && source /home/user/git/Autoware_On_Embedded/autoware.ai/install/setup.bash && apt install -y ros-melodic-astuff-sensor-msgs && catkin_make
 WORKDIR /home/user/
 
 COPY start.sh /start.sh
-COPY crontab.sh /crontab.sh
 RUN chmod a+x /start.sh
 CMD ["sh","/start.sh"]
+
+# RUN apt-get install -y xauth
+# ARG user
+# ARG uid
+# ARG gid
+# ENV NVIDIA_VISIBLE_DEVICES ${NVIDIA_VISIBLE_DEVICES:-all}
+# ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
+# ENV USERNAME ${user}
+# RUN usermod --shell /bin/bash $USERNAME && \
+#         usermod  --uid ${uid} $USERNAME && \
+#         groupmod --gid ${gid} $USERNAME
+
