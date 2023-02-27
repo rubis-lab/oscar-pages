@@ -96,10 +96,11 @@ ENV NVIDIA_VISIBLE_DEVICES ${NVIDIA_VISIBLE_DEVICES:-all}
 ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
 
 
-RUN apt install -y mesa-utils libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa libglu1-mesa-dev
+RUN apt install -y mesa-utils libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa libglu1-mesa-dev sshpass xterm bc
 RUN apt update
 RUN apt upgrade -y
 
-COPY start_4.sh /start.sh
+WORKDIR /root/Desktop
+COPY start_2.sh /start.sh
 RUN chmod a+x /start.sh
 CMD ["sh","/start.sh"]
