@@ -47,6 +47,9 @@ background: '/img/bg-oscar.png'
       <div class="col-sm-12">
           <button onclick="launchCameras()" id="launchCamerasButton" class="btn btn-primary" >Load Cameras</button>
       </div>
+      <div class="col-sm-12">
+          <button onclick="launchRviz()" id="launchRvizButton" class="btn btn-primary" >Load Visualization</button>
+      </div>
     </div>
 
   <p></p>
