@@ -1,9 +1,5 @@
 
 function launchCameras(){
-    alert("Four new tabs will open. Please close all four tabs and refresh the monitoring page to view the cameras.");
-    window.open('http://guest:guest0000@147.46.215.251:8885/ISAPI/Streaming/channels/102/httpPreview/');
-    window.open('http://guest:guest0000@147.46.215.251:8886/ISAPI/Streaming/channels/102/httpPreview/');
-    window.open('http://guest:guest0000@147.46.215.251:8887/ISAPI/Streaming/channels/102/httpPreview/');
-    window.open('http://guest:guest0000@147.46.215.251:8888/ISAPI/Streaming/channels/102/httpPreview/');
-
+    alert("id와 password에 각각 guest를 입력하여 로그인하세요");
+    window.open('http://guest:guest@147.46.219.156:17786/');
 }
