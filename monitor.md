@@ -47,13 +47,14 @@ background: '/img/bg-oscar.png'
       <div class="col-sm-12">
           <button onclick="launchCameras()" id="launchCamerasButton" class="btn btn-primary" >Load Cameras</button>
       </div>
+    </div>
+  <p></p>  <p></p>
+    <div class="row text-center">
       <div class="col-sm-12">
           <button onclick="launchRviz()" id="launchRvizButton" class="btn btn-primary" >Load Visualization</button>
       </div>
     </div>
-
-  <p></p>
-  <p></p>
+  <p></p>  <p></p>
   <form action="https://rubis-lab.github.io/oscar-pages/userpage">
     <div class="row text-center">
       <div class="col-sm-12">
