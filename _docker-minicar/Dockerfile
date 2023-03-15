@@ -96,11 +96,59 @@ ENV NVIDIA_VISIBLE_DEVICES ${NVIDIA_VISIBLE_DEVICES:-all}
 ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
 
 
-RUN apt install -y mesa-utils libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa libglu1-mesa-dev sshpass xterm bc
+RUN apt install -y mesa-utils libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa libglu1-mesa-dev sshpass xterm bc nautilus dconf-editor
 RUN apt update
 RUN apt upgrade -y
 
-WORKDIR /root/Desktop
+WORKDIR /home/user/Desktop
+USER root
+RUN rm chromium-browser.desktop exo-terminal-emulator.desktop firefox-browser.desktop gedit.desktop
+
 COPY start_2.sh /start.sh
-RUN chmod a+x /start.sh
+RUN chmod a+rwx /start.sh
+
+COPY scripts/change_const_look_ahead_distance.sh /home/user/Desktop/change_const_look_ahead_distance.sh
+RUN chmod a+rwx /home/user/Desktop/change_const_look_ahead_distance.sh
+COPY scripts/change_const_look_ahead_distance_2.sh /home/user/Documents/change_const_look_ahead_distance.sh
+RUN chmod a+rwx /home/user/Documents/change_const_look_ahead_distance.sh
+
+COPY scripts/change_error_threshold.sh /home/user/Desktop/change_error_threshold.sh
+RUN chmod a+rwx /home/user/Desktop/change_error_threshold.sh
+COPY scripts/change_error_threshold_2.sh /home/user/Documents/change_error_threshold.sh
+RUN chmod a+rwx /home/user/Documents/change_error_threshold.sh
+
+COPY scripts/change_max_iterations.sh /home/user/Desktop/change_max_iterations.sh
+RUN chmod a+rwx /home/user/Desktop/change_max_iterations.sh
+COPY scripts/change_max_iterations_2.sh /home/user/Documents/change_max_iterations.sh
+RUN chmod a+rwx /home/user/Documents/change_max_iterations.sh
+
+COPY scripts/change_minimum_look_ahead_distance.sh /home/user/Desktop/change_minimum_look_ahead_distance.sh
+RUN chmod a+rwx /home/user/Desktop/change_minimum_look_ahead_distance.sh
+COPY scripts/change_minimum_look_ahead_distance_2.sh /home/user/Documents/change_minimum_look_ahead_distance.sh
+RUN chmod a+rwx /home/user/Documents/change_minimum_look_ahead_distance.sh
+
+COPY scripts/change_steering_angle.sh /home/user/Desktop/change_steering_angle.sh
+RUN chmod a+rwx /home/user/Desktop/change_steering_angle.sh
+COPY scripts/change_steering_angle_2.sh /home/user/Documents/change_steering_angle.sh
+RUN chmod a+rwx /home/user/Documents/change_steering_angle.sh
+
+COPY scripts/change_velocity.sh /home/user/Desktop/change_velocity.sh
+RUN chmod a+rwx /home/user/Desktop/change_velocity.sh
+COPY scripts/change_velocity_2.sh /home/user/Documents/change_velocity.sh
+RUN chmod a+rwx /home/user/Documents/change_velocity.sh
+
+COPY scripts/start_autorunner.sh /home/user/Desktop/start_autorunner.sh
+RUN chmod a+rwx /home/user/Desktop/start_autorunner.sh
+COPY scripts/start_autorunner_2.sh /home/user/Documents/start_autorunner.sh
+RUN chmod a+rwx /home/user/Documents/start_autorunner.sh
+
+COPY scripts/start_core.sh /home/user/Desktop/start_core.sh
+RUN chmod a+rwx /home/user/Desktop/start_core.sh
+
+COPY scripts/start_RVIZ.sh /home/user/Desktop/start_RVIZ.sh
+RUN chmod a+rwx /home/user/Desktop/start_RVIZ.sh
+
+USER user
+
+RUN echo "gsettings set org.gnome.nautilus.preferences executable-text-activation 'launch'" >> /home/user/.bashrc
 CMD ["sh","/start.sh"]
