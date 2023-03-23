@@ -142,6 +142,11 @@ RUN chmod a+rwx /home/user/Desktop/start_autorunner.sh
 COPY scripts/start_autorunner_2.sh /home/user/Documents/start_autorunner.sh
 RUN chmod a+rwx /home/user/Documents/start_autorunner.sh
 
+COPY scripts/start_control.sh /home/user/Desktop/start_control.sh
+RUN chmod a+rwx /home/user/Desktop/start_control.sh
+COPY scripts/start_autorunner_2.sh /home/user/Documents/start_control.sh
+RUN chmod a+rwx /home/user/Documents/start_control.sh
+
 COPY scripts/start_core.sh /home/user/Desktop/start_core.sh
 RUN chmod a+rwx /home/user/Desktop/start_core.sh
 
