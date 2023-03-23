@@ -148,6 +148,9 @@ RUN chmod a+rwx /home/user/Desktop/start_core.sh
 COPY scripts/start_RVIZ.sh /home/user/Desktop/start_RVIZ.sh
 RUN chmod a+rwx /home/user/Desktop/start_RVIZ.sh
 
+RUN rm /opt/ros/melodic/share/rviz/default.rviz
+COPY default.rviz /opt/ros/melodic/share/rviz/default.rviz
+
 USER user
 
 RUN echo "gsettings set org.gnome.nautilus.preferences executable-text-activation 'launch'" >> /home/user/.bashrc
