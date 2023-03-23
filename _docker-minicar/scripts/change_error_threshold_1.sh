@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "    ==================== Current value ===================="
-sshpass -p nvidia ssh -oStrictHostKeyChecking=no nvidia@192.168.0.8 grep -r 'error_threshold' /home/rubis/git/Autoware_On_Embedded/rubis_ws/src/rubis_autorunner/scripts/minicar_lane_keeping/_minicar_2_localization.launch
+sshpass -p nvidia ssh -oStrictHostKeyChecking=no nvidia@192.168.0.8 grep -r 'error_threshold' /home/nvidia/Autoware_On_Embedded/rubis_ws/src/rubis_autorunner/scripts/minicar_lane_keeping/_minicar_2_localization.launch
 
 while [ 1 -gt 0 ]
 do
@@ -14,8 +14,8 @@ do
                 echo "Too small value"
         else
                 sshpass -p nvidia ssh -oStrictHostKeyChecking=no nvidia@192.168.0.8 << END
-                sed -i "39 i\    error_threshold: $VALUE,"  /home/rubis/git/Autoware_On_Embedded/rubis_ws/src/rubis_autorunner/scripts/minicar_lane_keeping/_minicar_2_localization.launch
-                sed -i "40 d" /home/rubis/git/Autoware_On_Embedded/rubis_ws/src/rubis_autorunner/scripts/minicar_lane_keeping/_minicar_2_localization.launch
+                sed -i "39 i\    error_threshold: $VALUE,"  /home/nvidia/Autoware_On_Embedded/rubis_ws/src/rubis_autorunner/scripts/minicar_lane_keeping/_minicar_2_localization.launch
+                sed -i "40 d" /home/nvidia/Autoware_On_Embedded/rubis_ws/src/rubis_autorunner/scripts/minicar_lane_keeping/_minicar_2_localization.launch
 END
                 break
         fi
