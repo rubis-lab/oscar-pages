@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sshpass -p nvidia ssh -oStrictHostKeyChecking=no nvidia@192.168.0.8 <<'END'
+sshpass -p nvidia ssh -T -oStrictHostKeyChecking=no nvidia@192.168.0.8 <<'END'
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples

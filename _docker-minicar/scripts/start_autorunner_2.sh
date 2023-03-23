@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sshpass -p 4542rubis ssh -oStrictHostKeyChecking=no rubis@192.168.0.4 <<'END'
+sshpass -p 4542rubis ssh -T -oStrictHostKeyChecking=no rubis@192.168.0.4 <<'END'
 case $- in
     *i*) ;;
       *) return;;
