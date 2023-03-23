@@ -104,42 +104,42 @@ WORKDIR /home/user/Desktop
 USER root
 RUN rm chromium-browser.desktop exo-terminal-emulator.desktop firefox-browser.desktop gedit.desktop
 
-COPY start_1.sh /start.sh
+COPY start_2.sh /start.sh
 RUN chmod a+rwx /start.sh
 
 COPY scripts/change_const_look_ahead_distance.sh /home/user/Desktop/change_const_look_ahead_distance.sh
 RUN chmod a+rwx /home/user/Desktop/change_const_look_ahead_distance.sh
-COPY scripts/change_const_look_ahead_distance_1.sh /home/user/Documents/change_const_look_ahead_distance.sh
+COPY scripts/change_const_look_ahead_distance_2.sh /home/user/Documents/change_const_look_ahead_distance.sh
 RUN chmod a+rwx /home/user/Documents/change_const_look_ahead_distance.sh
 
 COPY scripts/change_error_threshold.sh /home/user/Desktop/change_error_threshold.sh
 RUN chmod a+rwx /home/user/Desktop/change_error_threshold.sh
-COPY scripts/change_error_threshold_1.sh /home/user/Documents/change_error_threshold.sh
+COPY scripts/change_error_threshold_2.sh /home/user/Documents/change_error_threshold.sh
 RUN chmod a+rwx /home/user/Documents/change_error_threshold.sh
 
 COPY scripts/change_max_iterations.sh /home/user/Desktop/change_max_iterations.sh
 RUN chmod a+rwx /home/user/Desktop/change_max_iterations.sh
-COPY scripts/change_max_iterations_1.sh /home/user/Documents/change_max_iterations.sh
+COPY scripts/change_max_iterations_2.sh /home/user/Documents/change_max_iterations.sh
 RUN chmod a+rwx /home/user/Documents/change_max_iterations.sh
 
 COPY scripts/change_minimum_look_ahead_distance.sh /home/user/Desktop/change_minimum_look_ahead_distance.sh
 RUN chmod a+rwx /home/user/Desktop/change_minimum_look_ahead_distance.sh
-COPY scripts/change_minimum_look_ahead_distance_1.sh /home/user/Documents/change_minimum_look_ahead_distance.sh
+COPY scripts/change_minimum_look_ahead_distance_2.sh /home/user/Documents/change_minimum_look_ahead_distance.sh
 RUN chmod a+rwx /home/user/Documents/change_minimum_look_ahead_distance.sh
 
 COPY scripts/change_steering_angle.sh /home/user/Desktop/change_steering_angle.sh
 RUN chmod a+rwx /home/user/Desktop/change_steering_angle.sh
-COPY scripts/change_steering_angle_1.sh /home/user/Documents/change_steering_angle.sh
+COPY scripts/change_steering_angle_2.sh /home/user/Documents/change_steering_angle.sh
 RUN chmod a+rwx /home/user/Documents/change_steering_angle.sh
 
 COPY scripts/change_velocity.sh /home/user/Desktop/change_velocity.sh
 RUN chmod a+rwx /home/user/Desktop/change_velocity.sh
-COPY scripts/change_velocity_1.sh /home/user/Documents/change_velocity.sh
+COPY scripts/change_velocity_2.sh /home/user/Documents/change_velocity.sh
 RUN chmod a+rwx /home/user/Documents/change_velocity.sh
 
 COPY scripts/start_autorunner.sh /home/user/Desktop/start_autorunner.sh
 RUN chmod a+rwx /home/user/Desktop/start_autorunner.sh
-COPY scripts/start_autorunner_1.sh /home/user/Documents/start_autorunner.sh
+COPY scripts/start_autorunner_2.sh /home/user/Documents/start_autorunner.sh
 RUN chmod a+rwx /home/user/Documents/start_autorunner.sh
 
 COPY scripts/start_core.sh /home/user/Desktop/start_core.sh
