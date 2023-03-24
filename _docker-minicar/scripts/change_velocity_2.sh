@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "    ==================== Current value ===================="
-sshpass -p 4542rubis ssh -T -oStrictHostKeyChecking=no rubis@192.168.0.7 grep -r 'const_velocity' /home/rubis/git/Autoware_On_Embedded/rubis_ws/src/rubis_autorunner/scripts/minicar_lane_keeping/_minicar_4_control.launch
+sshpass -p 4542rubis ssh -T -oStrictHostKeyChecking=no rubis@192.168.0.4 grep -r 'const_velocity' /home/rubis/git/Autoware_On_Embedded/rubis_ws/src/rubis_autorunner/scripts/minicar_lane_keeping/_minicar_4_control.launch
 
 while [ 1 -gt 0 ]
 do
@@ -13,7 +13,7 @@ do
         then
                 echo "Too small value"
         else
-                sshpass -p 4542rubis ssh -T -oStrictHostKeyChecking=no rubis@192.168.0.7 << END
+                sshpass -p 4542rubis ssh -T -oStrictHostKeyChecking=no rubis@192.168.0.4 << END
                 sed -i "11 i\    <arg name=\"const_velocity\"                value=\"$VALUE\"/>"  /home/rubis/git/Autoware_On_Embedded/rubis_ws/src/rubis_autorunner/scripts/minicar_lane_keeping/_minicar_4_control.launch
                 sed -i "12 d" /home/rubis/git/Autoware_On_Embedded/rubis_ws/src/rubis_autorunner/scripts/minicar_lane_keeping/_minicar_4_control.launch
 END
