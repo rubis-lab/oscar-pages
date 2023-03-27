@@ -55,7 +55,7 @@ background: '/img/bg-oscar.png'
       </div>
     </div>
   <p></p>  <p></p>
-    <div class="flex-container">
+    <div class="row text-center">
       <div class="col-sm-12">
           <button onclick="launchVNC1()" id="launchVNC1Button" class="btn btn-primary" >Open VNC 1 Connection Tab</button>
       </div>
