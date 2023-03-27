@@ -11,3 +11,9 @@ function launchVNC1(){
 function launchVNC2(){
     window.open('http://147.46.219.156:17782');
 }
+function launchVNC3(){
+    window.open('http://147.46.219.156:17783');
+}
+function launchVNC4(){
+    window.open('http://147.46.219.156:17784');
+}
