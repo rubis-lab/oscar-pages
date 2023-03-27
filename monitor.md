@@ -32,33 +32,42 @@ background: '/img/bg-oscar.png'
 </style>
 
 <div class="container2">
-<center>
-<iframe src="https://build.3rinnovation.com/vnc2/index.html?resize=remote&path=vnc2/websockify" height="780" width="1080" title="vnc_session"></iframe>
-<!-- <div class="pie">
+<!-- <center>
+<iframe src="https://build.3rinnovation.com/vnc1/index.html?resize=remote&path=vnc1/websockify" height="780" width="1080" title="vnc_session"></iframe>
+ <div class="pie">
     <img src="http://147.46.215.251:8887/ISAPI/Streaming/channels/102/httpPreview/" style="width:495px">   
     <img src="http://147.46.215.251:8885/ISAPI/Streaming/channels/102/httpPreview/" style="width:495px">
     <img src="http://147.46.215.251:8886/ISAPI/Streaming/channels/102/httpPreview/" style="width:495px">
     <img src="http://147.46.215.251:8888/ISAPI/Streaming/channels/102/httpPreview/" style="width:495px">
-  </div> -->
-</center>
+  </div>
+</center> -->
 
    <p></p>
     <div class="row text-center">
       <div class="col-sm-12">
-          <button onclick="launchCameras()" id="launchCamerasButton" class="btn btn-primary" >Load Cameras</button>
+          <button onclick="launchCameras()" id="launchCamerasButton" class="btn btn-primary" >Open Camera Tab</button>
       </div>
     </div>
   <p></p>  <p></p>
     <div class="row text-center">
       <div class="col-sm-12">
-          <button onclick="launchRviz()" id="launchRvizButton" class="btn btn-primary" >Load Visualization</button>
+          <button onclick="launchRviz()" id="launchRvizButton" class="btn btn-primary" >Open Visualization Tab</button>
+      </div>
+    </div>
+  <p></p>  <p></p>
+    <div class="row text-center">
+      <div class="col-sm-12">
+          <button onclick="launchVNC1()" id="launchVNC1Button" class="btn btn-primary" >Open VNC 1 Connection Tab</button>
+      </div>
+      <div class="col-sm-12">
+          <button onclick="launchVNC2()" id="launchVNC2Button" class="btn btn-primary" >Open VNC 2 Connection Tab</button>
       </div>
     </div>
   <p></p>  <p></p>
   <form action="https://rubis-lab.github.io/oscar-pages/userpage">
     <div class="row text-center">
       <div class="col-sm-12">
-        <button type="submit" class="btn btn-primary">Return to User Homepage </button>
+        <button type="submit" class="btn btn-primary">Return to User Homepage</button>
       </div>
     </div>
   </form>
