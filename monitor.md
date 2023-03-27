@@ -62,8 +62,12 @@ background: '/img/bg-oscar.png'
     </div>
   <p></p>  <p></p>
     <div class="button">
-      <button onclick="launchVNC1()" id="launchVNC1Button" class="btn btn-primary" >Open VNC 1 Connection Tab</button>
-      <button onclick="launchVNC2()" id="launchVNC2Button" class="btn btn-primary" >Open VNC 2 Connection Tab</button>
+      <div>
+        <button onclick="launchVNC1()" id="launchVNC1Button" class="btn btn-primary" >Open VNC 1 Connection Tab</button>
+      </div>
+      <div>
+        <button onclick="launchVNC2()" id="launchVNC2Button" class="btn btn-primary" >Open VNC 2 Connection Tab</button>
+      </div>
     </div>
   <p></p>  <p></p>
   <form action="https://rubis-lab.github.io/oscar-pages/userpage">
