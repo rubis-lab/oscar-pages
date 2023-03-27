@@ -33,6 +33,7 @@ background: '/img/bg-oscar.png'
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
 }
 
 </style>
