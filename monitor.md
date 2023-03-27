@@ -1,6 +1,6 @@
 ---
 layout: vnc_connection
-title: Remote Connection
+title: Remote Connection Hub
 description: 
 background: '/img/bg-oscar.png'
 ---
@@ -64,19 +64,19 @@ background: '/img/bg-oscar.png'
   <p></p>  <p></p>
     <div class="button">
       <div>
-        <button onclick="launchVNC1()" id="launchVNC1Button" class="btn btn-primary" >Open VNC 1 Connection Tab</button>
+        <button onclick="launchVNC1()" id="launchVNC1Button" class="btn btn-primary" >Open Remote Desktop 1 Connection Tab</button>
       </div>
       <div>
-        <button onclick="launchVNC2()" id="launchVNC2Button" class="btn btn-primary" >Open VNC 2 Connection Tab</button>
+        <button onclick="launchVNC2()" id="launchVNC2Button" class="btn btn-primary" >Open Remote Desktop 2 Connection Tab</button>
       </div>
     </div>
   <p></p>  <p></p>
     <div class="button">
       <div>
-        <button onclick="launchVNC3()" id="launchVNC3Button" class="btn btn-primary" >Open VNC 3 Connection Tab</button>
+        <button onclick="launchVNC3()" id="launchVNC3Button" class="btn btn-primary" >Open Remote Desktop 3 Connection Tab</button>
       </div>
       <div>
-        <button onclick="launchVNC4()" id="launchVNC4Button" class="btn btn-primary" >Open VNC 4 Connection Tab</button>
+        <button onclick="launchVNC4()" id="launchVNC4Button" class="btn btn-primary" >Open Remote Desktop 4 Connection Tab</button>
       </div>
     </div>
   <p></p>  <p></p>
