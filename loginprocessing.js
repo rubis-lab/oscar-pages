@@ -24,7 +24,7 @@ $(document).ready(function(){
 
         // check whether the login or the signup button is pressed
         if ($(this).val() == 'login') {
-            url = 'http://147.46.219.156:7780/login';
+            url = 'https://build.3rinnovation.com/login';
         }
         else if ($(this).val() == 'signup') {
             url = 'https://build.3rinnovation.com/signup'
