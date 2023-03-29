@@ -427,16 +427,12 @@ $(document).ready(function(){
             if (data.includes("System is not busy.")){
                 alert("No active VNC session. Check your reservation time.");
             }
-            else if ((data.includes(formData.name))&& (data.includes("reserved"))){
+            else if (data.includes("reserved")){
                 //If the '.../busy' request returns the user's name then it means it is currently their reservation time
                 //Opens new tab with VNC session
                 //alert(formData.name);
                 alert("You will be redirected to your VNC session.");
                 window.open('https://rubis-lab.github.io/oscar-pages/monitor');
-                window.location.reload();
-            }
-            else if (data.includes("reserved")){
-                alert("Active VNC session by another user. OscarLab cannot be accessed at this time.");
                 window.location.reload();
             }
             else {
