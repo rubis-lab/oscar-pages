@@ -279,7 +279,6 @@ $(document).ready(function(){
       })
 
       .done(function(data){
-            alert(data.data);
             if (data.includes("duplicate")== true ){
                 if(!alert("There is currently an active reservation under this email. Please wait until after your appointment date to reserve again.")){
                     window.location.reload();
