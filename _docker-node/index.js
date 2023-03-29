@@ -218,7 +218,7 @@ var server = http.createServer(function(request,response){
                         }
                     }
                   }
-                    if(reserve_accepted == 0){
+                    if(true){
                         User.findOneAndUpdate({name: user.name},
                           {'$push':{reservations: {name:parsedQuery.name,
                             reserveStart: parsedQuery.reserveStart,
