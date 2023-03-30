@@ -74,8 +74,6 @@ alias sa='source /home/rubis/git/Autoware_On_Embedded/autoware.ai/install/setup.
 alias sa='source /home/rubis/git/Autoware_On_Embedded/rubis_ws/devel/setup.bash'
 alias lglaunch='cd /home/rubis/autoware.ai/autoware_files/lgsvl_file/launch/desktop'
 export OPENBLAS_CORETYPE=ARMV8 python3
-export ROS_HOSTNAME=192.168.0.4
-export ROS_MASTER_URI=http://192.168.0.6:11313/
 
 roslaunch rubis_autorunner minicar_lane_keeping.launch
 END                             

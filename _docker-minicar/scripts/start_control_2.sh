@@ -120,8 +120,6 @@ fi
 export PATH=/usr/local/cuda-10.2/bin:$PATH
 export LD_LIBRARY_PATH=/usr/local/cuda-10.2/lib64:$LD_LIBRARY_PATH
 export USER_HOME=/home/nvidia
-export ROS_MASTER_URI=http://192.168.0.6:11313/
-export ROS_HOSTNAME=192.168.0.4
 source /opt/ros/melodic/setup.bash
 source /home/nvidia/Autoware_On_Embedded/rubis_ws/devel/setup.bash
 source /home/nvidia/Autoware_On_Embedded/autoware.ai/install/setup.bash

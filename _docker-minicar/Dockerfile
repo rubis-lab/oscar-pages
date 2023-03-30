@@ -147,9 +147,6 @@ RUN chmod a+rwx /home/user/Desktop/start_control.sh
 COPY scripts/start_control_2.sh /home/user/Documents/start_control.sh
 RUN chmod a+rwx /home/user/Documents/start_control.sh
 
-COPY scripts/start_core.sh /home/user/Desktop/start_core.sh
-RUN chmod a+rwx /home/user/Desktop/start_core.sh
-
 COPY scripts/start_RVIZ.sh /home/user/Desktop/start_RVIZ.sh
 RUN chmod a+rwx /home/user/Desktop/start_RVIZ.sh
 
