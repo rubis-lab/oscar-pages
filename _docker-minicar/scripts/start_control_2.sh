@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sshpass -p nvidia ssh -T -oStrictHostKeyChecking=no nvidia@192.168.0.4 <<'END'
+sshpass -p 4542rubis ssh -oStrictHostKeyChecking=no rubis@192.168.0.4 <<'END'
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -50,12 +50,12 @@ esac
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-        # We have color support; assume it's compliant with Ecma-48
-        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-        # a case would tend to support setf rather than setaf.)
-        color_prompt=yes
+	# We have color support; assume it's compliant with Ecma-48
+	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+	# a case would tend to support setf rather than setaf.)
+	color_prompt=yes
     else
-        color_prompt=
+	color_prompt=
     fi
 fi
 
@@ -103,6 +103,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
@@ -117,24 +118,21 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-export PATH=/usr/local/cuda-10.2/bin:$PATH
-export LD_LIBRARY_PATH=/usr/local/cuda-10.2/lib64:$LD_LIBRARY_PATH
-export USER_HOME=/home/nvidia
 source /opt/ros/melodic/setup.bash
-source /home/nvidia/Autoware_On_Embedded/rubis_ws/devel/setup.bash
-source /home/nvidia/Autoware_On_Embedded/autoware.ai/install/setup.bash
-source /home/nvidia/RUBIS_Trafficlight_Signal/devel/setup.bash
-# source /home/nvidia/catkin_ws/devel/setup.bash
-alias gb='gedit /home/nvidia/.bashrc'
-alias sb='source /home/nvidia/.bashrc'
-alias sa='source /home/nvidia/Autoware_On_Embedded/autoware.ai/install/setup.bash'
-alias sa='source /home/nvidia/Autoware_On_Embedded/rubis_ws/devel/setup.bash'
-alias lglaunch='cd /home/nvidia/autoware.ai/autoware_files/lgsvl_file/launch/nvidia'
-
-alias rosnetsetup='export ROS_MASTER_URI=http://192.168.0.6:11311;export ROS_IP=192.168.0.10'
-alias rosnetrb='export ROS_MASTER_URI=http://minicar:11311;export ROS_IP=192.168.0.10'
-export ROS_HOSTNAME=192.168.0.4
+# Add 32-bit CUDA library & binary paths:
+export PATH=/usr/local/cuda-10.2/bin:/opt/ros/melodic/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+export LD_LIBRARY_PATH=/usr/local/cuda-10.2/lib:/opt/ros/melodic/lib
+export USER_HOME=/home/rubis
+source /home/rubis/git/Autoware_On_Embedded/rubis_ws/devel/setup.bash
+source /home/rubis/git/Autoware_On_Embedded/autoware.ai/install/setup.bash
+alias gb='gedit /home/rubis/.bashrc'
+alias sb='source /home/rubis/.bashrc'
+alias sa='source /home/rubis/git/Autoware_On_Embedded/autoware.ai/install/setup.bash'
+alias sa='source /home/rubis/git/Autoware_On_Embedded/rubis_ws/devel/setup.bash'
+alias lglaunch='cd /home/rubis/autoware.ai/autoware_files/lgsvl_file/launch/desktop'
+export OPENBLAS_CORETYPE=ARMV8 python3
 export ROS_MASTER_URI=http://192.168.0.6:11313/
+export ROS_HOSTNAME=192.168.0.4
 
 roslaunch control_module control_module.launch
 END                             
