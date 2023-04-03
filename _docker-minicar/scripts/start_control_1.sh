@@ -133,6 +133,8 @@ alias lglaunch='cd /home/nvidia/autoware.ai/autoware_files/lgsvl_file/launch/nvi
 
 alias rosnetsetup='export ROS_MASTER_URI=http://192.168.0.6:11311;export ROS_IP=192.168.0.10'
 alias rosnetrb='export ROS_MASTER_URI=http://minicar:11311;export ROS_IP=192.168.0.10'
+export ROS_MASTER_URI=http://192.168.0.6:11312/
+export ROS_HOSTNAME=192.168.0.8
 
 roslaunch control_module control_module.launch
 END                             
