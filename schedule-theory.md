@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Remote Laboratory
-description: Remote experimentation environment for autonomous driving
+title: Schedule Theory Research
+description: Parallelizing tasks with parallelization freedom
 background: '/img/bg-oscar.png'
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Remote Laboratory
-description: Remote experimentation environment for autonomous driving
+title: Multicore/GPGPU HW/SW Platform
+description: Reconfigurable control board-class HW/SW platforms
 background: '/img/bg-oscar.png'
 ---
 

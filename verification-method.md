@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Remote Laboratory
-description: Remote experimentation environment for autonomous driving
+title: Concurrent Verification Method
+description: Ensure functional and temporal accuracy & maximize scheduling freedom
 background: '/img/bg-oscar.png'
 ---
 
