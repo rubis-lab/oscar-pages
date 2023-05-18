@@ -5,18 +5,18 @@ description: Remote experimentation environment for autonomous driving
 background: '/img/bg-oscar.png'
 ---
 
-testThe remote laboratory extends the accessibility of OSCAR. It consists of the following components:
+The remote laboratory extends the accessibility of OSCAR. It consists of the following components:
 - OSCAR platform,
 -	track,
 -	monitoring system,
 -	server,
 -	remote clients.
 
-<img class="img-fluid" src="img/remote-lab.png">
-<span class="caption text-muted">Remote laboratory setup</span>
-
 The track in the remote laboratory is constructed to resemble a real road. We are using dark floor with yellow lanes to enable testing lane detection-based driving. Various sites are placed along the driveway to provide landmarks for localization with both LIDAR and an on-board camera. They include buildings of different sizes with different surface patterns, traffic cones, traffic barriers and traffic signs, all appropriately scaled for the OSCAR scaled platform.
 
 A monitoring system is needed to mimic a Global Positioning System (GPS). Wide-angle cameras are installed above and alongside the track to monitor car's movement.
 
 The remote laboratory is integrated into the OSCAR IDE. Remote clients can select a set of sensor inputs to use for their computations to generate an output of motion control commands. Users can collect real-time sensor data from the OSCAR platform while monitoring a video stream from cameras installed in the laboratory. 
+
+<p>Reserve at here : <a href="{{'/reserve' | relative_url }}">Resevation</a></p>
+<p>For developers  : <a href="{{'https://github.com/rubis-lab/Autoware_On_Embedded/tree/minicar'}}">Resevation</a></p>
