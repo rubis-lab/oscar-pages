@@ -5,7 +5,7 @@ description: Reconfigurable control board-class HW/SW platforms
 background: '/img/bg-oscar.png'
 ---
 <img class="img-fluid" src="img/무인차플랫폼.png">
-<span class="caption text-muted">Swerving mission in Carla simulator</span>
+<span class="caption text-muted">Multicore/GPGPU HW/SW Platform</span>
 
 <img class="img-fluid" src="img/차량플랫폼1.png">
 <span class="caption text-muted">Swerving mission in Carla simulator</span>
