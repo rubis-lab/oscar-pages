@@ -26,3 +26,5 @@ Existing simulation methods cannot provide functionally and temporally correct s
 
 <img class="img-fluid" src="img/mcme.PNG">
 <span class="caption text-muted">Weighted intervals and task-wise blocking values</span>
+
+<p>For developers  : <a href="{{'https://github.com/rubis-lab/CPSim_Linux_Generalized'}}">Github</a></p>
